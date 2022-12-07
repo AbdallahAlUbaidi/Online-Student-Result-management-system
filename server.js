@@ -7,8 +7,12 @@ const epxress_layouts = require("express-ejs-layouts")
 const mongoose = require("mongoose")
 
 const app = express()
+
 //Import Routers
+
 const indexRouter = require('./routes/index')
+
+
 //set up express view enigne, layout and the public folder
 app.set('view engine' , 'ejs')
 app.set('views' , __dirname + '/views')

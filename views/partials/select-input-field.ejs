@@ -1,0 +1,6 @@
+<label for="<%= field %>"><%= field %></label>
+<select name="<%= field %>" id="<%= field %>">
+    <% options.forEach(option=>{ %> 
+        <option value="<%= option %>"><%= option %></option>
+    <% }) %> 
+</select>

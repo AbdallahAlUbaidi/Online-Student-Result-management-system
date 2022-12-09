@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const studentSchema = mongoose.Schema(
     {
-        Credentials:{
+        userInfo:{
             type:mongoose.SchemaTypes.ObjectId,
             required:[true , 'Please enter your credentials'],
             ref:"User"

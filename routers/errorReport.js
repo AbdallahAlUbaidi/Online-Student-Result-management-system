@@ -9,6 +9,7 @@ const errorReport = (err)=>
     }
     else
     {
+        console.log(err)
         return {statusCode: 500 , errors:{ServerError:"Server was not able to respond to the request"}}
     }
 }

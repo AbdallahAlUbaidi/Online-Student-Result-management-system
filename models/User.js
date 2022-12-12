@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema({
         trim:true,
         minLength: [4 , "Username must be at least 8 characters long"],
         maxLength: [60 , "Username must be at most 60 characters long"],
-        unique:[true,'Username already exists'],
+        unique:true,
         validate:{
             validator:user=>{
                 const pattern = /^([a-zA-z0-9\.\-\_]*)([a-zA-z0-9\.\-\_])$/gi
@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema({
         required:[true,"Email field is required"],
         lowerCase:true,
         trim:true,
-        unique:[true,'Email already exists'],
+        unique:true,
         maxLength:[254 , 'Email address can be a max of 254 characters'],
         munLength:[3 , 'Email address can be at least 3 characters'],
         validate:{
@@ -79,6 +79,17 @@ userSchema.statics.createNewUser = async function(username , emailAddress , pass
     const newUser = await this.create({username , emailAddress , password , role}) 
     return newUser
 }
+
+userSchema.path('emailAddress').validate(async (email)=>
+{
+    return await mongoose.models.User.countDocuments({emailAddress:email}) == 0;
+} , 'Email already exists')
+
+userSchema.path('username').validate(async (username)=>
+{
+    return await mongoose.models.User.countDocuments({username}) == 0;
+} , 'username already exists')
+
 
 
 

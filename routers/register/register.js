@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const errorReport = require('../errorReport')
-const sendConfirmationEmail = require('../emailConfirmation/emailConfirmation').sendConfirmationEmail
+const sendConfirmationEmail = require('../email/emailConfirmation').sendConfirmationEmail
 
 
 const user = require('../../models/User')

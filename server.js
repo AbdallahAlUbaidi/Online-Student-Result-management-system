@@ -17,7 +17,7 @@ app.use(express.json())
 
 const indexRouter = require('./routers/index')
 const registerRouter = require('./routers/register/register')
-const emailConfirmationRouter = require('./routers/emailConfirmation/emailConfirmation').router
+const emailConfirmationRouter = require('./routers/email/emailConfirmation').router
 const errorReport = require('./routers/errorReport')
 
 

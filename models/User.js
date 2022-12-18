@@ -71,7 +71,10 @@ const userSchema = mongoose.Schema({
 
 const hashPassword = async (password)=>
 {
-    if(password == false) return null
+    if(password == null || password == undefined || password == '') 
+    {
+        return null
+    }
     return await bcrypt.hash(password ,  13)
 }
 userSchema.statics.createNewUser = async function(username , emailAddress , password , role){

@@ -41,4 +41,12 @@ const studentSchema = mongoose.Schema(
     }
 )
 
+studentSchema.statics.createStudent = async function(userInfo ,student_id , stage , branch , study)
+{
+    const newStudnet = this.create({
+        userInfo ,student_id , stage , branch , study
+    })
+    return newStudnet
+}
+
 module.exports = mongoose.model('Student' , studentSchema)

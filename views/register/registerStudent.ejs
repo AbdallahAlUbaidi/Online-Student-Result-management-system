@@ -1,0 +1,8 @@
+<p>Register Student Placeholder form</p>
+<form method="post" action="/register/student/:<%= locals.token %>">
+    <%- include('../partials/text-input-field' , {field:'Student-id'}) %><br>
+    <%- include('../partials/select-input-field' , {field:'branch' , options:['Information Engineering' ,'Network Engineering']}) %> <br>
+    <%- include('../partials/select-input-field' , {field:'stage' , options:['4' , '3' , '2' , '2']}) %><br>
+    <%- include('../partials/select-input-field' , {field:'study' , options:['Morning' , 'Evening']}) %> <br>
+    <button type="submit">Register</button>
+</form>

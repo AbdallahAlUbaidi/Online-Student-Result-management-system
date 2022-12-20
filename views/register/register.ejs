@@ -1,9 +1,8 @@
 <p>Register Placeholder form</p>
 <form method="post" action="/register" id="registerForm">
-    <%- include('../partials/text-input-field' , {field:'emailAddress'}) %><br>
-    <%- include('../partials/text-input-field' , {field:'username'}) %><br>
-    <%- include('../partials/password-input-field' , {field:'password'}) %><br>
-    <%- include('../partials/select-input-field' , {field:'role' , options:['student' , 'faculty']}) %><br>
+    <%- include('../partials/text-input-field' , {field:'emailAddress' , errors:locals.errors}) %><br>
+    <%- include('../partials/text-input-field' , {field:'username' , errors:locals.errors}) %><br>
+    <%- include('../partials/password-input-field' , {field:'password' , errors:locals.errors}) %><br>
+    <%- include('../partials/select-input-field' , {field:'role' , options:['student' , 'faculty'] , errors:locals.errors}) %><br>
     <button type="submit">Register</button>
-    <script src="/code/emailConfirmationPage/emailConfirmationPage.js"></script>
 </form>

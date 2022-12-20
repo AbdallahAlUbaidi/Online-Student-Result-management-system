@@ -7,7 +7,7 @@ const epxress_layouts = require("express-ejs-layouts")
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const cookieParser = require('cookie-parser')
-const url = require('url')
+const cors = require('cors')
 
 
 
@@ -16,7 +16,6 @@ const app = express()
 app.use(bodyParser.urlencoded({limit:"10mb" , extended:false}))
 app.use(cookieParser())
 app.use(express.json())
-
 //Import controllers
 
 const indexRouter = require('./controllers/routers/index')

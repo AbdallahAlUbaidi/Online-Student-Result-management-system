@@ -20,16 +20,18 @@ router.get('/' , (req , res)=>
 router.post('/' , async(req , res)=>
 {
     try
-    {
+    {  
         const newUser = await user.createNewUser(req.body.username , req.body.emailAddress , req.body.password , req.body.role)
         sendConfirmationEmail(newUser)
         res.cookie('Authorization' , `bearer ${emailToken.generateEmailCheckToken(newUser)}` , {path:'/emailConfirmation' , httpOnly:true})
+        res.cookie('message' , '' , {path:'/emailConfirmation'})
+        res.cookie('msgType' , '' , {path:'/emailConfirmation'})
         res.status(201).redirect('/emailConfirmation')
     }
     catch(error)
     {
         const errorInfo = errorReport(error)
-        res.status(errorInfo.statusCode).json(errorInfo.errors)
+        res.status(errorInfo.statusCode).render( 'register/register', {errors: errorInfo.errors})
     }
 })
 

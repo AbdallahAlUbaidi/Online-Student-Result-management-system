@@ -7,7 +7,9 @@ const epxress_layouts = require("express-ejs-layouts")
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const cookieParser = require('cookie-parser')
-const cors = require('cors')
+const flash = require('connect-flash')
+const session = require('express-session')
+const helmet =  require('helmet')
 
 
 
@@ -16,13 +18,21 @@ const app = express()
 app.use(bodyParser.urlencoded({limit:"10mb" , extended:false}))
 app.use(cookieParser())
 app.use(express.json())
+app.use(helmet.hidePoweredBy())
+app.use(session({
+    cookie:{ maxAge: 60000 },
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized:false,
+    resave:false
+}))
+app.use(flash())
 //Import controllers
 
 const indexRouter = require('./controllers/routers/index')
 const registerRouter = require('./controllers/routers/register/register')
 const studentRegisterRouter = require('./controllers/routers/register/studentRegister')
 const authenticationRouter = require('./controllers/routers/authentication')
-const emailConfirmationRouter = require('./controllers/email/emailConfirmation').router
+const emailConfirmationRouter = require('./controllers/routers/email/emailConfirmation')
 const errorReport = require('./controllers/errorReport')
 
 

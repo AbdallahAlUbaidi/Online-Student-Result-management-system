@@ -1,7 +1,7 @@
-function showFlashMessage(status , message , req , res)
+function showFlashMessage(status , message , req , res , redirectTarget='back')
 {
     req.flash('message' , message)
-    res.status(status).redirect('back')
+    res.status(status).redirect(redirectTarget)
 }
 
 

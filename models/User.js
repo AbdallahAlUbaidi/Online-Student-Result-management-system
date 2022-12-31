@@ -77,6 +77,16 @@ const hashPassword = async (password)=>
     }
     return await bcrypt.hash(password ,  13)
 }
+
+userSchema.statics.updateUser = async function(filter , updatedFields)
+{
+    const userInfo = await this.findOne(filter)
+    for(const field in updatedFields)
+        userInfo[field] = updatedFields[field]
+    await this.validate(userInfo , Object.keys(updatedFields))
+    return await this.updateOne(filter , updatedFields)
+}
+
 userSchema.statics.createNewUser = async function(username , emailAddress , password , role){
     password = await hashPassword(password)
     const newUser = await this.create({username , emailAddress , password , role}) 

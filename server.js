@@ -29,6 +29,7 @@ app.use(flash())
 //Import controllers
 
 const indexRouter = require('./controllers/routers/index')
+const loginRouter = require('./controllers/routers/login/login')
 const registerRouter = require('./controllers/routers/register/register')
 const studentRegisterRouter = require('./controllers/routers/register/studentRegister')
 const authenticationRouter = require('./controllers/routers/authentication')
@@ -54,6 +55,7 @@ mongoose.connect(process.env.DATABASE_URL ,
 app.use('/' , indexRouter)
 app.use('/register' , registerRouter)
 app.use('/register/student' , studentRegisterRouter)
+app.use('/login' , loginRouter)
 app.use('/emailConfirmation' , emailConfirmationRouter)
 app.use('/authentication' , authenticationRouter)
 

@@ -4,19 +4,16 @@ const errorReport = require('../errorReport');
 const {_refreashToken} = require('./refreashToken')
 
 
-function generateAccessToken(refreashToken , expiration = '30m')
+async function generateAccessToken(refreashToken , expiration = '30m')
 {
-        const tokenInfo = jwt.verify(refreashToken , process.env.REFREASH_TOKEN_SECRET , (err , decoded)=>
-        {
-            if(err)errorReport(err)
-        })
-        return jwt.sign(tokenInfo , process.env.ACCESS_TOKEN_SECRET)
+    const tokenInfo = await jwt.verify(refreashToken , process.env.REFREASH_TOKEN_SECRET)
+    return await jwt.sign(tokenInfo , process.env.ACCESS_TOKEN_SECRET)
 
 }
 
-function verifyAccessToken(accessToken)
+async function verifyAccessToken(accessToken)
 {
-    const tokenInfo = jwt.verify(accessToken , process.env.ACCESS_TOKEN_SECRET , (err , decoded)=>
+    const tokenInfo = await jwt.verify(accessToken , process.env.ACCESS_TOKEN_SECRET , (err , decoded)=>
     {
         if(err)errorReport(err)
     })

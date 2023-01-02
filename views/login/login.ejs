@@ -1,1 +1,7 @@
 <p>Login placeholder</p>
+<div class="ReportMessage"><%= locals.message %> </div>
+<form action="/login" method="post">
+    <%- include('../partials/text-input-field.ejs' , {field:'emailAddress'}) %>
+    <%- include('../partials/password-input-field.ejs' , {field:'password'}) %>
+    <button type="submit">Login</button>
+</form>

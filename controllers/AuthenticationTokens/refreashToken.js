@@ -1,14 +1,15 @@
 const jwt = require('jsonwebtoken');
 
 
-function createRefreashToken(user)
+async function createRefreashToken(user)
 {
-    return jwt.sign({userId: user._id} , process.env.REFREASH_TOKEN_SECRET , {expiresIn:'3d'});
+    const token  = await jwt.sign({userId: user._id} , process.env.REFREASH_TOKEN_SECRET , {expiresIn:'3d'});
+    return token
 }
-
-function verifyRefreashToekn(refreshToken)
+async function verifyRefreashToekn(refreshToken)
 {
-    return jwt.verify(refreshToken , process.env.REFREASH_TOKEN_SECRET)
+    const tokenInfo = await jwt.verify(refreshToken , process.env.REFREASH_TOKEN_SECRET)
+    return tokenInfo
 }
 
 

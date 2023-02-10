@@ -16,7 +16,8 @@ const studentSchema = mongoose.Schema(
                 {
                     const pattern = /^([0-9]+)([0-9]+)$/gi
                     return pattern.test(number)
-                }
+                },
+                message:props => `"${props.value}" is not a valid student id number`
             }
         },
         stage:{
@@ -41,12 +42,16 @@ const studentSchema = mongoose.Schema(
     }
 )
 
-studentSchema.statics.createStudent = async function(userInfo ,student_id , stage , branch , study)
+
+studentSchema.path('userInfo').validate(async (userId)=>
 {
-    const newStudnet = this.create({
-        userInfo ,student_id , stage , branch , study
-    })
-    return newStudnet
-}
+    return await mongoose.models.Student.countDocuments({userInfo:userId}) == 0;
+} , 'You have entered your student information before')
+
+studentSchema.path('student_id').validate(async (studentId)=>
+{
+    return await mongoose.models.Student.countDocuments({student_id:studentId}) == 0;
+} , 'The student id you have entered already exists')
+
 
 module.exports = mongoose.model('Student' , studentSchema)

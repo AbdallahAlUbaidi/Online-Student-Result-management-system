@@ -1,11 +1,12 @@
 const express = require('express')
-const { generateAccessToken } = require('../AuthenticationTokens/accessToken')
+const accessToken = require('../AuthenticationTokens/accessToken')
+const refreshToken = require('../AuthenticationTokens/refreshToken')
 const router = express.Router()
 
 
-router.get('/token' , (req , res ) =>
+router.get('/' , (req , res ) =>
 {
-    res.json({token:generateAccessToken(req.body.token , process.env.TOKEN_EXPIRATION_PERIOD)})
+    res.redirect('back')
 })
 
 

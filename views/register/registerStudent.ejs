@@ -1,8 +1,9 @@
 <p>Register Student Placeholder form</p>
-<form method="post" action="/register/student/:<%= locals.token %>">
-    <%- include('../partials/text-input-field' , {field:'Student-id'}) %><br>
-    <%- include('../partials/select-input-field' , {field:'branch' , options:['Information Engineering' ,'Network Engineering']}) %> <br>
-    <%- include('../partials/select-input-field' , {field:'stage' , options:['4' , '3' , '2' , '2']}) %><br>
-    <%- include('../partials/select-input-field' , {field:'study' , options:['Morning' , 'Evening']}) %> <br>
+<div class="ReportMessage"><%= locals.message %> </div>
+<form method="post" action="/register/student">
+    <%- include('../partials/text-input-field' , {field:'student_id' , errors:locals.errors}) %><br>
+    <%- include('../partials/select-input-field' , {field:'branch' , options:['Information Engineering' ,'Network Engineering'] , errors:locals.errors}) %> <br>
+    <%- include('../partials/select-input-field' , {field:'stage' , options:['1st' , '2nd' , '3rd' , '4th' , 'Graduate'] , errors:locals.errors}) %><br>
+    <%- include('../partials/select-input-field' , {field:'study' , options:['Morning' , 'Evening'] , errors:locals.errors}) %> <br>
     <button type="submit">Register</button>
 </form>

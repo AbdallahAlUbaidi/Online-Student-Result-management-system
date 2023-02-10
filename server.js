@@ -34,8 +34,12 @@ const registerRouter = require('./controllers/routers/register/register')
 const studentRegisterRouter = require('./controllers/routers/register/studentRegister')
 const authenticationRouter = require('./controllers/routers/authentication')
 const emailConfirmationRouter = require('./controllers/routers/email/emailConfirmation')
+const accessToken = require('./controllers/AuthenticationTokens/accessToken')
+const {hasEnteredRoleInfo , rolesRegisterLinks} = require('./controllers/roleInfo')
 const errorReport = require('./controllers/errorReport')
 
+//testing routers
+const testTokens = require('./controllers/routers/TestToken')
 
 //set up express view enigne, layout and the public folder
 app.set('view engine' , 'ejs')
@@ -51,14 +55,24 @@ mongoose.connect(process.env.DATABASE_URL ,
     ()=>{console.log("Connected Successfully")},
     (e)=>{errorReport(error)}) 
 
+
+//Protected routes
+app.use(accessToken.tokenHandler.unless({path:['/login' , '/register' , '/emailConfirmation']}))
+app.use(hasEnteredRoleInfo.unless({path:['/login' , '/register' , '/emailConfirmation'].concat(rolesRegisterLinks)}))
+
+
+
 //Using routers
 app.use('/' , indexRouter)
 app.use('/register' , registerRouter)
 app.use('/register/student' , studentRegisterRouter)
 app.use('/login' , loginRouter)
 app.use('/emailConfirmation' , emailConfirmationRouter)
-app.use('/authentication' , authenticationRouter)
+app.use('/token' , authenticationRouter)
 
+
+//testing router
+app.use('/testTokens' , testTokens)
 
 app.listen(process.env.PORT || 80)
 

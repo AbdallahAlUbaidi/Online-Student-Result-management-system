@@ -65,16 +65,22 @@ router.get('/checkVerify' , confirmationEmail.verifyEmailCheckToken , flashMessa
     else if(userInfo.conformed == false)
         flashMessage.showFlashMessage(409 , 'Email has yet to be verifyed' , req , res)
     else 
-        flashMessage.showFlashMessage(200 , 'Email Verified' , req , res)
+        flashMessage.showFlashMessage(200 , 'Email Verified' , req , res , '/login')
 
 })
 
 router.get('/:emailToken' , async (req , res)=>
 {
    
-    let userId = await emailToken.verifyEmailConfirmationToken(req.params.emailToken).userId
-    await user.updateOne({_id:userId} , {conformed:true})
-    res.status(200).json({message:'Your Email was verified successfully'})  //placeholder will have a seperate html page instead
+    const tokenInfo = emailToken.verifyEmailConfirmationToken(req.params.emailToken);
+    if(tokenInfo.statusCode != undefined || tokenInfo.statusCode != null)
+        res.status(tokenInfo.statusCode).render('errorPages/invalidToken')
+    else
+    {
+        let userId = await tokenInfo.userId
+        await user.updateOne({_id:userId} , {conformed:true})
+        res.status(200).json({message:'Your Email was verified successfully'})  //placeholder will have a seperate html page instead
+    }
 })
 
 module.exports = router

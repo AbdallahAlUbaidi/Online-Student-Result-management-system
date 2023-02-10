@@ -4,12 +4,11 @@ const router = express.Router()
 
 const user = require('../../../models/User')
 const accessToken = require('../../AuthenticationTokens/accessToken')
-const refreashToken = require('../../AuthenticationTokens/refreashToken')
+const refreshToken = require('../../AuthenticationTokens/refreshToken')
 const emailToken = require('../../AuthenticationTokens/emailToken')
 const flashMessage = require('../../flashMessage')
 const confirmationEmail = require('../../email/sendConfirmationEmail')
-
-const errorReport = require('../../errorReport')
+const roleInfo = require('../../roleInfo')
 
 router.get('/' , (req , res)=>
 {
@@ -17,22 +16,32 @@ router.get('/' , (req , res)=>
 })
 
 router.post('/' , async (req , res)=>
-{
+{ 
     const userInfo = await user.findOne({emailAddress:req.body.emailAddress});
-    // console.log(await checkCredentials(userInfo , req.body.password))
     if(! await checkCredentials(userInfo , req.body.password))
         flashMessage.showFlashMessage(401 , 'Wrong Credentials' , req , res)
     else if(!userInfo.conformed)
     {
         confirmationEmail.sendConfirmationEmail(userInfo)
-        res.cookie('Authorization' , `bearer ${emailToken.generateEmailCheckToken(userInfo)}` , {path:'/emailConfirmation' , httpOnly:true})
+        res.cookie('Email_token' , `bearer ${emailToken.generateEmailCheckToken(userInfo)}` , {
+            path:'/emailConfirmation' , 
+            httpOnly:true
+        })
         res.status(201).redirect('/emailConfirmation')
     }
     else
     {
-            generateTokens(userInfo , res).then(tokens =>{
-            res.send('Login Successful') //Placeholder
-        })
+        
+        await generateTokensCookies(userInfo , res)
+        const role_info = await roleInfo.getRoleInfo(userInfo._id , userInfo)
+        if(role_info.error)
+            res.render('errorPages/serverError' , {error:role_info.error.errors.ServerError})
+        if(!role_info.roleInfo)
+            res.redirect(role_info.role.registerLink)
+        else
+        {
+            res.send('Login Successful')
+        }
     }
 })
 
@@ -46,13 +55,18 @@ async function checkCredentials(userInfo , password)
     return true
 }
 
-async function generateTokens(userInfo ,  res)
+async function generateTokensCookies(userInfo ,  res)
 {
-    const refreash_token = await refreashToken.createRefreashToken(userInfo)
-    const access_token = await accessToken.generateAccessToken(refreash_token , "2h")
-    res.cookie('Refreash_Token' , `bearer ${refreash_token}` , {httpOnly:true}) //Place holder will be stored differently
-    res.cookie('Authorization' , `bearer ${access_token}` , {httpOnly:true})
-    return {refreash_token , access_token}
+    const refresh_token = await refreshToken.generateToken(userInfo)
+    const access_token = await accessToken.generateToken(refresh_token , process.env.ACCESS_TOKEN_EXPIRATION_PERIOD)
+    res.cookie('Refreash_Token' , `bearer ${refresh_token}` , { 
+        httpOnly: true, 
+        sameSite: 'None', secure: true, 
+        maxAge: parseInt(process.env.REFRESH_TOKEN_EXPIRATION_PERIOD) * 24 * 60 * 60 * 1000 })
+    res.cookie('Authorization' , `bearer ${access_token}` , { httpOnly: true, 
+        sameSite: 'None', secure: true, 
+        maxAge: parseInt(process.env.ACCESS_TOKEN_EXPIRATION_PERIOD) * 60 * 60 * 1000 })
+    return {refreash_token: refresh_token , access_token}
 
 }
 module.exports = router

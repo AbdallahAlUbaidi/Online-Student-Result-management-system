@@ -4,6 +4,6 @@
         <option value="<%= option %>"><%= option %></option>
     <% }) %> 
 </select>
-<% if(errors != undefined){ %> 
-    <div class="errorMsg"><%= errors[field] %> </div>
+<% if(locals.errors != undefined && locals.errors != null){ %> 
+    <div class="errorMsg"><%= locals.errors[field] %> </div>
     <% } %> 

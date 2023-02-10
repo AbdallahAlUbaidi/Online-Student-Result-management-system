@@ -1,27 +1,34 @@
 const express = require('express')
-const User = require('../../../models/User')
 const Student = require('../../../models/Student')
-const router = require('../authentication')
+const router = express.Router()
+const flashMessage = require('../../flashMessage')
+const errorReport = require('../../errorReport')
 
-router.get('/' , (req , res)=>
+router.get('/' ,flashMessage.setCachingToOff ,  (req , res)=>
 {
-    res.render('register/registerStudent' , {token:req.params.token})
+    res.render('register/registerStudent' , {message:req.flash('message')})
 })
 
 
-// router.post('/' , async (req , res)=>
-// {
-    
-//     try
-//     {
-//         // const student = await student.createNewStudent( , req.body.student_id , req.body.stage , req.body.branch , req.body.study)
-//         res.status(201).json({});
-//     }
-//     catch(error)
-//     {
-//         const errorInfo = errorReport(error)
-//         res.status(errorInfo.statusCode).json(errorInfo.errors)
-//     }
-// })
+router.post('/' , async(req , res)=>
+{
+    try{
+        userId = req.auth.userId
+        await Student.create({
+            userInfo:userId.toLowerCase(),
+            student_id:req.body.student_id.toLowerCase(),
+            stage:req.body.stage.toLowerCase(),
+            branch:req.body.branch.toLowerCase(),
+            study:req.body.study.toLowerCase()
+        })
+        res.redirect('/testTokens') //For testing purposes in future will be course , dashboard or similer landing page
+    }catch(err){
+        const errorInfo = errorReport(err)
+        if(errorInfo.statusCode === 500)
+            res.status.render('errorPages/serverError')
+        res.status(errorInfo.statusCode).render('register/registerStudent' , {errors: errorInfo.errors}) 
+    }
+})
+
 
 module.exports = router

@@ -9,7 +9,14 @@ function generateEmailConfirmationToken(user)
 
 function verifyEmailConfirmationToken(emailToken)
 {
-    return jwt.verify(emailToken , process.env.EMAIL_TOKEN_SECRET )
+    try
+    {
+        return jwt.verify(emailToken , process.env.EMAIL_TOKEN_SECRET )
+    }
+    catch(err)
+    {
+        return errorReport(err);
+    }
 }
 
 function generateEmailCheckToken(user)
@@ -19,7 +26,14 @@ function generateEmailCheckToken(user)
 
 function verifyEmailCheckToken(checkToken)
 {
-    return jwt.verify(checkToken , process.env.CHECK_VERIFY_TOKEN_SECRET)
+    try
+    {
+        return jwt.verify(checkToken , process.env.CHECK_VERIFY_TOKEN_SECRET)
+    }
+    catch(err)
+    {
+        return errorReport(err)
+    }
 }
 
 

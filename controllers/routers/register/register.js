@@ -2,14 +2,10 @@ const express = require('express')
 const router = express.Router()
 
 const errorReport = require('../../errorReport')
-const sendConfirmationEmail = require('../../email/emailConfirmation').sendConfirmationEmail
+const {sendConfirmationEmail} = require('../../email/sendConfirmationEmail')
 const emailToken = require('../../AuthenticationTokens/emailToken')
 
-
-
 const user = require('../../../models/User')
-const Student = require('../../../models/Student')
-const faculty = require('../../../models/Faculty')
 
 
 router.get('/' , (req , res)=>
@@ -24,13 +20,13 @@ router.post('/' , async(req , res)=>
         const newUser = await user.createNewUser(req.body.username , req.body.emailAddress , req.body.password , req.body.role)
         sendConfirmationEmail(newUser)
         res.cookie('Authorization' , `bearer ${emailToken.generateEmailCheckToken(newUser)}` , {path:'/emailConfirmation' , httpOnly:true})
-        res.cookie('message' , '' , {path:'/emailConfirmation'})
-        res.cookie('msgType' , '' , {path:'/emailConfirmation'})
         res.status(201).redirect('/emailConfirmation')
     }
     catch(error)
     {
         const errorInfo = errorReport(error)
+        if(errorInfo.statusCode === 500)
+            res.status.render('errorPages/serverError')
         res.status(errorInfo.statusCode).render( 'register/register', {errors: errorInfo.errors})
     }
 })

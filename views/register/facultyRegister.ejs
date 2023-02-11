@@ -1,0 +1,13 @@
+<p>Register Faculty Placeholder form</p>
+<div class="ReportMessage"><%= locals.message %> </div>
+<form method="post" action="/register/faculty">
+    <%- include('../partials/text-input-field' , {field:'id_num' , errors:locals.errors}) %><br>
+    <%- include('../partials/select-input-field' , {field:'department' , options:[
+    'Computer engineering' , 'Electrical engineering' , 'Mechanical engineering' , 'Elctromechanical engineering' , 'Chemical engineering' , 'Civil engineering',
+    'Production engineering and metallurgy' , 'Material engineering' , 'Architectural engineering' , 'Laser and optoelectronics engineering' , 'Comunication engineering',
+    'Petrolum technology engineering' , 'Biomedical engineering' , 'Applied sciences' , 'Computer sciences' , 'English language center' , 'Continous learning center', 
+    'training and workshop center' , 'envoirmental research center' , 'information technology center' , 'nanotechnology and advanced materials research center' ,
+    'Energy and renewable energies research center'] , errors:locals.errors}) %> <br>
+    <%- include('../partials/text-input-field' , {field:'specialty' , errors:locals.errors}) %><br>
+    <button type="submit">Register</button>
+</form>

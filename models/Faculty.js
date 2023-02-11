@@ -17,9 +17,10 @@ const facultySchema = mongoose.Schema(
                 {
                     const pattern = /^([0-9]+)([0-9]+)$/gi
                     return pattern.test(number)
-                }
+                },
+                message:props => `"${props.value}" is not a valid id number number`
             },
-            required:true
+            required:[true , 'You must specify your id number']
         },
         department:
         {
@@ -31,19 +32,30 @@ const facultySchema = mongoose.Schema(
                 'petrolum technology engineering' , 'biomedical engineering' , 'applied sciences' , 'computer sciences' , 'english language center' , 'continous learning center', 
                 'training and workshop center' , 'envoirmental research center' , 'information technology center' , 'nanotechnology and advanced materials research center' ,
                 'energy and renewable energies research center'],
-            required:true
+            required:[true , 'You must specify your department']
         },
         specialty:
         {
             type:String,
             lowercase:true,
-            required:true,
+            required:[true , 'You must specify your specialty'],
             minLength:3,
             maxLength:30
         }
 
     }
 )
+
+facultySchema.path('userInfo').validate(async (userId)=>
+{
+    return await mongoose.models['Faculty Member'].countDocuments({userInfo:userId}) == 0;
+} , 'You have entered your Faculty information before')
+
+facultySchema.path('id_num').validate(async (idNum)=>
+{
+    return await mongoose.models['Faculty Member'].countDocuments({id_num:idNum}) == 0;
+} , 'The id number you have entered already exists')
+
 
 
 module.exports = mongoose.model('Faculty Member' , facultySchema)

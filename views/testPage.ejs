@@ -10,5 +10,8 @@
     <p>Branch: <%- locals.roleInfo.branch %></p>
     <p>Stage: <%- locals.roleInfo.stage %></p>
     <p>Study: <%- locals.roleInfo.study %></p>
+<% }else if(locals.userInfo.role === 'faculty'){ %>
+<p>Id number: <%- locals.roleInfo.id_num %> </p>
+<p>Department: <%- locals.roleInfo.department %></p> 
+<p>Specialty: <%- locals.roleInfo.specialty %> </p>
 <% } %>
-

@@ -25,7 +25,7 @@ router.post('/' , async(req , res)=>
     }catch(err){
         const errorInfo = errorReport(err)
         if(errorInfo.statusCode === 500)
-            res.status.render('errorPages/serverError')
+            res.status(errorInfo.statusCode).render('errorPages/serverError')
         res.status(errorInfo.statusCode).render('register/registerStudent' , {errors: errorInfo.errors}) 
     }
 })

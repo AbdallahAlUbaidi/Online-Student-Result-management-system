@@ -61,10 +61,10 @@ async function generateTokensCookies(userInfo ,  res)
     const access_token = await accessToken.generateToken(refresh_token , process.env.ACCESS_TOKEN_EXPIRATION_PERIOD)
     res.cookie('Refreash_Token' , `bearer ${refresh_token}` , { 
         httpOnly: true, 
-        sameSite: 'None', secure: true, 
+        sameSite: 'None', secure: process.env.HTTPS, 
         maxAge: parseInt(process.env.REFRESH_TOKEN_EXPIRATION_PERIOD) * 24 * 60 * 60 * 1000 })
     res.cookie('Authorization' , `bearer ${access_token}` , { httpOnly: true, 
-        sameSite: 'None', secure: true, 
+        sameSite: 'None', secure: process.env.HTTPS, 
         maxAge: parseInt(process.env.ACCESS_TOKEN_EXPIRATION_PERIOD) * 60 * 60 * 1000 })
     return {refreash_token: refresh_token , access_token}
 

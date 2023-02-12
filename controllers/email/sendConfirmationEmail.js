@@ -17,7 +17,7 @@ function sendConfirmationEmail(user)
 
 function verifyEmailCheckToken(req , res , next)
 {
-    const cookie = req.cookies.Authorization
+    const cookie = req.cookies.emailToken
     if(cookie == undefined)
     {   
         res.status(401).json({message:'Autherization faild'}) 

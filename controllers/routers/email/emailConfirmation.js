@@ -33,6 +33,7 @@ router.get('/resendEmail' , confirmationEmail.verifyEmailCheckToken , flashMessa
 
 router.get('/modifyEmail' , confirmationEmail.verifyEmailCheckToken,  async (req , res)=>
 {
+    
     const userInfo = await user.findOne({_id: req.userId})
     if(userInfo == undefined)
         flashMessage.showFlashMessage(404 , 'Could not find user account' , req , res  , '/emailConfirmation')
@@ -46,7 +47,10 @@ router.post('/modifyEmail' , confirmationEmail.verifyEmailCheckToken ,  async (r
 {
     try
     {
-        const newUser = await user.updateUser({_id:req.userId} , {emailAddress : req.body.emailAddress})
+        const updateQuery = await user.updateUser({_id:req.userId} , {emailAddress : req.body.emailAddress})
+        if (!(updateQuery.acknowledged && updateQuery.modifiedCount === 1))
+            throw new Error('Could not found user account')
+        const newUser = await user.findById({_id:req.userId})
         confirmationEmail.sendConfirmationEmail(newUser)
         flashMessage.showFlashMessage(200 , 'Email Updated Successfully a new verification email was sent to your new email address' , req , res  , '/emailConfirmation')
     }

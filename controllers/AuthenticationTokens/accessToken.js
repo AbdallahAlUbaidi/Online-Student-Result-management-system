@@ -3,7 +3,7 @@ const {expressjwt} = require('express-jwt')
 const {unless} = require('express-unless')
 const errorReport = require('../errorReport');
 const axois = require('axios');
-var i = 0
+const secure = Boolean(parseInt(process.env.HTTPS))
 
 async function generateToken(refreashToken , expiration = '30m')
 {
@@ -54,13 +54,13 @@ function errorHandler(err, req, res, next)
             {
                 res.cookie('Authorization' , `` , { 
                     httpOnly: true, 
-                    sameSite: 'None',
-                    secure: process.env.HTTPS, 
+                    sameSite: secure? 'None': "Lax",
+                    secure: Boolean(parseInt(process.env.HTTPS)), 
                     maxAge: parseInt(process.env.ACCESS_TOKEN_EXPIRATION_PERIOD) * 60 * 60 * 1000 
                 })
                 res.cookie('Refreash_Token' , `` , { 
                     httpOnly: true, 
-                    sameSite: 'None', secure: process.env.HTTPS, 
+                    sameSite: secure? 'None': "Lax", secure: Boolean(parseInt(process.env.HTTPS)), 
                     maxAge: parseInt(process.env.REFRESH_TOKEN_EXPIRATION_PERIOD) * 24 * 60 * 60 * 1000 })
                 
                 res.render('errorPages/invalidToken' , {error:err.code})
@@ -81,7 +81,7 @@ function errorHandler(err, req, res, next)
                     res.cookie('Authorization' , `bearer ${accessToken}` , { 
                         httpOnly: true, 
                         sameSite: 'None',
-                        secure: process.env.HTTPS, 
+                        secure: Boolean(parseInt(process.env.HTTPS)), 
                         maxAge: parseInt(process.env.ACCESS_TOKEN_EXPIRATION_PERIOD) * 60 * 60 * 1000 
                     })
                     req.cookies.Authorization = `bearer ${accessToken}`;

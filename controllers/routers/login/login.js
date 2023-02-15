@@ -40,9 +40,7 @@ router.post('/' , async (req , res)=>
         if(!role_info.roleInfo)
             res.redirect(role_info.role.registerLink)
         else
-        {
-            res.send('Login Successful')
-        }
+            res.redirect('/courses')
     }
 })
 

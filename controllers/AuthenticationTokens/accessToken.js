@@ -89,7 +89,9 @@ function errorHandler(err, req, res, next)
                 })
                 .catch(err =>
                 {
-                    if(err.response.status === 401 && err.response.data.errorMsg === "invalid signature")
+                    if(!err.response)
+                        res.render('errorPages/serverError' , {error:'Auth Server did not responed'})
+                    else if(err.response.status === 401 && err.response.data.errorMsg === "invalid signature")
                         res.render('errorPages/invalidToken' , {error:err.response.data.errorMsg})
                     else if(err.response.status === 401 && err.response.data.errorMsg === 'jwt expired')
                         res.redirect('/login')

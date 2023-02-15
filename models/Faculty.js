@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const Course = require('./Course')
 const facultySchema = mongoose.Schema(
     {
         userInfo:{
@@ -41,8 +42,11 @@ const facultySchema = mongoose.Schema(
             required:[true , 'You must specify your specialty'],
             minLength:3,
             maxLength:30
+        },
+        courses:{
+            type:[Course.Schema],
+            default:[]
         }
-
     }
 )
 

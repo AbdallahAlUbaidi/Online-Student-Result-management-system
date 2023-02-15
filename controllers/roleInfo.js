@@ -13,7 +13,7 @@ async function getRoleInfo(userId , userInfo = undefined)
     {
         if(!userInfo){userInfo = await user.findById(userId)};
         const role = roles[userInfo.role]
-        const roleInfo = await role.model.findOne({userInfo:userInfo._id})
+        const roleInfo = await role.model.findOne({userInfo:userInfo._id}).populate("courses")
         return {roleInfo , userInfo , role}
     }
     catch(err)
@@ -30,7 +30,10 @@ async function hasEnteredRoleInfo(req , res , next)
     else if(!roleInfo.roleInfo)
         flashMessage.showFlashMessage(302 , `You need to enter your ${roleInfo.userInfo.role} information` , req , res , roleInfo.role.registerLink)
     else
-        next();
+    {   
+        req.info = roleInfo
+        next()
+    }
 }
 
 

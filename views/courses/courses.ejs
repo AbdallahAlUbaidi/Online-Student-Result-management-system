@@ -1,0 +1,9 @@
+<h1>Place holder courses Page</h1>
+<hr>
+<% locals.courses.forEach(course =>{ %>
+    <hr>
+        <h1><a href="/courses/<%- course.courseTitle.replace(/\s/gm , '-') %>"><%- course.courseTitle %></a></h1>
+        <h2>Lecturers:</h2>
+        <% course.lec %>
+    <hr>    
+<% }) %>

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Course = require('./Course')
 const studentSchema = mongoose.Schema(
     {
         userInfo:{
@@ -37,11 +38,26 @@ const studentSchema = mongoose.Schema(
             required:[true , 'You must specify your study'],
             enum:['morning' , 'evening'],
             lowercase:true
+        },
+        courses:{
+            type:[{type:mongoose.SchemaTypes.ObjectId ,  ref:'Course'}]
         }
 
     }
 )
 
+studentSchema.pre('save' , async function(next){
+    try{
+        if(!this.courses)
+            this.courses = []
+        const coursesArray = await Course.find({stage:this.stage, $or:[{branch:this.branch} , {branch:'both branches'}]} , {_id:1})
+        const updatedCourses = this.courses.concat(coursesArray)
+        this.set('courses' , updatedCourses)
+        next()
+    }catch(err){
+        console.log(err)
+    }
+})
 
 studentSchema.path('userInfo').validate(async (userId)=>
 {

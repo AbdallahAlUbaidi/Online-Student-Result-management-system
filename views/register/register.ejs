@@ -1,8 +1,83 @@
-<p>Register Placeholder form</p>
-<form method="post" action="/register" id="registerForm">
-    <%- include('../partials/text-input-field' , {field:'emailAddress' , errors:locals.errors}) %><br>
-    <%- include('../partials/text-input-field' , {field:'username' , errors:locals.errors}) %><br>
-    <%- include('../partials/password-input-field' , {field:'password' , errors:locals.errors}) %><br>
-    <%- include('../partials/select-input-field' , {field:'role' , options:['student' , 'faculty'] , errors:locals.errors}) %><br>
-    <button type="submit">Register</button>
-</form>
+<div class="mm">
+    <div class="content fade-in ">
+      <div class="container shadow-lg p-3  bg-body ">
+        <div class="img ">
+        <img src="css/icons8-registered-trademark-80.png" alt="" class="rounded mx-auto  d-block  ">
+        </div>
+         <div class="body">
+          <h2 data-text="Sign&nbsp;up" class="mt-3 mb-0 " id="text">Sign up</h2>
+          </div>
+   
+        <form>
+          <div class="mb-2">
+        <div class="position-relative">
+          <div>
+              <input type="text" class="form-control mt-3 pt-0 inputTextField" name="username" id="usernameField"placeholder="User Name">
+              <p class="error1  position-absolute top-0 inputTextFieldError" id="usernameFieldError" style="display: none;"></p>
+              <i class="bi bi-person-fill position-absolute top-0 person"></i>
+              <span></span>
+          </div>
+          
+         
+        </div>
+            <div class="position-relative">
+              <div>
+                <input type="email" class="form-control mt-3 pt-0 inputTextField" name="emailAddress" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email address">
+                <p class="error1  position-absolute top-0 inputTextFieldError" id="emailFieldError" style="display: none;"></p>
+                <i class="bi bi-envelope-fill position-absolute top-0 e"></i>
+                <span></span>
+              </div>
+              
+           
+          </div>
+          </div>
+          <div class="mb-3 " >
+          
+            <div class="position-relative">
+              <div>
+               
+                <input type="password" class="form-control mt-3 pt-0 inputTextField" name="password" id="passwordField" placeholder="Password">
+                <p class="error1  position-absolute top-0 inputTextFieldError" id="passwordFieldError" style="display: none;"></p>
+                <i class="bi bi-lock-fill position-absolute top-0 p"></i>
+             
+                <i class="bi bi-eye-fill position-absolute top-0 end-0 eye " id="show-password"></i>
+                <span></span>
+              </div>
+              
+        
+             </div>
+             </div>
+             <div class="mb-3 " >
+              <div class="position-relative">
+                <div>
+                
+                  <input type="password" class="form-control mt-3 pt-0 inputTextField" id="conformPassword" placeholder="Confirm Password">
+                  <p class="error1  position-absolute top-0 inputTextFieldError" id="conformPasswordError" style="display: none;"></p>
+                  <i class="bi bi-lock-fill position-absolute top-0 p"></i>
+              
+                  <i class="bi bi-eye-fill position-absolute top-0 end-0 eye " id="show-pass"></i>
+                  <span></span>
+                </div>
+                
+         
+          </div>
+           </div>
+           <div>
+        
+            <select class="form-select" aria-label="Default select example" name="role" aria-placeholder="Select Role">
+              <option selected>Select Role</option>
+              <option value="1">Student</option>
+              <option value="2">Faculty</option>
+            </select>
+         
+          </div>
+          
+          
+          
+          <button type="submit" class="btn btn-primary mb-4 rounded-pill w-100 rounded-pill mt-3" >Register Now</button>
+        
+         </form>
+         
+          </div>
+          </div>
+          </div>

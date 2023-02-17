@@ -1,0 +1,117 @@
+body {
+    /* background-color: #f2f2f2; */
+    
+      background-image: linear-gradient(to right, #b1b4c914, #9ba1c71e, #7b87d22d);
+    
+    
+  }
+  .fa-exclamation-triangle {
+    animation: pulse 1s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  h1 {
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    10% { opacity: 0.1; }
+    20% { opacity: 0.2; }
+    30% { opacity: 0.3; }
+    40% { opacity: 0.4; }
+    50% { opacity: 0.5; }
+    60% { opacity: 0.6; }
+    70% { opacity: 0.7; }
+    80% { opacity: 0.8; }
+    90% { opacity: 0.9; }
+  
+    100% { opacity: 1; }
+  }
+
+ .container{
+  font-family: sans-serif !important;
+  height: 80vh !important;
+  width: 90vw !important;
+ }
+ 
+  i.fa-exclamation-triangle {
+    color: #3d52d5;
+    font-size: 100px;
+    margin-top: 10vh;
+  }
+  
+  .btn-primary {
+    background-color: #3d52d5 !important;
+    border-color: #3d52d5;
+  }
+  
+
+  a:hover{
+    transform: translate(0.1px,-1.2px);
+    /* border-color: #424b68 !important;
+
+    background-image: linear-gradient(to right,rgb(42, 53, 131),rgb(78, 85, 126)) !important;
+  
+    transition:  0.4s all ease-in-out !important; */
+    /* font-weight: bold; */
+  }
+  a{
+    z-index: 1;
+    position: relative;
+    font-size: 18px !important;
+    /* height: 4px !important; */
+    font-family: inherit;
+    color: white;
+    padding: 0.5em 1em;
+    outline: none;
+    border: none;
+    background-color: #3d52d5 !important;
+    overflow: hidden;
+    transition: color 0.4s ease-in-out;
+  }
+  
+a::before {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    top: 100%;
+    right: 100%;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    /* background-color: #242d69; */
+    background: linear-gradient(to right,#3648bd57,#2d3c9b);
+    transform-origin: center;
+    transform: translate3d(50%, -50%, 0) scale3d(0, 0, 0);
+    transition: transform 0.45s ease-in-out;
+  }
+  
+  a:hover {
+    cursor: pointer;
+    color: #161616;
+  }
+  
+  a:hover::before {
+    transform: translate3d(50%, -50%, 0) scale3d(25, 25, 25);
+  }
+  .btn-primary{
+  
+  box-shadow: 0px 0px 0px rgba(255,255, 255, 1),
+                  inset 0px 0px 0px rgba(0,0, 0, 0.05),
+                  inset 0px 0px 0px rgba(255,255, 255, 1),
+                  0px 0px 0px rgba(0,0, 0, 0.05) !important;
+                  transition: 0.5s all;
+                  transition: all 0.4s ease-in-out !important;
+  }
+   .btn-primary:active {
+    box-shadow: 0px 0px 10px #3d51d592 !important;
+  }
+   
+  
+  
+  

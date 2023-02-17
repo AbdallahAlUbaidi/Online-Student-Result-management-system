@@ -277,7 +277,7 @@ a::before {
   }
   
   a:hover::before {
-    transform: translate3d(50%, -50%, 0) scale3d(25, 25, 25);
+    transform: translate3d(50%, -50%, 0) scale3d(55, 55, 55);
   }
   .button{
     text-align: center;

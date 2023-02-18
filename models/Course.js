@@ -25,6 +25,11 @@ const courseSchema =  mongoose.Schema({
         required:[true , 'You must specify which branch this course is for'],
         enum:['information engineering' , 'network engineering' , 'both branches'],
         lowercase:true
+    },
+    courseType:{
+        type:String,
+        enum:['practical' , 'theoretical'],
+        required:true
     }
 })
 

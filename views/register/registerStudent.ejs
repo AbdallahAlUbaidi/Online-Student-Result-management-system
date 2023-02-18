@@ -1,9 +1,20 @@
-<p>Register Student Placeholder form</p>
-<div class="ReportMessage"><%= locals.message %> </div>
-<form method="post" action="/register/student">
-    <%- include('../partials/text-input-field' , {field:'student_id' , errors:locals.errors}) %><br>
-    <%- include('../partials/select-input-field' , {field:'branch' , options:['Information Engineering' ,'Network Engineering'] , errors:locals.errors}) %> <br>
-    <%- include('../partials/select-input-field' , {field:'stage' , options:['1st' , '2nd' , '3rd' , '4th' , 'Graduate'] , errors:locals.errors}) %><br>
-    <%- include('../partials/select-input-field' , {field:'study' , options:['Morning' , 'Evening'] , errors:locals.errors}) %> <br>
-    <button type="submit">Register</button>
-</form>
+<div class="form-container">
+    <div class="content fade-in">
+      <div class="container shadow-lg p-3 bg-body">
+        <div class="image-container">
+          <img src="/images/formImage.png" alt="" class="rounded mx-auto d-block ">
+        </div>
+        <div class="title-container">
+          <h2 data-text="Student&nbsp;Information" class="mt-3 mb-0 title" id="student-title">Student</h2>
+        </div>
+        <form action="/register/student" method="post">
+            <% const errors = !locals.errors ? {} : locals.errors %>
+            <%- include('../partials/text-input-field.ejs' , {error:errors.student_id , fieldName:'student_id' , fieldId:'student-id-field' , placeholder:'ID' , boostrapIconName:'bi-person-vcard-fill' , isEmail:false}) %>
+            <%- include('../partials/select-input-field.ejs' , {error:errors.stage , fieldName:'stage' , fieldId:'student-stage-field' , selectedOptionText:"Stage" , options:['1st' , '2nd' , '3rd' , '4th' , 'Graduate']}) %>
+            <%- include('../partials/select-input-field.ejs' , {error:errors.branch , fieldName:'branch' , fieldId:'student-branch-field' , selectedOptionText:"Branch" , options:['information engineering' , 'network engineering']}) %>
+            <%- include('../partials/select-input-field.ejs' , {error:errors.study , fieldName:'study' , fieldId:'student-study-field' , selectedOptionText:'Study' , options:['morning' , 'evening']}) %>
+            <%- include('../partials/form-submit-button.ejs' , {buttonText:'Save'}) %>
+        </form>
+      </div>
+    </div>
+  </div>

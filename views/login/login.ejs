@@ -1,89 +1,28 @@
-<div class="mm">
-    <div class="content fade-in ">
-  
+<div class="form-container">
+  <div class="content fade-in ">
     <div class="container shadow-lg p-3 bg-body">
-      <img src="css/undraw_pic_profile_re_7g2h.svg" alt="" class="rounded mx-auto d-block w-25 ">
-      <div class="body">
-      <h2 data-text="Sign&nbsp;In" class="mt-4 mb-9" id="text">Sign In</h2>
-      </div>
-     
-     
-    <form  action="/login" method="post" >
-      <div class="mb-3 ">
-        <div class="position-relative ">
-         
-          <div>
-          
-            <input type="email" class="form-control pt-0 inputTextField "id="exampleInputEmail1" name="emailAddress" aria-describedby="emailHelp"   placeholder="Email address"  >
-            <p class="error1  position-absolute top-0 inputTextFieldError " id="emailFieldError" style="display: none;"></p>
-          
-            <i class="bi bi-envelope-fill position-absolute top-0 e"></i>
-           
-            <span></span>
-          </div>
-        
-          
-   
+        <div class="image-container">
+          <img src="/images/formImage.png" alt="" class="rounded mx-auto d-block w-25 ">
         </div>
-    
-      
-    
+      <div class="title-container">
+        <h2 data-text="Sign&nbsp;In" class="mt-4 mb-9 title" id="login-title">Sign In</h2>
       </div>
-      <div class="mb-3 " >
-      
-        <div class="position-relative">
-          <div>
-        
-            <input type="password" class="form-control pt-0 inputTextField" name="password" id="passwordField" placeholder="Password">
-            <p class="error1  position-absolute top-0  inputTextFieldError" id="passwordFieldError" style="display: none;"></p>
-            <i class="bi bi-lock-fill position-absolute top-0 p"></i>
-      
-            <i class="bi bi-eye-fill position-absolute top-0 end-0 eye " id="show-password"></i>
-            <span></span>
+      <form action="/login" method="post">
+        <%- include('../partials/text-input-field.ejs' , {error:'' , fieldName:'emailAddress' , fieldId:'login-email-field' , placeholder:'Email address' , boostrapIconName:'bi-envelope-fill' , isEmail:true}) %>
+        <%- include('../partials/password-input-field.ejs' , {error : '' , fieldName:'password' , fieldId:'login-password-field' , placeholder:'Password'}) %>
+        <div class="mb-3 form-check form-checkbox-container">
+          <input type="checkbox" class="form-checkbox-input form-check-input" id="login-form-checkbox-label-me-check">
+          <div class="form-checkbox-link-container">
+            <label class="form-check-label form-checkbox-label" for="login-form-checkbox-label-me-check">Remember me</label>
+            <a href="#" class="text-decoration-none form-link">Forgot password</a>
           </div>
-      
-         
         </div>
-   
-      </div>
-      <div class="mb-3 form-check">
-       
-        <input type="checkbox" class="form-check-input " id="exampleCheck1">
-       
-        <div class="o">
-       
-          <label class="form-check-label remember" for="exampleCheck1">Remember me</label>
-      
-        
-          
-          <a href="#" class="text-decoration-none forgot">Forgot password </a>
-          
-       
+        <%- include('../partials/form-submit-button.ejs' , {buttonText:'Login'}) %>
+        <div class="d-flex justify-content-center">
+          <p class="mr-3 form-link-label">Not member?</p>
+          <a href="/register" class="text-decoration-none form-link" id="s"> Signup now</a>
         </div>
-     
-      </div>
-      
-      <button type="submit" class="btn btn-primary mb-4 rounded-pill w-100 rounded-pill" >Login</button>
-      
-      
-          <div class="d-flex justify-content-center  ">
-            
-           <p class="mr-2 Notmember">Not member? </p> 
-           
-          
-            <a href="/register" class="text-decoration-none now " id="s"> Signup now</a>
-            
-      
-          </div>
-        
-    </form>
-  
+      </form>
     </div>
-    </div>
-    </div>
-  
-   
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-      
-    <script  src="js/login.js"></script>
-      
+  </div>
+</div>

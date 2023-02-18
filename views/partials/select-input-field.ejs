@@ -1,9 +1,11 @@
-<label for="<%= field %>"><%= field %></label>
-<select name="<%= field %>" id="<%= field %>">
-    <% options.forEach(option=>{ %> 
-        <option value="<%= option %>"><%= option %></option>
-    <% }) %> 
-</select>
-<% if(locals.errors != undefined && locals.errors != null){ %> 
-    <div class="errorMsg"><%= locals.errors[field] %> </div>
-    <% } %> 
+<div>
+    <select class="form-select<%- error ? ' form-select-error': "" %>" id="<%- fieldId %>" name="<%- fieldName %>">
+      <option selected value=""><%- selectedOptionText %></option>
+        <% options.forEach(option =>{ %>
+            <option value="<%- option %>"><%- option.charAt(0).toUpperCase() + option.slice(1) %></option>
+        <% }) %>
+    </select>
+    <% if(error) {%>
+        <p class="select-field-error"><i class ="bi bi-shield-fill-exclamation form-field-icon form-field-icon-static select-error-icon"></i> <%- error %></p> 
+    <% } %>
+</div>

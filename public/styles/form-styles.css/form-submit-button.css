@@ -1,0 +1,63 @@
+.btn-primary {
+    background-image: linear-gradient(
+      to right,
+      rgb(23.9%, 32.2%, 83.5%),
+      rgb(118, 130, 202)
+    ) !important;
+    box-shadow: 0px 0px 0px rgba(255, 255, 255, 1),
+      inset 0px 0px 0px rgba(0, 0, 0, 0.05),
+      inset 0px 0px 0px rgba(255, 255, 255, 1), 0px 0px 0px rgba(0, 0, 0, 0.05) !important;
+    border: #3d52d5 !important;
+    font-weight: bold !important;
+    font-size: 16px !important;
+    cursor: pointer !important;
+    transition: all 0.4s ease-in-out !important;
+  }
+  .btn-primary:active {
+    box-shadow: 0px 0px 10px #3d51d592 !important;
+  }
+
+  .form-submit-button:hover {
+    transform: translate(0.1px, -2.2px);
+    transition: 0.4s all ease;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .form-submit-button {
+    z-index: 1;
+    position: relative;
+    font-size: inherit;
+    font-family: inherit;
+    color: white;
+    padding: 0.5em 1em;
+    outline: none;
+    border: none;
+    background-color: #3d52d5;
+    overflow: hidden;
+    transition: color 0.4s ease-in-out;
+  }
+  
+  .form-submit-button::before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #1f27658f;
+    transform-origin: center;
+    transform: translate3d(-50%, -50%, 0) scale3d(0, 0, 0);
+    transition: transform 0.45s ease-in-out;
+  }
+  
+  .form-submit-button:hover {
+    cursor: pointer;
+    color: #192256;
+  }
+  
+  .form-submit-button:hover::before {
+    transform: translate3d(-50%, -50%, 0) scale3d(1.1 , 6 , 6);
+  }

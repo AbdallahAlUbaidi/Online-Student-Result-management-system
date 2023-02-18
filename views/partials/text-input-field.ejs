@@ -1,5 +1,10 @@
-<label for="<%= field %> "><%= field %></label>
-<input type="text" id="<%= field %>" name="<%= field %>">
-<% if(locals.errors != undefined && locals.errors != null){ %> 
-<div class="errorMsg"><%= locals.errors[field] %> </div>
-<% } %> 
+<div class="mb-3">
+    <div class="position-relative">
+        <div>
+            <input type="<%- isEmail ? "email" : "text" %>" class="form-control mt-3 pt-0 inputTextField form-text-field <%- error? "form-control-error" : "" %>" name="<%- fieldName %>" id="<%- fieldId %>" placeholder="<%- placeholder %>">
+            <p class="position-absolute top-0 inputTextFieldError" id="<%-fieldName %>Error" style="display: none;"><%- error ? error : ""%></p>
+            <i class="bi <%- boostrapIconName %> position-absolute top-0 form-field-icon form-field-icon-static"></i>
+            <span class="form-input-line"></span>
+        </div>
+    </div>
+  </div>

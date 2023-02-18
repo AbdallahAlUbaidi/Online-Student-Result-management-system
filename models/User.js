@@ -55,7 +55,7 @@ const userSchema = mongoose.Schema({
     },
     role:{
         type:String,
-        enum:['admin','student' , 'faculty' , 'exam_committee' , 'branch_head'],
+        enum:['student' , 'faculty'],
         lowerCase:true,
         required:[true,"Please specify your role"]
     },

@@ -20,7 +20,7 @@ router.post('/' ,flashMessage.setCachingToOff, async(req , res)=>
             department:req.body.department,
             specialty:req.body.specialty
         })
-        res.redirect('/testTokens') //For testing purposes in future will be course , dashboard or similer landing page
+        res.redirect('/courses')
     }catch(err){
         const errorInfo = errorReport(err)
         if(errorInfo.statusCode === 500)

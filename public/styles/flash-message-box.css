@@ -1,0 +1,103 @@
+:root{
+    --success-color:#22BB33;
+    --success-color-darker:#178223;
+    --error-color:#c92432;
+    --error-color-darker:#8c1923;
+    --inform-color:#5BC0DE;
+    --inform-color-darker:#3f869b;
+    --border-color:gray;
+}
+
+.flash-message{
+    font-size: 16px;
+    font-weight: 300;
+    margin: 0 4px;
+    width: 90%;
+    height: max-content;
+}
+
+.flash-message-container{
+    position: sticky;
+    top: 8px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    max-height: 300px;
+    font-family: cursive;
+    z-index: 2;
+}
+.flash-message-box{
+    position: relative;
+    padding:15px 50px 15px 20px;
+    color: #fff;
+    height: max-content;
+    width: 100%;
+    max-width: 850px;
+    margin: 0 36px 0 10px;
+    border-radius: 5px;
+    border-left: 6px solid var(--border-color);
+    overflow: hidden;
+}
+
+.flash-message-box-error{
+    background-color: var(--error-color);
+    --border-color:var(--error-color-darker);
+    
+}
+
+.flash-message-box-success{
+    background-color: var(--success-color);
+    --border-color:var(--success-color-darker);
+}
+
+.flash-message-box-inform{
+    background-color: var(--inform-color);
+    --border-color:var(--inform-color-darker);
+}
+
+.flash-message-icon{
+    position: relative;
+    top: 50%;
+    left: -10px;
+    font-size: 20px;
+}
+
+
+.flash-message-icon-error{
+    color: var(--error-color-darker);
+}
+
+.flash-message-icon-success{
+    color: var(--success-color-darker);
+}
+
+.flash-message-icon-inform{
+    color: var(--inform-color-darker);
+}
+.flash-message-exit{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    padding: 100vh 22px;
+    background-color: var(--border-color);
+    font-size: 20px;
+    position: absolute;
+    width: 100%;
+    max-width: 18px;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    right: 0;
+    font-weight: 300;
+    transition: all 0.3s ease; 
+    opacity: 0.8;
+}
+
+.flash-message-exit:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+
+

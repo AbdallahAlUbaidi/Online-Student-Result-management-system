@@ -1,0 +1,86 @@
+.navbar {
+    background-color: #ffffff !important;
+    border-bottom: 0.7px solid rgb(228, 228, 228) !important;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  ul a {
+    position: relative;
+    z-index: 1;
+    padding: 0.5em 1em !important;
+    margin: 0 3.8px !important;
+    border-radius: 16px !important;
+    font-size: 15.5px !important;
+    font-weight: 500 !important;
+  
+    color: #060a36 !important;
+    font-weight: 470;
+    white-space: nowrap;
+    display: inline-block !important;
+    /* display: inline-block !important;
+      white-space: nowrap !important; */
+  }
+  
+  ul a::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    color: aliceblue !important;
+    border-radius: 16px !important;
+    bottom: 0;
+    color: aliceblue !important;
+    left: -0.25em;
+    right: -0.25em;
+    background-color: #3d54d5 !important;
+    transform-origin: bottom center;
+    transform: scaleY(0);
+    transition: all 0.149s ease-in-out !important;
+  }
+  .navbar-brand{
+    transition: all 0.4s ease;
+    width: 150px !important;
+    transform: scale(1.8) !important;
+    margin-left: 45px !important;
+    margin-bottom: 10px !important;
+    margin-top: 9px !important;
+    
+  }
+  .navbar-brand:hover{
+  transform: scale(1.65) !important;
+  }
+  
+  ul a:hover::before {
+    transform: scaleY(1);
+  }
+  ul a:hover {
+    color: white !important;
+  }
+  
+  img {
+    width: 100px;
+    height: 30vh !important;
+  }
+  
+  .carousel-control-prev-icon {
+    color: red !important;
+  }
+  .carousel-control-next-icon {
+    color: red !important;
+  }
+  
+  .navbar-toggler:focus {
+    color: #3d52d5 !important;
+  }
+  .navbar-toggler-icon:focus {
+    color: #3d52d5 !important;
+  }
+  
+  @media (max-width: 450px) {
+    .navbar-brand {
+      width: 120px !important;
+      margin-left: 35px !important;
+      transform: scale(1.78) !important;
+    }
+  }
+  

@@ -1,8 +1,29 @@
-<p>Login placeholder</p>
-<div class="ReportMessage"><%= locals.message %> </div>
-<form action="/login" method="post">
-    <%- include('../partials/text-input-field.ejs' , {field:'emailAddress'}) %>
-    <%- include('../partials/password-input-field.ejs' , {field:'password'}) %>
-    <button type="submit">Login</button>
-</form><br>
-<a href="/register">register</a>
+<%- include('../partials/flash-message-box.ejs') %>
+<div class="form-container">
+  <div class="content fade-in ">
+    <div class="container shadow-lg p-3 bg-body">
+        <div class="image-container">
+          <img src="/images/formImage.png" alt="" class="rounded mx-auto d-block w-25 ">
+        </div>
+      <div class="title-container">
+        <h2 data-text="Sign&nbsp;In" class="mt-4 mb-9 title" id="login-title">Sign In</h2>
+      </div>
+      <form action="/login" method="post">
+        <%- include('../partials/text-input-field.ejs' , {error:'' , fieldName:'emailAddress' , fieldId:'login-email-field' , placeholder:'Email address' , boostrapIconName:'bi-envelope-fill' , isEmail:true}) %>
+        <%- include('../partials/password-input-field.ejs' , {error : '' , fieldName:'password' , fieldId:'login-password-field' , placeholder:'Password'}) %>
+        <div class="mb-3 form-check form-checkbox-container">
+          <input type="checkbox" class="form-checkbox-input form-check-input" id="login-form-checkbox-label-me-check">
+          <div class="form-checkbox-link-container">
+            <label class="form-check-label form-checkbox-label" for="login-form-checkbox-label-me-check">Remember me</label>
+            <a href="#" class="text-decoration-none form-link">Forgot password</a>
+          </div>
+        </div>
+        <%- include('../partials/form-submit-button.ejs' , {buttonText:'Login'}) %>
+        <div class="d-flex justify-content-center">
+          <p class="mr-3 form-link-label">Not member?</p>
+          <a href="/register" class="text-decoration-none form-link" id="s"> Signup now</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

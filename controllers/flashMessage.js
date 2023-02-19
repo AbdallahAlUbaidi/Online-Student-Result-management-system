@@ -1,6 +1,9 @@
-function showFlashMessage(status , message , req , res , redirectTarget='back')
+function showFlashMessage(status , message , req , res , messageType = '2' , redirectTarget='back')
 {
+    
     req.flash('message' , message)
+    req.flash('messageType' , messageType)
+
     res.status(status).redirect(redirectTarget)
 }
 

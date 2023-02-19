@@ -1,13 +1,25 @@
-<p>Register Faculty Placeholder form</p>
-<div class="ReportMessage"><%= locals.message %> </div>
-<form method="post" action="/register/faculty">
-    <%- include('../partials/text-input-field' , {field:'id_num' , errors:locals.errors}) %><br>
-    <%- include('../partials/select-input-field' , {field:'department' , options:[
-    'Computer engineering' , 'Electrical engineering' , 'Mechanical engineering' , 'Elctromechanical engineering' , 'Chemical engineering' , 'Civil engineering',
-    'Production engineering and metallurgy' , 'Material engineering' , 'Architectural engineering' , 'Laser and optoelectronics engineering' , 'Comunication engineering',
-    'Petrolum technology engineering' , 'Biomedical engineering' , 'Applied sciences' , 'Computer sciences' , 'English language center' , 'Continous learning center', 
-    'training and workshop center' , 'envoirmental research center' , 'information technology center' , 'nanotechnology and advanced materials research center' ,
-    'Energy and renewable energies research center'] , errors:locals.errors}) %> <br>
-    <%- include('../partials/text-input-field' , {field:'specialty' , errors:locals.errors}) %><br>
-    <button type="submit">Register</button>
-</form>
+<%- include('../partials/flash-message-box.ejs') %>
+<div class="form-container">
+    <div class="content fade-in">
+      <div class="container shadow-lg p-3 bg-body">
+        <div class="image-container">
+          <img src="/images/formImage.png" alt="" class="rounded mx-auto d-block">
+        </div>
+        <div class="title-container">
+          <h2 data-text="Faculty&nbsp;Information" class="mt-3 mb-0 title" id="faculty-form-title">Faculty</h2>
+        </div>
+        <form action="/register/faculty" method="post">
+            <% const errors = !locals.errors ? {} : locals.errors %>
+            <%- include('../partials/text-input-field.ejs' , {error:errors.id_num , fieldName:'id_num' , fieldId:'faculty-id-field' , placeholder:'ID' , boostrapIconName:'bi-person-vcard-fill' , isEmail:false})%>
+            <%- include('../partials/text-input-field.ejs' , {error:errors.specialty , fieldName:'specialty' , fieldId:'faculty-specialty-field' , placeholder:'Specialty' , boostrapIconName:'bi-mortarboard-fill' , isEmail:false}) %>
+            <%- include('../partials/select-input-field.ejs' , {error:errors.department , fieldName:'department' , fieldId:'faculty-department-field' , selectedOptionText:"Department" , options:[
+            'computer engineering' , 'electrical engineering' , 'mechanical engineering' , 'elctromechanical engineering' , 'chemical engineering' , 'civil engineering',
+            'production engineering and metallurgy' , 'material engineering' , 'architectural engineering' , 'laser and optoelectronics engineering' , 'comunication engineering',
+            'petrolum technology engineering' , 'biomedical engineering' , 'applied sciences' , 'computer sciences' , 'english language center' , 'continous learning center', 
+            'training and workshop center' , 'envoirmental research center' , 'information technology center' , 'nanotechnology and advanced materials research center' ,
+            'energy and renewable energies research center']}) %>
+            <%- include('../partials/form-submit-button.ejs' , {buttonText:'Save'}) %>
+        </form>
+      </div>
+    </div>
+  </div>

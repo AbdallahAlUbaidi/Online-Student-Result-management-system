@@ -1,8 +1,22 @@
-<p>Register Placeholder form</p>
-<form method="post" action="/register" id="registerForm">
-    <%- include('../partials/text-input-field' , {field:'emailAddress' , errors:locals.errors}) %><br>
-    <%- include('../partials/text-input-field' , {field:'username' , errors:locals.errors}) %><br>
-    <%- include('../partials/password-input-field' , {field:'password' , errors:locals.errors}) %><br>
-    <%- include('../partials/select-input-field' , {field:'role' , options:['student' , 'faculty'] , errors:locals.errors}) %><br>
-    <button type="submit">Register</button>
-</form>
+<%- include('../partials/flash-message-box.ejs') %>
+<div class="form-container">
+  <div class="content fade-in">
+    <div class="container shadow-lg p-3 bg-body">
+      <div class="image-container">
+        <img src="/images/formImage.png" alt="" class="rounded mx-auto d-block ">
+      </div>
+      <div class="title-container">
+        <h2 data-text="Sign&nbsp;up" class="mt-3 mb-0 title" id="register-title">Sign up</h2>
+      </div>
+      <form action="/register" method="post">
+        <% const errors = !locals.errors ? {} : locals.errors %>
+        <%- include('../partials/text-input-field.ejs' , {error:errors.username , fieldName:'username' , fieldId:'register-username-field' , placeholder:'User Name' , boostrapIconName:"bi-person-fill" , isEmail:false}) %>
+        <%- include('../partials/text-input-field.ejs' , {error:errors.emailAddress , fieldName:'emailAddress' , fieldId:'register-email-field' , placeholder:'Email address' , boostrapIconName:'bi-envelope-fill' , isEmail:true}) %>
+        <%- include('../partials/password-input-field.ejs' , {error:errors.password , fieldName:"password" , fieldId:'register-password-field' , placeholder:'Password'}) %>
+        <%- //include('../partials/password-input-field.ejs' , {error:errors.confirmPassword , fieldName:'confirmPassword' , fieldId:'register-confirm-password' , placeholder:'Confirm Password'}) %>
+        <%- include('../partials/select-input-field.ejs' , {error:errors.role , fieldName:'role' ,  fieldId:"register-select-role" ,  selectedOptionText:"Select Role" , options:['student' , 'faculty']}) %>
+        <%- include('../partials/form-submit-button.ejs' , {buttonText:'Register Now'}) %>
+      </form>
+    </div>
+  </div>
+</div>

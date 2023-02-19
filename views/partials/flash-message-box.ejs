@@ -1,0 +1,13 @@
+<% if(locals.message){ %>
+    <% const messageBoxClassArray = ['flash-message-box-error' , 'flash-message-box-success' , 'flash-message-box-inform'] %>
+    <% const iconClassArray = ['bi-shield-fill-exclamation' , 'bi-check-circle-fill' , 'bi-info-square-fill'] %>
+    <% const messageBoxClass = messageBoxClassArray[parseInt(locals.messageType)] %>
+    <% const iconClass = iconClassArray[parseInt(locals.messageType)] %>
+    <div class="flash-message-container">
+        <div class="flash-message-box <%- messageBoxClass %>">
+            <span class="flash-message-icon"><i class="bi <%- iconClass %>"></i></i></span>  <!-- Error icon -->
+            <span class="flash-message"><%- locals.message %></span>
+            <span class="flash-message-exit"><i class="bi bi-x-lg"></i></span>
+        </div>
+    </div>
+<% } %>

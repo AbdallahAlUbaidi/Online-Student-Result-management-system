@@ -1,3 +1,4 @@
+<%- include('../partials/flash-message-box.ejs') %>
 <h1>Modify Email placeholder</h1>
 <form action="modifyEmail" method="post">
     <%- include('../partials/text-input-field.ejs' , {field:'emailAddress' , errors:{emailAddress:locals.message}}) %> 

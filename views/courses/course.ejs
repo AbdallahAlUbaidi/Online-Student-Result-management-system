@@ -15,19 +15,14 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <% if(role === 'faculty') {%>
-              <%- include('../partials/nav-bar-link.ejs' , {link:'/courses/createCourse' , linkText:'Create Course' , customIconClass:'fa fa-arrow-circle-up'}) %>
-              <% } %>
+                <%- include('../partials/nav-bar-link.ejs' , {link:'#' , linkText:'Delete Course' , customIconClass:'fa fa-minus-square'}) %>
+                <%- include('../partials/nav-bar-link.ejs' , {link:'#' , linkText:'Edit Course' , customIconClass:'bi bi-pencil-fill'}) %>
+            <% } %>
             <%- include('../partials/nav-bar-link.ejs' , {link:'/logout' , linkText:'Logout' , customIconClass:'bi bi-x-circle-fill'}) %>
           </ul>
         </div>
       </nav>
-    
-      <div class="container p-3 ">
-        <div class="row row-cols-1 row-cols-md-3 g-4" id="empty-div">
-            <% locals.courses.forEach(course =>{ %> <div class="col ">
-                <%- include('../partials/course-card.ejs' , {course}) %>
-          </div><% }) %> </div>
-      </div>
-
-
+      <br>
+      <p>Placeholder</p>
+      <br>
 </div>

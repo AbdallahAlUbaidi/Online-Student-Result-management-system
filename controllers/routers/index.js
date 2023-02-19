@@ -9,7 +9,7 @@ router.get("/", (req , res)=>
     if(cookie == undefined || cookie == null)
         res.redirect('/login')
     else
-        res.redirect('/courses')
+        res.render('index')
 })
 
 module.exports = router

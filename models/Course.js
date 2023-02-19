@@ -29,7 +29,7 @@ const courseSchema =  mongoose.Schema({
     courseType:{
         type:String,
         enum:['practical' , 'theoretical'],
-        required:true
+        required:[true , 'You must specify this course\'s type']
     }
 })
 

@@ -3,7 +3,7 @@ function showFlashMessage(status , message , req , res , messageType = 2 , redir
     
     req.flash('message' , message)
     req.flash('messageType' , messageType)
-    console.log(message , messageType)
+
     res.status(status).redirect(redirectTarget)
 }
 

@@ -11,16 +11,16 @@ const confirmationEmail = require('../../email/sendConfirmationEmail')
 const roleInfo = require('../../roleInfo')
 const secure = Boolean(parseInt(process.env.HTTPS))
 
-router.get('/' , flashMessage.setCachingToOff , (req , res)=>
+router.get('/'  , (req , res)=>
 {
-    res.render('login/login' , {message:req.flash('message') , messageType:req.flash('messageType')})
+    res.render('login/login' , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0]})
 })
 
 router.post('/'  ,async (req , res)=>
 { 
     const userInfo = await user.findOne({emailAddress:req.body.emailAddress});
     if(! await checkCredentials(userInfo , req.body.password))
-        flashMessage.showFlashMessage(401 , 'Invalid Email or password' , req , res , 0)
+        flashMessage.showFlashMessage(401 , 'Invalid Email or password' , req , res , '0')
     else if(!userInfo.conformed)
     {
         confirmationEmail.sendConfirmationEmail(userInfo)

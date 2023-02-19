@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.get('/' , flashMessage.setCachingToOff , (req , res)=>
 {
-    res.render('register/facultyRegister' , {message:req.flash('message') , messageType:req.flash('messageType')})
+    res.render('register/facultyRegister' , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0]})
 })
 
 router.post('/' ,flashMessage.setCachingToOff, async(req , res)=>

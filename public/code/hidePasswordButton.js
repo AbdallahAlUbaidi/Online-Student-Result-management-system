@@ -1,7 +1,6 @@
 const passwordFieldsArray = Array.from(document.querySelectorAll('input.passwordField'));
 const hidePasswordButtonsArray = Array.from(document.querySelectorAll('input.passwordField ~i.bi-eye-fill'));
-console.log(passwordFieldsArray)
-console.log(hidePasswordButtonsArray)
+
 
 function hidePassword(passwordField , hidePasswordButton){
     passwordField.type = 'password';

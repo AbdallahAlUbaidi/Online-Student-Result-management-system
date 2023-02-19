@@ -16,7 +16,7 @@
             <% if(role === 'faculty') {%>
               <%- include('../partials/nav-bar-link.ejs' , {link:'/courses/createCourse' , linkText:'Create Course' , customIconClass:'fa fa-arrow-circle-up'}) %>
               <% } %>
-            <%- include('../partials/nav-bar-link.ejs' , {link:'#' , linkText:'Logout' , customIconClass:'bi bi-x-circle-fill'}) %>
+            <%- include('../partials/nav-bar-link.ejs' , {link:'/logout' , linkText:'Logout' , customIconClass:'bi bi-x-circle-fill'}) %>
           </ul>
         </div>
       </nav>

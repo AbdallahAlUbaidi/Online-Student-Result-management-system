@@ -6,7 +6,7 @@ const errorReport = require('../../errorReport')
 
 router.get('/' ,flashMessage.setCachingToOff ,  (req , res)=>
 {
-    res.render('register/registerStudent' , {message:req.flash('message')})
+    res.render('register/registerStudent' , {message:req.flash('message') , messageType:req.flash('messageType')})
 })
 
 

@@ -11,7 +11,7 @@ const flashMessage = require('../../flashMessage')
 router.get('/' , flashMessage.setCachingToOff ,  confirmationEmail.verifyEmailCheckToken , async (req , res)=>
 {
     const userInfo = await user.findOne({_id : req.userId})
-    res.render('email/confirmEmail' , {message:req.flash('message') , emailAddress:userInfo.emailAddress})
+    res.render('email/confirmEmail' , {message:req.flash('message') , messageType:req.flash('messageType') , emailAddress:userInfo.emailAddress})
 })
 
 router.get('/resendEmail' , confirmationEmail.verifyEmailCheckToken , flashMessage.setCachingToOff , async (req , res)=>
@@ -19,14 +19,14 @@ router.get('/resendEmail' , confirmationEmail.verifyEmailCheckToken , flashMessa
     
     const userInfo = await user.findOne({_id:req.userId})
     if(userInfo == undefined)
-        flashMessage.showFlashMessage(404 , 'Could not find user account' , req , res)
+        flashMessage.showFlashMessage(404 , 'Could not find user account' , req , res , 0)
         
     else if(userInfo.conformed == true)
         flashMessage.showFlashMessage(409 , 'Your Email is already verified' , req , res)
         
     else{
         confirmationEmail.sendConfirmationEmail(userInfo)
-        flashMessage.showFlashMessage(200 , 'A new email has been send' , req , res)
+        flashMessage.showFlashMessage(200 , 'A new email has been send' , req , res , 1)
     }
 
 })
@@ -36,9 +36,9 @@ router.get('/modifyEmail' , confirmationEmail.verifyEmailCheckToken,  async (req
     
     const userInfo = await user.findOne({_id: req.userId})
     if(userInfo == undefined)
-        flashMessage.showFlashMessage(404 , 'Could not find user account' , req , res  , '/emailConfirmation')
+        flashMessage.showFlashMessage(404 , 'Could not find user account' , req , res , 0  , '/emailConfirmation')
     else if(userInfo.conformed == true)
-        flashMessage.showFlashMessage(409 , 'Your Email is already verified' , req , res , '/emailConfirmation')
+        flashMessage.showFlashMessage(409 , 'Your Email is already verified' , req , res , 0 ,  '/emailConfirmation')
     else
         res.render('email/modifyEmail' , {emailAddress:userInfo.emailAddress , message: req.flash('message')[0]})
 })
@@ -52,12 +52,12 @@ router.post('/modifyEmail' , confirmationEmail.verifyEmailCheckToken ,  async (r
             throw new Error('Could not found user account')
         const newUser = await user.findById({_id:req.userId})
         confirmationEmail.sendConfirmationEmail(newUser)
-        flashMessage.showFlashMessage(200 , 'Email Updated Successfully a new verification email was sent to your new email address' , req , res  , '/emailConfirmation')
+        flashMessage.showFlashMessage(200 , 'Email Updated Successfully a new verification email was sent to your new email address' , req , res , 1 , '/emailConfirmation')
     }
     catch(err)
     {
         const error = errorReport(err)
-        flashMessage.showFlashMessage(error.statusCode , error.errors.emailAddress , req ,res)
+        flashMessage.showFlashMessage(error.statusCode , error.errors.emailAddress , req ,res , 0)
     }
 })
 
@@ -65,11 +65,11 @@ router.get('/checkVerify' , confirmationEmail.verifyEmailCheckToken , flashMessa
 {
     const userInfo = await user.findOne({_id:req.userId})
     if(userInfo == undefined)
-        flashMessage.showFlashMessage(404 , 'Could not find user account' , req , res)  //Might be changed into seperate HTML page
+        flashMessage.showFlashMessage(404 , 'Could not find user account' , req , res , 0)  //Might be changed into seperate HTML page
     else if(userInfo.conformed == false)
-        flashMessage.showFlashMessage(409 , 'Email has yet to be verifyed' , req , res)
+        flashMessage.showFlashMessage(409 , 'Email has yet to be verifyed' , req , res , 0)
     else 
-        flashMessage.showFlashMessage(200 , 'Email Verified' , req , res , '/login')
+        flashMessage.showFlashMessage(200 , 'Email Verified' , req , res , 1 ,  '/login')
 
 })
 

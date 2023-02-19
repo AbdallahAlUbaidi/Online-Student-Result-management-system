@@ -13,7 +13,7 @@
         <%- include('../partials/text-input-field.ejs' , {error:errors.username , fieldName:'username' , fieldId:'register-username-field' , placeholder:'User Name' , boostrapIconName:"bi-person-fill" , isEmail:false}) %>
         <%- include('../partials/text-input-field.ejs' , {error:errors.emailAddress , fieldName:'emailAddress' , fieldId:'register-email-field' , placeholder:'Email address' , boostrapIconName:'bi-envelope-fill' , isEmail:true}) %>
         <%- include('../partials/password-input-field.ejs' , {error:errors.password , fieldName:"password" , fieldId:'register-password-field' , placeholder:'Password'}) %>
-        <%- include('../partials/password-input-field.ejs' , {error:errors.confirmPassword , fieldName:'confirmPassword' , fieldId:'register-confirm-password' , placeholder:'Confirm Password'}) %>
+        <%- //include('../partials/password-input-field.ejs' , {error:errors.confirmPassword , fieldName:'confirmPassword' , fieldId:'register-confirm-password' , placeholder:'Confirm Password'}) %>
         <%- include('../partials/select-input-field.ejs' , {error:errors.role , fieldName:'role' ,  fieldId:"register-select-role" ,  selectedOptionText:"Select Role" , options:['student' , 'faculty']}) %>
         <%- include('../partials/form-submit-button.ejs' , {buttonText:'Register Now'}) %>
       </form>

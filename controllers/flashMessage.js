@@ -1,4 +1,4 @@
-function showFlashMessage(status , message , req , res , messageType = 2 , redirectTarget='back')
+function showFlashMessage(status , message , req , res , messageType = '2' , redirectTarget='back')
 {
     
     req.flash('message' , message)

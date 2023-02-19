@@ -4,8 +4,6 @@
     <% const messageBoxClass = messageBoxClassArray[parseInt(locals.messageType)] %>
     <% const iconClass = iconClassArray[parseInt(locals.messageType)] %>
     <div class="flash-message-container">
-        <!-- <i class="bi bi-check-circle-fill"></i>  Success icon -->
-        <!-- <i class="bi bi-info-square-fill"></i>   Info Icon -->
         <div class="flash-message-box <%- messageBoxClass %>">
             <span class="flash-message-icon"><i class="bi <%- iconClass %>"></i></i></span>  <!-- Error icon -->
             <span class="flash-message"><%- locals.message %></span>

@@ -17,7 +17,7 @@
 }
 
 .flash-message-container{
-    position: absolute;
+    position: sticky;
     top: 8px;
     display: flex;
     justify-content: center;
@@ -25,6 +25,7 @@
     height: 100%;
     max-height: 300px;
     font-family: cursive;
+    z-index: 2;
 }
 .flash-message-box{
     position: relative;
@@ -75,7 +76,10 @@
     color: var(--inform-color-darker);
 }
 .flash-message-exit{
-    padding: 100vh 18px;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    padding: 100vh 22px;
     background-color: var(--border-color);
     font-size: 20px;
     position: absolute;
@@ -84,10 +88,11 @@
     width: 100%;
     top: 50%;
     transform: translateY(-50%);
+    text-align: center;
     right: 0;
     font-weight: 300;
     transition: all 0.3s ease; 
-    opacity: 0.9;
+    opacity: 0.8;
 }
 
 .flash-message-exit:hover{

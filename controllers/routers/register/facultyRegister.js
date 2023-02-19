@@ -26,7 +26,7 @@ router.post('/' ,flashMessage.setCachingToOff, async(req , res)=>
         if(errorInfo.statusCode === 500)
             res.status(errorInfo.statusCode).render('errorPages/serverError')
         else if(errorInfo.errors.userInfo)
-            flashMessage.showFlashMessage(errorInfo.statusCode , errorInfo.errors.userInfo , req , res , 0)
+            flashMessage.showFlashMessage(errorInfo.statusCode , errorInfo.errors.userInfo , req , res , '0')
         else
             res.status(errorInfo.statusCode).render('register/facultyRegister' , {errors: errorInfo.errors}) 
     }

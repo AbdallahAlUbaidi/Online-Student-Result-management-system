@@ -1,7 +1,10 @@
 const flashMessageBox = Array.from(document.getElementsByClassName('flash-message-container'))[0]
 const flashMessageExit = Array.from(document.getElementsByClassName('flash-message-exit'))[0]
 
+
 function hideFlashMessage(flashMessageBox){
+    if(!flashMessageBox)
+        return;
     flashMessageBox.style = 'display:none;'
 }
 

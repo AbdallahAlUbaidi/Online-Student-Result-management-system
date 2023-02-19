@@ -492,7 +492,7 @@ button:hover {
 }
 
 button:hover::before {
-  transform: translate3d(-50%, -50%, 0) scale3d(85, 35, 35);
+  transform: translate3d(-50%, -50%, 0) scale3d(45, 15, 15);
 }
 #show-password{
     transition: transform 0.2s ease-in-out;

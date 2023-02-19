@@ -1,6 +1,18 @@
 <%- include('../partials/flash-message-box.ejs') %>
-<h1>Modify Email placeholder</h1>
-<form action="modifyEmail" method="post">
-    <%- include('../partials/text-input-field.ejs' , {field:'emailAddress' , errors:{emailAddress:locals.message}}) %> 
-    <button type="submit">Update</button>
-</form>
+<div class="form-container">
+  <div class="content fade-in ">
+    <div class="container shadow-lg p-3 bg-body">
+        <div class="image-container">
+          <img src="/images/register/email-confirm-page-image.svg" alt="" class="rounded mx-auto d-block w-25 ">
+        </div>
+      <div class="title-container">
+        <h2 data-text=" Modify&nbsp;Email" class="mt-4 mb-9 title" id="modify-email-title">Modify Email</h2>
+      </div>
+      <p>Please Write your email to update</p>
+      <form action="modifyEmail" method="post">
+        <%- include('../partials/text-input-field.ejs' , {error:'' , fieldName:'emailAddress' , fieldId:'modify-email-new-email-field' , placeholder:'New Email address' , boostrapIconName:'bi-envelope-fill' , isEmail:true}) %>
+        <%- include('../partials/form-submit-button.ejs' , {buttonText:'Update'}) %>
+      </form>
+    </div>
+  </div>
+</div>

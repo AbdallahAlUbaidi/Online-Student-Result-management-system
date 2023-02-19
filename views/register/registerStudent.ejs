@@ -1,58 +1,9 @@
-
-<div class="mmm">
-    <div class="content fade-in">
-        
-      <div class="container shadow-lg p-3  bg-body  ">     
-        <img src="css/icons8-registered-trademark-80.png" alt="" class="rounded mx-auto d-block ">
-          
-          <div class="body">
-           <h2 data-text="Students" class="mt-3 mb-1  " id="text">Students</h2>
-           </div>
-        <div>
-        <form>
-          <div class="mb-2 ">
-  
-            <select class="form-select" id="a" name="stage" aria-label="Default select example">
-              <option selected>Select Stage</option>
-              <option value="1">First</option>
-              <option value="2">Second</option>
-              <option value="3">Third</option>
-              <option value="4">Fourth</option>
-            </select>
-           
-          </div>
-          <div class="mb-2 " >
-        
-            <select class="form-select" name="study" aria-label="Default select example">
-              <option selected>Select Studying</option>
-              <option value="1">Morning</option>
-              <option value="2">Evening</option>
-           
-            </select>
-          </div>
-          <div class="mb-3 " >
-          
-            <select class="form-select" name="branch" aria-label="Default select example">
-              <option selected>Select Branch</option>
-              <option value="1">Networks</option>
-              <option value="2">Informations</option>
-           
-            </select>
-          
-  
-            <div class="mb-3 " >
-            <div class="position-relative ">
-            <input type="number" class="form-control  mt-3 pt-0 inputTextField" name="student_id" id="exampleInputPassword1 shadow-sm p-3 mb-5 bg-body rounded" placeholder="Student Id">
-            <p class="error1 inputTextFieldError" style="display: none;">error</p>
-            <i class="fas fa-id-card position-absolute top-0"></i>
-            <span></span>
-           </div>
-          </div>
-          
-          </div>
-          <button type="submit" class="btn btn-primary mb-4 rounded-pill w-100 rounded-pill mt-3" >Register Now</button>
-         
-          </div>
-          </div>
-          </div>
-          </div>
+<p>Register Student Placeholder form</p>
+<div class="ReportMessage"><%= locals.message %> </div>
+<form method="post" action="/register/student">
+    <%- include('../partials/text-input-field' , {field:'student_id' , errors:locals.errors}) %><br>
+    <%- include('../partials/select-input-field' , {field:'branch' , options:['Information Engineering' ,'Network Engineering'] , errors:locals.errors}) %> <br>
+    <%- include('../partials/select-input-field' , {field:'stage' , options:['1st' , '2nd' , '3rd' , '4th' , 'Graduate'] , errors:locals.errors}) %><br>
+    <%- include('../partials/select-input-field' , {field:'study' , options:['Morning' , 'Evening'] , errors:locals.errors}) %> <br>
+    <button type="submit">Register</button>
+</form>

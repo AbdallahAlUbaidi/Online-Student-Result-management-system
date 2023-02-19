@@ -1,50 +1,13 @@
-<div class="mm">
-    <div class="content fade-in">
-      <div class="container shadow-lg p-3  bg-body  ">
-        <img src="css/icons8-registered-trademark-80.png" alt="" class="rounded mx-auto d-block ">
-         
-        <div class="body">
-  
-         <h2 data-text="Faculty" class="mt-4 mb-2 faculty ">Faculty</h2>
-         </div>
-       
-        <form>
-          <div class="mb-2">
-            <div class="position-relative ">
-                <input type="number" class="form-control mt-3 pt-0 inputTextField" name="id_num" id="exampleInputPassword1 shadow-sm p-3 mb-5 bg-body rounded"placeholder="ID">
-                <p class="error1  position-absolute top-0 inputTextFieldError" style="display: none;"></p>
-                <i class="fas fa-id-card position-absolute top-0"></i>
-                <span></span>
-              
-               
-  
-  
-            </div>
-                <div class="position-relative">
-                  
-                <input type="text" class="form-control mt-3 pt-0 inputTextField" name="department" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Department">
-                <p class="error1  position-absolute top-0 inputTextFieldError" style="display: none;"></p>
-                <i class="fas fa-university position-absolute top-0"></i>
-                <span></span>
-  
-              </div>
-              </div>
-              <div class="mb-3 " >
-              
-                <div class="position-relative">
-                  
-                <input type="text" class="form-control mt-3 pt-0 inputTextField" name="specialty" id="password" placeholder="Specility">
-                <p class="error1  position-absolute top-0 inputTextFieldError" style="display: none;"></p>
-                <i class="fas fa-book position-absolute top-0"></i>
-                <span></span>
-              
-                 </div>
-                 </div>
-         
-           <div class="mb-0 mt-2 " >
-               <button type="submit" class="btn btn-primary mb-4 rounded-pill w-100 rounded-pill mt-3" >Register Now</button>
-          </div> 
-        
-         
-          </div> 
-          </div>
+<p>Register Faculty Placeholder form</p>
+<div class="ReportMessage"><%= locals.message %> </div>
+<form method="post" action="/register/faculty">
+    <%- include('../partials/text-input-field' , {field:'id_num' , errors:locals.errors}) %><br>
+    <%- include('../partials/select-input-field' , {field:'department' , options:[
+    'Computer engineering' , 'Electrical engineering' , 'Mechanical engineering' , 'Elctromechanical engineering' , 'Chemical engineering' , 'Civil engineering',
+    'Production engineering and metallurgy' , 'Material engineering' , 'Architectural engineering' , 'Laser and optoelectronics engineering' , 'Comunication engineering',
+    'Petrolum technology engineering' , 'Biomedical engineering' , 'Applied sciences' , 'Computer sciences' , 'English language center' , 'Continous learning center', 
+    'training and workshop center' , 'envoirmental research center' , 'information technology center' , 'nanotechnology and advanced materials research center' ,
+    'Energy and renewable energies research center'] , errors:locals.errors}) %> <br>
+    <%- include('../partials/text-input-field' , {field:'specialty' , errors:locals.errors}) %><br>
+    <button type="submit">Register</button>
+</form>

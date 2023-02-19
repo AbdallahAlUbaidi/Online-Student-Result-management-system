@@ -15,11 +15,11 @@ router.post('/' , async(req , res)=>
     try{
         userId = req.auth.userId
         await Student.create({
-            userInfo:userId,
-            student_id:req.body.student_id,
-            stage:req.body.stage,
-            branch:req.body.branch,
-            study:req.body.study
+            userInfo:userId.toLowerCase(),
+            student_id:req.body.student_id.toLowerCase(),
+            stage:req.body.stage.toLowerCase(),
+            branch:req.body.branch.toLowerCase(),
+            study:req.body.study.toLowerCase()
         })
         res.redirect('/courses') 
     }catch(err){

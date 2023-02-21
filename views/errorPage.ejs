@@ -1,0 +1,15 @@
+<div class="error-page-body">
+    <div class="d-flex error-page-main-container" >
+        <div class="align-self-center mx-auto text-center error-page-container">
+          <i class="fas fa-exclamation-triangle fa-10x text-danger mb-3 error-page-exclamation-triangle"></i>
+          <h1 class="display-4 text-danger error-page-statuscode-header"><%-statusCode + " "  + errorName %></h1>
+          <p class="error-page-error-message"><%- errorMsg %></p>
+          <hr class="my-4">
+          <p><%- errorDescription %></p>
+          <a class="btn btn-primary btn-lg error-page-button" href="/" role="button">
+            <i class="fas fa-home error-page-home-icon"></i>
+            Back to Home
+          </a>
+        </div>
+      </div>
+</div>

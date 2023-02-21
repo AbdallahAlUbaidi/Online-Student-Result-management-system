@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { renderErrorPage } = require('../controllers/errorReport')
 const Course = require('./Course')
 const studentSchema = mongoose.Schema(
     {

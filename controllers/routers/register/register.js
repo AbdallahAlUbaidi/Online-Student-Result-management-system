@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const errorReport = require('../../errorReport')
+const {errorReport, renderErrorPage} = require('../../errorReport')
 const {sendConfirmationEmail} = require('../../email/sendConfirmationEmail')
 const emailToken = require('../../AuthenticationTokens/emailToken')
 
@@ -26,7 +26,7 @@ router.post('/' , async(req , res)=>
     {       
         const errorInfo = errorReport(error)
         if(errorInfo.statusCode === 500)
-            res.status.render('errorPages/serverError')
+            renderErrorPage(res , 500)
         res.status(errorInfo.statusCode).render( 'register/register', {errors: errorInfo.errors})
     }
 })

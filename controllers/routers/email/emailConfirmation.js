@@ -5,7 +5,7 @@ const router = express.Router()
 const user = require('../../../models/User')
 const emailToken = require('../../AuthenticationTokens/emailToken')
 const confirmationEmail = require('../../email/sendConfirmationEmail')
-const errorReport = require('../../errorReport')
+const {errorReport, renderErrorPage} = require('../../errorReport')
 const flashMessage = require('../../flashMessage')
 
 router.get('/' , flashMessage.setCachingToOff ,  confirmationEmail.verifyEmailCheckToken , async (req , res)=>
@@ -77,8 +77,8 @@ router.get('/:emailToken' , async (req , res)=>
 {
    
     const tokenInfo = emailToken.verifyEmailConfirmationToken(req.params.emailToken);
-    if(tokenInfo.statusCode != undefined || tokenInfo.statusCode != null)
-        res.status(tokenInfo.statusCode).render('errorPages/invalidToken')
+    if(tokenInfo.statusCode)
+        renderErrorPage(res , 401)
     else
     {
         let userId = await tokenInfo.userId

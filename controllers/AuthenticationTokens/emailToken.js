@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const errorReport = require('../errorReport')
+const {errorReport} = require('../errorReport')
 
 function generateEmailConfirmationToken(user)
 {

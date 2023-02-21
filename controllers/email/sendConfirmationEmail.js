@@ -1,6 +1,6 @@
 const emailToken = require('../AuthenticationTokens/emailToken')
 const sendEmail = require('./sendEmail')
-const errorReport = require('../errorReport')
+const {errorReport} = require('../errorReport')
 
 
 

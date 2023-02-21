@@ -1,17 +1,5 @@
 
-<!-- Test Page to Debug issues regarding Authentication won't be included in the finale version -->
-<p>Test Successful</p>
-<p>Your name is <strong><%- locals.userInfo.username %> </strong></p>
-<p>Your email is <strong><%- locals.userInfo.emailAddress %> </strong></p>
-<p>You are a <strong><%- locals.userInfo.role %></strong></p>
-<p>Your <%- locals.userInfo.role %> information are</p>
-<% if(locals.userInfo.role === 'student'){ %>
-    <p>Student Id: <%- locals.roleInfo.student_id %></p>
-    <p>Branch: <%- locals.roleInfo.branch %></p>
-    <p>Stage: <%- locals.roleInfo.stage %></p>
-    <p>Study: <%- locals.roleInfo.study %></p>
-<% }else if(locals.userInfo.role === 'faculty'){ %>
-<p>Id number: <%- locals.roleInfo.id_num %> </p>
-<p>Department: <%- locals.roleInfo.department %></p> 
-<p>Specialty: <%- locals.roleInfo.specialty %> </p>
-<% } %>
+<a href="testTokens/401">401</a>
+<a href="testTokens/404">404</a>
+<a href="testTokens/500">500</a>
+

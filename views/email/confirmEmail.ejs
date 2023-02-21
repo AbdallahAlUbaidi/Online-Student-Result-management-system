@@ -2,13 +2,13 @@
 <div class="email-confirm-page-main-container email-confirm-page-container">
     <div class="container email-confirm-page-container shadow-lg p-3  bg-body">
         <img src="/images/register/email-confirm-page-image.svg" alt="" class="rounded mx-auto d-block w-25 mt-1">
-        <div class="body">
+        <div class="title-container">
           <h2 data-text=" Email&nbsp;Confirmation" class="mt-3 mb-0 email-confirm-page email-confirm-page-header">Email Confirmation</h2>
         </div>
         <p class="email-confirm-page-paragraph">An email was send to "<%- locals.emailAddress %>" check your inbox for the confirmation email to varified</p>
         <hr>
         <p class="email-confirm-page-paragraph">Please click on the links below to confirm your email address:</p>
-        <div class="mb-3">
+        <div class="mb-3 links-container">
           <a href="emailConfirmation/checkVerify" class="text-decoration-none email-confirm-page-link">Already verified</a>
           <a href="emailConfirmation/modifyEmail" class="text-decoration-none email-confirm-page-link">Modify Email</a>
           <a href="emailConfirmation/resendEmail" class="text-decoration-none email-confirm-page-link">Resend Email</a>

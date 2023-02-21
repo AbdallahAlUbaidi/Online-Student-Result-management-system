@@ -1,4 +1,4 @@
-const errorReport = (err)=>
+const errorReport = err=>
 {
     if(err.name === 'ValidationError')
     {
@@ -24,5 +24,17 @@ const errorReport = (err)=>
     }
 }
 
+const errorObjects = {
+    500:{errorName:"Internal Server Error" , errorMsg:'The server encountered an error' , errorDescription:'The Server encountered an error while processing your request'},
+    404:{errorName:'Not Found', errorMsg: 'The requested page can\'t be found' , statusCode:404 , errorDescription:'We could not find what you are looking for, it might have been deleted or modifyed'},
+    401:{errorName:'UnAutherized' , errorMsg: 'Access to this page was restricted' ,  errorDescription:'Sorry, you are not autherized to view this page'}
+}
 
-module.exports = errorReport
+const renderErrorPage = (res , statusCode)=>{
+    console.log(statusCode)
+    const {errorName , errorMsg , errorDescription} = errorObjects[statusCode]
+    res.render('errorPage' , {errorName, statusCode , errorMsg , errorDescription})
+}
+
+
+module.exports = {errorReport , renderErrorPage} 

@@ -9,6 +9,7 @@ const emailToken = require('../../AuthenticationTokens/emailToken')
 const flashMessage = require('../../flashMessage')
 const confirmationEmail = require('../../email/sendConfirmationEmail')
 const roleInfo = require('../../roleInfo')
+const { renderErrorPage } = require('../../errorReport')
 const secure = Boolean(parseInt(process.env.HTTPS))
 
 router.get('/'  , (req , res)=>
@@ -36,7 +37,7 @@ router.post('/'  ,async (req , res)=>
         await generateTokensCookies(userInfo , res)
         const role_info = await roleInfo.getRoleInfo(userInfo._id , userInfo)
         if(role_info.error)
-            res.render('errorPages/serverError' , {error:role_info.error.errors.ServerError})
+            renderErrorPage(500)
         if(!role_info.roleInfo)
             res.redirect(role_info.role.registerLink)
         else

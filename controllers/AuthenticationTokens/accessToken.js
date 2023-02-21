@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const {expressjwt} = require('express-jwt')
 const {unless} = require('express-unless')
-const errorReport = require('../errorReport');
+const {errorReport , renderErrorPage} = require('../errorReport');
 const axois = require('axios');
 const secure = Boolean(parseInt(process.env.HTTPS))
 
@@ -63,7 +63,7 @@ function errorHandler(err, req, res, next)
                     sameSite: secure? 'None': "Lax", secure: Boolean(parseInt(process.env.HTTPS)), 
                     maxAge: parseInt(process.env.REFRESH_TOKEN_EXPIRATION_PERIOD) * 24 * 60 * 60 * 1000 })
                 
-                res.render('errorPages/invalidToken' , {error:err.code})
+                renderErrorPage(res ,401)
             }
             else
             {
@@ -90,13 +90,13 @@ function errorHandler(err, req, res, next)
                 .catch(err =>
                 {
                     if(!err.response)
-                        res.render('errorPages/serverError' , {error:'Auth Server did not responed'})
+                        renderErrorPage(res , 500)
                     else if(err.response.status === 401 && err.response.data.errorMsg === "invalid signature")
-                        res.render('errorPages/invalidToken' , {error:err.response.data.errorMsg})
+                        renderErrorPage( res , 401)
                     else if(err.response.status === 401 && err.response.data.errorMsg === 'jwt expired')
                         res.redirect('/login')
                     else
-                        res.render('errorPages/serverError' , {error:'An error has occured in the server'})
+                        renderErrorPage(res , 500)
                 })
             }
         }

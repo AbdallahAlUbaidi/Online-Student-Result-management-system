@@ -4,7 +4,7 @@ const OAuth2 = google.auth.OAuth2
 const OAuth2_client = new OAuth2(process.env.CLIENT_ID , process.env.CLIENT_SECRET)
 OAuth2_client.setCredentials({refresh_token:process.env.CLIENT_REFRESH_TOKEN})
 
-const errorReport = require('../errorReport')
+const {errorReport} = require('../errorReport')
 
 function createMailTransporter()
 {

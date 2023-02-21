@@ -3,7 +3,7 @@ const roles = {
     faculty: {model:require('../models/Faculty'), registerLink: '/register/faculty'}
 }
 const user = require('../models/User')
-const errorReport = require('./errorReport')
+const {errorReport, renderErrorPage} = require('./errorReport');
 const {unless} = require('express-unless')
 const flashMessage = require('./flashMessage')
 
@@ -26,7 +26,7 @@ async function hasEnteredRoleInfo(req , res , next)
     const userId = req.auth.userId
     const roleInfo = await getRoleInfo(userId)
     if(roleInfo.error)
-        res.render('errorPages/serverError' , {error:roleInfo.error.errors.ServerError})
+        renderErrorPage(res , 500)
     else if(!roleInfo.roleInfo)
         flashMessage.showFlashMessage(302 , `You need to enter your ${roleInfo.userInfo.role} information` , req , res , roleInfo.role.registerLink)
     else

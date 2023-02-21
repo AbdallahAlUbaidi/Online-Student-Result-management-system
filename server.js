@@ -39,7 +39,7 @@ const emailConfirmationRouter = require('./controllers/routers/email/emailConfir
 const coursesRouter = require('./controllers/routers/courses/courses')
 const accessToken = require('./controllers/AuthenticationTokens/accessToken')
 const {hasEnteredRoleInfo , rolesRegisterLinks} = require('./controllers/roleInfo')
-const errorReport = require('./controllers/errorReport')
+const {errorReport} = require('./controllers/errorReport')
 
 //testing routers
 const testTokens = require('./controllers/routers/TestToken')

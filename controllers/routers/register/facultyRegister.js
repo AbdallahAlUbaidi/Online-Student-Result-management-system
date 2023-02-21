@@ -2,7 +2,7 @@ const express = require('express')
 
 const Faculty = require('../../../models/Faculty')
 const flashMessage = require('../../flashMessage')
-const errorReport = require('../../errorReport')
+const {errorReport, renderErrorPage} = require('../../errorReport')
 const router = express.Router()
 
 router.get('/' , flashMessage.setCachingToOff , (req , res)=>
@@ -24,7 +24,7 @@ router.post('/' ,flashMessage.setCachingToOff, async(req , res)=>
     }catch(err){
         const errorInfo = errorReport(err)
         if(errorInfo.statusCode === 500)
-            res.status(errorInfo.statusCode).render('errorPages/serverError')
+            renderErrorPage(500)
         else if(errorInfo.errors.userInfo)
             flashMessage.showFlashMessage(errorInfo.statusCode , errorInfo.errors.userInfo , req , res , '0')
         else

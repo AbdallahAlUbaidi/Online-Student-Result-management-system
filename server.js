@@ -34,7 +34,6 @@ const logoutRouter = require('./controllers//routers/login/logout')
 const registerRouter = require('./controllers/routers/register/register')
 const studentRegisterRouter = require('./controllers/routers/register/studentRegister')
 const facultyRegisterRouter = require('./controllers/routers/register/facultyRegister')
-const authenticationRouter = require('./controllers/routers/authentication')
 const emailConfirmationRouter = require('./controllers/routers/email/emailConfirmation')
 const coursesRouter = require('./controllers/routers/courses/courses')
 const accessToken = require('./controllers/AuthenticationTokens/accessToken')
@@ -42,7 +41,7 @@ const {hasEnteredRoleInfo , rolesRegisterLinks} = require('./controllers/roleInf
 const {errorReport} = require('./controllers/errorReport')
 
 //testing routers
-const testTokens = require('./controllers/routers/TestToken')
+const testRouter = require('./controllers/routers/Test')
 
 //set up express view enigne, layout and the public folder
 app.set('view engine' , 'ejs')
@@ -75,11 +74,10 @@ app.use('/logout' , logoutRouter)
 app.use('/emailConfirmation' , emailConfirmationRouter)
 app.use('/courses' , coursesRouter)
 
-app.use('/token' , authenticationRouter)
 
 
 //testing router
-app.use('/testTokens' , testTokens)
+app.use('/test' , testRouter)
 
 app.listen(process.env.PORT || 80)
 

@@ -79,6 +79,13 @@
     color: #96131e !important;
   }
 
+  .form-control-error::placeholder{
+    color: #c92432 !important;
+  }
+
+  .form-control-error:focus::placeholder{
+    color: #96131e !important;
+  }
   .form-control-error:focus ~.form-input-line{
     background-color: #96131e;
   }

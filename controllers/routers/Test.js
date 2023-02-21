@@ -1,3 +1,4 @@
+//A Route used to test some functinality will be replaced with solid test in the future
 const express = require('express')
 const user = require('../../models/User')
 const roleInfoModule = require('../roleInfo')

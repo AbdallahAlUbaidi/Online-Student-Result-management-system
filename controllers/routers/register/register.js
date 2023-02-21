@@ -17,7 +17,7 @@ router.post('/' , async(req , res)=>
 {
     try
     {  
-        const newUser = await user.createNewUser(req.body.username , req.body.emailAddress , req.body.password , req.body.role)
+        const newUser = await user.createNewUser(req.body.username , req.body.emailAddress , req.body.password , req.body.confirmPassword , req.body.role)
         sendConfirmationEmail(newUser)
         res.cookie('emailToken' , `bearer ${emailToken.generateEmailCheckToken(newUser)}` , {path:'/emailConfirmation' , httpOnly:true})
         res.status(201).redirect('/emailConfirmation')
@@ -27,7 +27,8 @@ router.post('/' , async(req , res)=>
         const errorInfo = errorReport(error)
         if(errorInfo.statusCode === 500)
             renderErrorPage(res , 500)
-        res.status(errorInfo.statusCode).render( 'register/register', {errors: errorInfo.errors})
+        else
+            res.status(errorInfo.statusCode).render( 'register/register', {errors: errorInfo.errors})
     }
 })
 

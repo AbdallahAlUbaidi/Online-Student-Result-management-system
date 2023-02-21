@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema({
                 const pattern = /^([a-zA-z0-9\.\-\_]*)([a-zA-z0-9\.\-\_])$/gi
                 return pattern.test(user)
             },
-            message:props => `"${props.value}" is not a valid user name\nUsername must only contain:\n-lower case and uppercase letters\n-digits from 0 - 9 \n-special characters (. , - , _ )\n-it must not have spaces`
+            message:props => `"${props.value}" is not a valid user name`
         }
     },
     emailAddress:{
@@ -69,6 +69,22 @@ const userSchema = mongoose.Schema({
 })
 
 
+userSchema.virtual('unhashedPassoword')
+.get(function(){
+    return this._unhashedPassoword;
+})
+.set(function(value){
+    this._unhashedPassoword = value;
+})
+
+userSchema.virtual('confirmPassword')
+.get(function(){
+    return this._confirmPassoword;
+})
+.set(function(value){
+    this._confirmPassoword = value;
+})
+
 const hashPassword = async (password)=>
 {
     if(password == null || password == undefined || password == '') 
@@ -87,9 +103,12 @@ userSchema.statics.updateUser = async function(filter , updatedFields)
     return await this.updateOne(filter , updatedFields)
 }
 
-userSchema.statics.createNewUser = async function(username , emailAddress , password , role){
-    password = await hashPassword(password)
-    const newUser = await this.create({username , emailAddress , password , role}) 
+userSchema.statics.createNewUser = async function(username , emailAddress , password , confirmPassword , role){
+    hashedPassword = await hashPassword(password)
+    const newUser = this({username , emailAddress , password:hashedPassword , role})
+    newUser.confirmPassword = confirmPassword
+    newUser.unhashedPassoword = password
+    await newUser.save()
     return newUser
 }
 
@@ -102,8 +121,9 @@ userSchema.path('username').validate(async (username)=>
 {
     return await mongoose.models.User.countDocuments({username}) == 0;
 } , 'username already exists')
-
-
-
-
+userSchema.pre('validate' , function(next){
+    if(this.unhashedPassoword !== this.confirmPassword)
+        this.invalidate('confirmPassword', 'Passwords do not match');
+    next()
+})
 module.exports = mongoose.model('User' , userSchema) 

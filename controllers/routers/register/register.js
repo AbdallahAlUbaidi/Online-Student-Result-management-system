@@ -18,7 +18,7 @@ router.post('/' , async(req , res)=>
     try
     {  
         const newUser = await user.createNewUser(req.body.username , req.body.emailAddress , req.body.password , req.body.confirmPassword , req.body.role)
-        sendConfirmationEmail(newUser)
+        await sendConfirmationEmail(newUser)
         res.cookie('emailToken' , `bearer ${emailToken.generateEmailCheckToken(newUser)}` , {path:'/emailConfirmation' , httpOnly:true})
         res.status(201).redirect('/emailConfirmation')
     }

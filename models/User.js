@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
         trim:true,
         unique:true,
         maxLength:[254 , 'Email address can be a max of 254 characters'],
-        munLength:[3 , 'Email address can be at least 3 characters'],
+        minLength:[3 , 'Email address can be at least 3 characters'],
         validate:{
             validator:email=>{
                 const emailPattern1 = /^([\.\_A-Za-z0-9]+)@([\.A-Za-z]+)\.([a-zA-Z]{2,8})\s*$/g;
@@ -103,8 +103,18 @@ userSchema.statics.updateUser = async function(filter , updatedFields)
     return await this.updateOne(filter , updatedFields)
 }
 
+userSchema.statics.updatePassword = async function(filter , password , confirmPassword){
+    const user = await this.findOne(filter);
+    const hashedPassword = await hashPassword(password);
+    user.unhashedPassoword = password;
+    user.confirmPassword = confirmPassword
+    user.password = hashedPassword;
+    user.markModified('confirmPassword')
+    await user.save({validateModifiedOnly: true})
+}
+
 userSchema.statics.createNewUser = async function(username , emailAddress , password , confirmPassword , role){
-    hashedPassword = await hashPassword(password)
+    const hashedPassword = await hashPassword(password)
     const newUser = this({username , emailAddress , password:hashedPassword , role})
     newUser.confirmPassword = confirmPassword
     newUser.unhashedPassoword = password
@@ -126,4 +136,6 @@ userSchema.pre('validate' , function(next){
         this.invalidate('confirmPassword', 'Passwords do not match');
     next()
 })
+
+
 module.exports = mongoose.model('User' , userSchema) 

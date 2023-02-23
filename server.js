@@ -31,6 +31,7 @@ app.use(flash())
 const indexRouter = require('./controllers/routers/index')
 const loginRouter = require('./controllers/routers/login/login')
 const logoutRouter = require('./controllers//routers/login/logout')
+const retrievePasswordRouter = require('./controllers/routers//retrievePassword/retrievePassword')
 const registerRouter = require('./controllers/routers/register/register')
 const studentRegisterRouter = require('./controllers/routers/register/studentRegister')
 const facultyRegisterRouter = require('./controllers/routers/register/facultyRegister')
@@ -59,8 +60,8 @@ mongoose.connect(process.env.DATABASE_URL ,
 
 
 //Protected routes
-app.use(accessToken.tokenHandler.unless({path:['/login' , '/register' , /^\/emailConfirmation/]}))
-app.use(hasEnteredRoleInfo.unless({path:['/login' , '/register' , /^\/emailConfirmation/].concat(rolesRegisterLinks)}))
+app.use(accessToken.tokenHandler.unless({path:[/^\/login/ , '/register' , /^\/emailConfirmation/]}))
+app.use(hasEnteredRoleInfo.unless({path:[/^\/login/ , '/register' , /^\/emailConfirmation/].concat(rolesRegisterLinks)}))
 
 
 
@@ -70,6 +71,7 @@ app.use('/register' , registerRouter)
 app.use('/register/student' , studentRegisterRouter)
 app.use('/register/faculty' , facultyRegisterRouter)
 app.use('/login' , loginRouter)
+app.use('/login/retrievePassword' , retrievePasswordRouter)
 app.use('/logout' , logoutRouter)
 app.use('/emailConfirmation' , emailConfirmationRouter)
 app.use('/courses' , coursesRouter)

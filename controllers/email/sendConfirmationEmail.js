@@ -1,6 +1,7 @@
 const emailToken = require('../AuthenticationTokens/emailToken')
 const sendEmail = require('./sendEmail')
-const {errorReport} = require('../errorReport')
+const {errorReport, renderErrorPage} = require('../errorReport')
+const { showFlashMessage } = require('../flashMessage')
 
 
 
@@ -18,20 +19,20 @@ function sendConfirmationEmail(user)
 function verifyEmailCheckToken(req , res , next)
 {
     const cookie = req.cookies.emailToken
-    if(cookie == undefined)
-    {   
-        res.status(401).json({message:'Autherization faild'}) 
-        return
-    }
+    if(cookie == undefined){renderErrorPage(res , 401);return;}
     const token = cookie.split(' ')[1]
     try{req.userId = emailToken.verifyEmailCheckToken(token).userId}
     catch(err){
-        error = errorReport(err)
-        res.status(error.statusCode).json({message:error.message})   //Place holder will have a seperate html page
+        const {message , statusCode} = errorReport(err)
+        if(statusCode === 500)
+            renderErrorPage(res , 500);
+        else
+            showFlashMessage(statusCode , message , req , res , '0');
     }
     if(req.userId == undefined)
-        res.status(401).json({message:'Unautherized Access'})   //Place holder will have a seperate html page
-    next()
+        renderErrorPage(res , 401)
+    else
+        next()
 }
 
 

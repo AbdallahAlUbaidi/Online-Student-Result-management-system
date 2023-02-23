@@ -65,7 +65,7 @@ router.get('/checkVerify' , confirmationEmail.verifyEmailCheckToken , flashMessa
 {
     const userInfo = await user.findOne({_id:req.userId})
     if(userInfo == undefined)
-        flashMessage.showFlashMessage(404 , 'Could not find user account' , req , res , '0')  //Might be changed into seperate HTML page
+        flashMessage.showFlashMessage(404 , 'Could not find user account' , req , res , '0') 
     else if(userInfo.conformed == false)
         flashMessage.showFlashMessage(409 , 'Email has yet to be verifyed' , req , res , '0')
     else 

@@ -12,9 +12,8 @@
         <%- include('../partials/text-input-field.ejs' , {error:'' , fieldName:'emailAddress' , fieldId:'login-email-field' , placeholder:'Email address' , boostrapIconName:'bi-envelope-fill' , isEmail:true}) %>
         <%- include('../partials/password-input-field.ejs' , {error : '' , fieldName:'password' , fieldId:'login-password-field' , placeholder:'Password'}) %>
         <div class="mb-3 form-check form-checkbox-container">
-          <input type="checkbox" class="form-checkbox-input form-check-input" id="login-form-checkbox-label-me-check">
           <div class="form-checkbox-link-container">
-            <label class="form-check-label form-checkbox-label" for="login-form-checkbox-label-me-check">Remember me</label>
+            <%- include('../partials/form-checkbox.ejs' , {fieldId:'login-remember-me-checkbox' , fieldName:'rememberMe' , labelText:'Remember me'}) %>
             <a href="/login/retrievePassword" class="text-decoration-none form-link">Forgot password</a>
           </div>
         </div>

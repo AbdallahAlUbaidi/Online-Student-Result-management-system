@@ -14,12 +14,8 @@ router.post('/' ,flashMessage.setCachingToOff, async(req , res)=>
 {
     try{
         const userId = req.auth.userId
-        await Faculty.create({
-            userInfo:userId,
-            id_num:req.body.id_num,
-            department:req.body.department,
-            specialty:req.body.specialty
-        })
+        const {id_num , department , specialty , branch} = req.body
+        await Faculty.create({userInfo:userId,id_num,department,specialty , branch})
         res.redirect('/courses')
     }catch(err){
         const errorInfo = errorReport(err)

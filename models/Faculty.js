@@ -43,9 +43,14 @@ const facultySchema = mongoose.Schema(
             minLength:3,
             maxLength:30
         },
+        branch:{
+            type:String,
+            required:[true , 'You must specify your branch'],
+            enum:['information engineering' , 'network engineering'],
+            lowercase:true
+        },
         courses:{
-            type:[Course.Schema],
-            default:[]
+            type:[{type:mongoose.SchemaTypes.ObjectId ,  ref:'Course'}],
         }
     }
 )

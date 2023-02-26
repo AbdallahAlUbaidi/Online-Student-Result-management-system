@@ -18,6 +18,7 @@
             'petrolum technology engineering' , 'biomedical engineering' , 'applied sciences' , 'computer sciences' , 'english language center' , 'continous learning center', 
             'training and workshop center' , 'envoirmental research center' , 'information technology center' , 'nanotechnology and advanced materials research center' ,
             'energy and renewable energies research center']}) %>
+            <%- include('../partials/select-input-field.ejs' , {error:errors.branch , fieldName:'branch' , fieldId:'faculty-branch-field' , selectedOptionText:"Branch" , options:['information engineering' , 'network engineering']}) %>
             <%- include('../partials/form-submit-button.ejs' , {buttonText:'Save'}) %>
         </form>
       </div>

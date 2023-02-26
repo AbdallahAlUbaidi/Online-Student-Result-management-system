@@ -14,13 +14,8 @@ router.post('/' , async(req , res)=>
 {
     try{
         userId = req.auth.userId
-        await Student.create({
-            userInfo:userId,
-            student_id:req.body.student_id,
-            stage:req.body.stage,
-            branch:req.body.branch,
-            study:req.body.study
-        })
+        const {student_id , stage , branch , study} = req.body
+        await Student.create({userInfo:userId,student_id,stage,branch,study})
         res.redirect('/courses') 
     }catch(err){
         const errorInfo = errorReport(err)

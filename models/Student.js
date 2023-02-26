@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const { renderErrorPage } = require('../controllers/errorReport')
 const Course = require('./Course')
+const Grade = require('./Grade')
 const studentSchema = mongoose.Schema(
     {
         userInfo:{
@@ -52,6 +52,9 @@ studentSchema.pre('save' , async function(next){
         if(!this.courses)
             this.courses = []
         const coursesArray = await Course.find({stage:this.stage, $or:[{branch:this.branch} , {branch:'both branches'}]} , {_id:1})
+        coursesArray.forEach(course =>{
+            Grade.create({student:this , course})
+        })
         const updatedCourses = this.courses.concat(coursesArray)
         this.set('courses' , updatedCourses)
         next()

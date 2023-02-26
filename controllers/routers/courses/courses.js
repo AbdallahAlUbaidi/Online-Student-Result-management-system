@@ -3,11 +3,29 @@ const router = express.Router()
 const {errorReport, renderErrorPage} = require('../../errorReport')
 
 const Course = require('../../../models/Course')
-const { auth } = require('googleapis/build/src/apis/abusiveexperiencereport')
+const Faculty = require('../../../models/Faculty')
+
+const rolesMap = {
+    faculty:{
+        coursesPageView:'courses/facultyPages/coursesPage',
+        coursePageView:'courses/facultyPages/coursePage'
+    },
+    branchHead:{
+        coursesPageView:'courses/branchHeadPages/coursesPage',
+        coursePageView:'courses/branchHeadPages/coursePage'
+    },
+    examCommittee:{
+        coursesPageView:'courses/examCommiteePages/coursesPage',
+        coursePageView:'courses/examCommiteePages/coursePage'
+    }
+}
 
 router.get('/' , async(req , res)=>
 {
-    res.render('courses/courses' , {courses:req.info.roleInfo.courses , role:req.info.userInfo.role})
+    const {userInfo , roleInfo} = req.info
+    const {role} = userInfo;
+    const {courses} = roleInfo
+    res.render( rolesMap[role].coursesPageView , {courses , role})
 })
 
 router.get('/createCourse' , (req , res)=>{
@@ -15,22 +33,28 @@ router.get('/createCourse' , (req , res)=>{
 })
 
 router.post('/createCourse' , async(req , res )=>{
+    const {roleInfo , role} = req.info;
+
     try{
-        await Course.create({courseTitle:req.body.courseTitle , stage:req.body.stage , branch:req.body.branch , courseType:req.body.courseType})
+        const {courseTitle , stage , courseType , bothBranches} = req.body;
+        const branch = bothBranches? 'both branches': roleInfo.branch;
+        await Course.createCourse(courseTitle , stage , branch , courseType , roleInfo);
         res.redirect('/courses')
     }catch(err){
-        const errorInfo = errorReport(err)
-        res.render('courses/createCourse' , {errors:errorInfo.errors})
+        const {errors} = errorReport(err)
+        res.render( rolesMap[role] , {errors})
     }
 })
 
 router.get('/:courseTitle' , (req , res)=>{
-    const coursesArray = req.info.roleInfo.courses
-    const courseIndex = coursesArray.findIndex(courseObject => courseObject.courseTitle.replace(/\s/gm , '-') == req.params.courseTitle)
+    const {roleInfo , userInfo} = req.info;
+    const {role} = userInfo;
+    const {courses} = roleInfo
+    const courseIndex = courses.findIndex(courseObject => courseObject.courseTitle.replace(/\s/gm , '-') == req.params.courseTitle)
     if( courseIndex < 0)
         renderErrorPage(res , 404)
     else
-        res.render('courses/course' , {course:coursesArray[courseIndex] , role:req.info.userInfo.role})  //Placeholder
+        res.render( rolesMap[role].coursePageView , {course:courses[courseIndex] , role})  //Placeholder
 })
 
 

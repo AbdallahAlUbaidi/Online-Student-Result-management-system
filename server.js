@@ -37,6 +37,7 @@ const studentRegisterRouter = require('./controllers/routers/register/studentReg
 const facultyRegisterRouter = require('./controllers/routers/register/facultyRegister')
 const emailConfirmationRouter = require('./controllers/routers/email/emailConfirmation')
 const coursesRouter = require('./controllers/routers/courses/courses')
+const gradesRouter = require('./controllers/routers/grades/grades')
 const accessToken = require('./controllers/AuthenticationTokens/accessToken')
 const {hasEnteredRoleInfo , rolesRegisterLinks} = require('./controllers/roleInfo')
 const {errorReport} = require('./controllers/errorReport')
@@ -75,6 +76,7 @@ app.use('/login/retrievePassword' , retrievePasswordRouter)
 app.use('/logout' , logoutRouter)
 app.use('/emailConfirmation' , emailConfirmationRouter)
 app.use('/courses' , coursesRouter)
+app.use('/grades' , gradesRouter)
 
 
 

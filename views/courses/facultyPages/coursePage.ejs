@@ -1,4 +1,4 @@
-<%- include('../partials/flash-message-box.ejs') %>
+<%- include('../../partials/flash-message-box.ejs') %>
 <div class="page-container">
     <nav class="navbar navbar-expand-lg navbar-light  ">
         <div class="container-fluid position-relative">
@@ -15,11 +15,12 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <% if(role === 'faculty') {%>
-                <%- include('../partials/nav-bar-link.ejs' , {link:'#' , linkText:'Delete Course' , customIconClass:'fa fa-minus-square'}) %>
-                <%- include('../partials/nav-bar-link.ejs' , {link:'#' , linkText:'Edit Course' , customIconClass:'bi bi-pencil-fill'}) %>
+                <%- include('../../partials/nav-bar-link.ejs' , {link:'#' , linkText:'Delete Course' , customIconClass:'fa fa-minus-square'}) %>
+                <%- include('../../partials/nav-bar-link.ejs' , {link:'#' , linkText:'Edit Course' , customIconClass:'bi bi-pencil-fill'}) %>
             <% } %>
-            <%- include('../partials/nav-bar-link.ejs' , {link:'/logout' , linkText:'Logout' , customIconClass:'bi bi-x-circle-fill'}) %>
+            <%- include('../../partials/nav-bar-link.ejs' , {link:'/logout' , linkText:'Logout' , customIconClass:'bi bi-x-circle-fill'}) %>
           </ul>
         </div>
       </nav>
+      <table id="grades-table" course="<%- locals.course.courseTitle.replace(/\s/gm , '-') %>" role="faculty"></table>
 </div>

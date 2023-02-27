@@ -1,4 +1,4 @@
-<%- include('../partials/flash-message-box.ejs') %>
+<%- include('../../partials/flash-message-box.ejs') %>
 <div class="page-container">
     <nav class="navbar navbar-expand-lg navbar-light  ">
         <div class="container-fluid position-relative">
@@ -15,9 +15,9 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <% if(role === 'faculty') {%>
-              <%- include('../partials/nav-bar-link.ejs' , {link:'/courses/createCourse' , linkText:'Create Course' , customIconClass:'fa fa-arrow-circle-up'}) %>
+              <%- include('../../partials/nav-bar-link.ejs' , {link:'/courses/createCourse' , linkText:'Create Course' , customIconClass:'fa fa-arrow-circle-up'}) %>
               <% } %>
-            <%- include('../partials/nav-bar-link.ejs' , {link:'/logout' , linkText:'Logout' , customIconClass:'bi bi-x-circle-fill'}) %>
+            <%- include('../../partials/nav-bar-link.ejs' , {link:'/logout' , linkText:'Logout' , customIconClass:'bi bi-x-circle-fill'}) %>
           </ul>
         </div>
       </nav>
@@ -29,7 +29,7 @@
             <% //const thirdStageCourses = locals.courses.filter(course => course.stage === '3rd') %>
             <% //const forthStageCourses = locals.courses.filter(course => course.stage === '4th') %>
             <% locals.courses.forEach(course => { %>
-              <%- include('../partials/course-card.ejs' , {course}) %>
+              <%- include('../../partials/course-card.ejs' , {course}) %>
             <% }) %>
           </div>
       </div>

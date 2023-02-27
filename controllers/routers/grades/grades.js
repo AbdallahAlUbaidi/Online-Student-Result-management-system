@@ -3,40 +3,59 @@ const router = express.Router();
 
 const {errorReport , renderErrorPage} = require('../../errorReport')
 const {showFlashMessage} = require('../../flashMessage')
-
+const {parseGrades} = require('../../parseGrades');
 const Grade = require('../../../models/Grade')
 const Course = require('../../../models/Course')
 const Student = require('../../../models/Student')
 const Faculty = require('../../../models/Faculty')
 
+
 //All roles aside from student
-router.get('/' , (req , res)=>{
+
+router.get('/:courseTitle/faculty' , async (req , res)=>{
+    const {fields , records} = await parseGrades(['gradeStatus' , 'evaluationScore' , 'midTermScore'] , req.params.courseTitle , res)
+    res.json({fields , records})
+})
+
+router.get(':courseTitle/branchHead' , async (req , res)=>{
+
+})
+
+router.get(':courseTitle/examCommittee' , async (req , res)=>{
+
+})
+
+router.get('/student' , async (req , res)=>{
 
 })
 
 //Only faculty and exam committee
-router.post('/save' , (req , res)=>{
+router.post(':course/:role/save' , async (req , res)=>{
 
 })
 
 //Only faculty
-router.post('/submit' , (req , res)=>{
+router.post(':course/submit' , (req , res)=>{
 
 })
 
 //Only branch head
-router.post('/approve' , (req , res)=>{
+router.post(':course/approve' , (req , res)=>{
 
 })
 
 //Only branch head
-router.post('/reject' , (req , res)=>{
+router.post(':course/reject' , (req , res)=>{
 
 })
 
 //Only exam committee
-router.post('/publish' , (req , res)=>{
+router.post(':course/publish' , (req , res)=>{
     
 })
+
+
+
+
 
 module.exports = router;

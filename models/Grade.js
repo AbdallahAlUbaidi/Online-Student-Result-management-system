@@ -18,7 +18,7 @@ const gradeSchema = mongoose.Schema({
         type:String,
         lowerCase:true,
         default:'notGraded',
-        enum:['notGraded' , 'pending' , 'approvedPending' , 'finalized' , 'published']
+        enum:['notGraded' , 'pendingApproval' , 'pendingFinalExam' , 'finalized' , 'published']
 
     },
     evaluationScore:{

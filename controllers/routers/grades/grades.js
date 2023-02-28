@@ -13,16 +13,18 @@ const Faculty = require('../../../models/Faculty')
 //All roles aside from student
 
 router.get('/:courseTitle/faculty' , async (req , res)=>{
-    const {fields , records} = await parseGrades(['gradeStatus' , 'evaluationScore' , 'midTermScore'] , req.params.courseTitle , res)
+    const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'evaluationScore' , 'midTermScore'] , req.params.courseTitle , res)
     res.json({fields , records})
 })
 
-router.get(':courseTitle/branchHead' , async (req , res)=>{
-
+router.get('/:courseTitle/branchHead' , async (req , res)=>{
+    const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'preFinalScore'] , req.params.courseTitle , res)
+    res.json({fields , records})
 })
 
-router.get(':courseTitle/examCommittee' , async (req , res)=>{
-
+router.get('/:courseTitle/examCommittee' , async (req , res)=>{
+    const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'preFinalScore' , 'finalExamScore' , 'totalScore'] , req.params.courseTitle , res)
+    res.json({fields , records})
 })
 
 router.get('/student' , async (req , res)=>{

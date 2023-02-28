@@ -44,12 +44,12 @@ function getGradesRecords(grades , fields){
     grades.forEach(async function(grade){
 
         let newRecord = {};
-        newRecord.studentFullName = {};
-        newRecord.studentFullName.value = grade.student.studentFullName;
-        newRecord.studentFullName.isWritable = false;
-        fields.forEach(field =>{
+        fields.forEach(async field =>{
             newRecord[field] = {};
-            newRecord[field].value =  grade[field];
+            if(field === 'studentFullName')
+                newRecord[field].value =  grade.student[field];
+            else
+                newRecord[field].value =  await grade[field];
             newRecord[field].isWritable = gradeWritableField.faculty(grade.gradeStatus , field);
         })
         records.push(newRecord);
@@ -57,12 +57,8 @@ function getGradesRecords(grades , fields){
     return records;
 }
 
-function getGradesFileds(fieldNames){
+function getGradesFieleds(fieldNames){
     let fields = [];
-    let studentNameField = {};
-    studentNameField.name = 'studentFullName';
-    studentNameField.displayName = displayNameMap.studentFullName;
-    fields.push(studentNameField);
     fieldNames.forEach(field =>{
         let newField = {};
         newField.name = field;
@@ -79,7 +75,7 @@ async function parseGrades(fieldsNames , courseTitle , res){
         courseId = course._id
        
         const grades = await Grade.find({course:courseId})
-        .select(fieldsNames
+        .select(fieldsNames.slice(1)
         .concat(['student'])
         .join(' '))
         .populate({
@@ -87,7 +83,7 @@ async function parseGrades(fieldsNames , courseTitle , res){
             select:'studentFullName'
         })
         const records = getGradesRecords(grades , fieldsNames);
-        const fields = getGradesFileds(fieldsNames)
+        const fields = getGradesFieleds(fieldsNames)
         return {fields , records};
     }catch(err){
         const {errors , statusCode , message} = errorReport(err);
@@ -97,4 +93,4 @@ async function parseGrades(fieldsNames , courseTitle , res){
 }
 
 
-module.exports = {parseGrades , getGradesRecords , getGradesFileds , displayNameMap  , gradeWritableField}
+module.exports = {parseGrades , getGradesRecords , getGradesFileds: getGradesFieleds , displayNameMap  , gradeWritableField}

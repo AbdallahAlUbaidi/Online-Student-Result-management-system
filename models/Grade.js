@@ -27,6 +27,11 @@ const gradeSchema = mongoose.Schema({
     },
     midTermScore:{
         type:mongoose.Schema.Types.Mixed,
+        set:value=>{
+            if(value === 'ABSENT')
+                return value;
+            return parseFloat(value);
+        },
         validate:{
             validator:value => typeof value === 'number' || (typeof value === 'string' && value.toUpperCase() === 'ABSENT'),
             message: props => `${props.value} is an invalid Score Must be a number or "ABSENT"`
@@ -52,9 +57,9 @@ gradeSchema.virtual('preFinalScore')
 .get(async function(){
     const course = await this.populate('course');
     const maxScore = course.courseType === 'theoretical'? 30 : 50;
-    let {midTermScore , evaluationScore} =await this;
-    if(typeof midTermScore === 'String');
-        midTermScore = 0;
+    let {midTermScore , evaluationScore} = this;
+    if(typeof midTermScore === 'String')
+        midTermScore = 0;    
     const preFinalScore = evaluationScore + midTermScore;
     if(preFinalScore > maxScore)
         throw new mongoose.Error.ValidationError(`Pre final score must not be higher than ${maxScore}`)

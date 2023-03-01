@@ -39,11 +39,11 @@ const displayNameMap = {
 }
 
 
-function getGradesRecords(grades , fields){
+async function getGradesRecords(grades , fields){
     let records = [];
     grades.forEach(async function(grade){
-
         let newRecord = {};
+        newRecord.studentId = grade.student._id; //Tempary will be hashed and mapped into a cash
         fields.forEach(async field =>{
             newRecord[field] = {};
             if(field === 'studentFullName')
@@ -82,7 +82,7 @@ async function parseGrades(fieldsNames , courseTitle , res){
             path:'student',
             select:'studentFullName'
         })
-        const records = getGradesRecords(grades , fieldsNames);
+        const records = await getGradesRecords(grades , fieldsNames);
         const fields = getGradesFieleds(fieldsNames)
         return {fields , records};
     }catch(err){

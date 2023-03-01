@@ -38,26 +38,26 @@ function makeTableHeadings(fields , table  , tableHeadingClasses = ''){
 
 function makeTableRecord(recordValues , fields , tableRecordClasses = '' , tableCellClasses = ''){
     const tableRecord = document.createElement('tr');
+    tableRecord.setAttribute('student-id' , recordValues.studentId);
     if(tableCellClasses)
         tableRecord.classList.add(tableRecordClasses);
     fields.forEach(field =>{
         const {value , isWritable} = recordValues[field.name];
-        const tableCell = makeTableCell(value , isWritable , tableCellClasses);
+        const tableCell = makeTableCell(value , isWritable ,  field.name , tableCellClasses);
         tableRecord.appendChild(tableCell);
     })
     return tableRecord;
 }
 
-function makeTableCell(value , isWritable , tableCellClasses = ''){
-    console.log(value , !value)
+function makeTableCell(value , isWritable  , field , tableCellClasses = ''){
     const tableCell = document.createElement('td');
     if(tableCellClasses)
         tableCell.classList.add(tableCellClasses);
     if(!isWritable)
         tableCell.innerHTML = value? value: '';
     else if(!value)
-        tableCell.innerHTML = '<input type = "text">';
+        tableCell.innerHTML = `<input type = "text" field=${field}>`;
     else
-        tableCell.innerHTML = `<input type = "text" value = "${value}">`;
+        tableCell.innerHTML = `<input type = "text" field=${field} value = "${value}">`;
     return tableCell;
 }

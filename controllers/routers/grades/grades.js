@@ -14,17 +14,17 @@ const { updateOne } = require('../../../models/Faculty');
 //All roles aside from student
 
 router.get('/:courseTitle/faculty' , async (req , res)=>{
-    const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'evaluationScore' , 'midTermScore' , 'preFinalScore'] , req.params.courseTitle , res)
+    const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'evaluationScore' , 'midTermScore'] , req.params.courseTitle , res , 'faculty')
     res.json({fields , records})
 })
 
 router.get('/:courseTitle/branchHead' , async (req , res)=>{
-    const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'preFinalScore'] , req.params.courseTitle , res)
+    const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'preFinalScore'] , req.params.courseTitle , res , 'branchHead')
     res.json({fields , records})
 })
 
 router.get('/:courseTitle/examCommittee' , async (req , res)=>{
-    const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'preFinalScore' , 'finalExamScore' , 'totalScore'] , req.params.courseTitle , res)
+    const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'preFinalScore' , 'finalExamScore'  , 'totalScore'] , req.params.courseTitle , res , 'examCommittee')
     res.json({fields , records})
 })
 
@@ -55,7 +55,6 @@ router.post('/:courseTitle/save' , async (req , res)=>{
         res.sendStatus(200);
     }catch(err){
         const {statusCode} = errorReport(err)
-        console.log({statusCode}); //Debug
         renderErrorPage(statusCode , res);
     }
 })

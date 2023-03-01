@@ -41,6 +41,11 @@ const gradeSchema = mongoose.Schema({
     },
     finalExamScore:{
         type:mongoose.Schema.Types.Mixed,
+        set:value=>{
+            if(value === 'ABSENT')
+                return value;
+            return parseFloat(value);
+        },
         validate:{
             validator:value => typeof value === 'number' || (typeof value === 'string' && value.toUpperCase() === 'ABSENT'),
             message: props => `${props.value} is an invalid Score Must be a number or "ABSENT"`
@@ -68,7 +73,8 @@ gradeSchema.virtual('preFinalScore')
 
 gradeSchema.virtual('totalScore')
 .get(async function(){
-    const {finalExamScore , preFinalScore} = await this;
+    let finalExamScore = this.finalExamScore;
+    let preFinalScore = await this.preFinalScore;
     if(typeof finalExamScore === 'String')
         finalExamScore = 0;
     const totalScore = preFinalScore + finalExamScore;

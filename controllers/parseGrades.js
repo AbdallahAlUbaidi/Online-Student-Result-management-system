@@ -39,7 +39,7 @@ const displayNameMap = {
 }
 
 
-async function getGradesRecords(grades , fields){
+async function getGradesRecords(grades , fields , role){
     let records = [];
     grades.forEach(async function(grade){
         let newRecord = {};
@@ -50,14 +50,14 @@ async function getGradesRecords(grades , fields){
                 newRecord[field].value =  grade.student[field];
             else
                 newRecord[field].value =  await grade[field];
-            newRecord[field].isWritable = gradeWritableField.faculty(grade.gradeStatus , field);
+            newRecord[field].isWritable = gradeWritableField[role](grade.gradeStatus , field);
         })
         records.push(newRecord);
     })
     return records;
 }
 
-function getGradesFieleds(fieldNames){
+function getGradesFields(fieldNames){
     let fields = [];
     fieldNames.forEach(field =>{
         let newField = {};
@@ -68,12 +68,11 @@ function getGradesFieleds(fieldNames){
     return fields;
 }
 
-async function parseGrades(fieldsNames , courseTitle , res){
+async function parseGrades(fieldsNames , courseTitle , res , role){
     try{
         courseTitle = courseTitle.split('-').join(' ');
         const course = await Course.findOne({courseTitle}) //Temprary way to get course
         courseId = course._id
-       
         const grades = await Grade.find({course:courseId})
         .select(fieldsNames.slice(1)
         .concat(['student'])
@@ -82,8 +81,10 @@ async function parseGrades(fieldsNames , courseTitle , res){
             path:'student',
             select:'studentFullName'
         })
-        const records = await getGradesRecords(grades , fieldsNames);
-        const fields = getGradesFieleds(fieldsNames)
+        const x = await Grade.find({course:courseId}).select('totalScore')
+        console.log(x)
+        const records = await getGradesRecords(grades , fieldsNames , role);
+        const fields = getGradesFields(fieldsNames)
         return {fields , records};
     }catch(err){
         const {errors , statusCode , message} = errorReport(err);
@@ -93,4 +94,4 @@ async function parseGrades(fieldsNames , courseTitle , res){
 }
 
 
-module.exports = {parseGrades , getGradesRecords , getGradesFileds: getGradesFieleds , displayNameMap  , gradeWritableField}
+module.exports = {parseGrades , getGradesRecords , getGradesFileds: getGradesFields , displayNameMap  , gradeWritableField}

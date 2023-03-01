@@ -60,10 +60,11 @@ const gradeSchema = mongoose.Schema({
 
 gradeSchema.virtual('preFinalScore')
 .get(async function(){
-    const course = await this.populate('course');
+    const grade = this;
+    const course = await grade.populate('course');
     const maxScore = course.courseType === 'theoretical'? 30 : 50;
-    let {midTermScore , evaluationScore} = this;
-    if(typeof midTermScore === 'String')
+    let {evaluationScore , midTermScore} = grade;
+    if(typeof midTermScore === 'string')
         midTermScore = 0;    
     const preFinalScore = evaluationScore + midTermScore;
     if(preFinalScore > maxScore)
@@ -73,9 +74,10 @@ gradeSchema.virtual('preFinalScore')
 
 gradeSchema.virtual('totalScore')
 .get(async function(){
-    let finalExamScore = this.finalExamScore;
-    let preFinalScore = await this.preFinalScore;
-    if(typeof finalExamScore === 'String')
+    const grade = this;
+    let finalExamScore = grade.finalExamScore;
+    const preFinalScore = await grade.preFinalScore;
+    if(typeof finalExamScore === 'string')
         finalExamScore = 0;
     const totalScore = preFinalScore + finalExamScore;
     if(totalScore > 100 || totalScore < 0)

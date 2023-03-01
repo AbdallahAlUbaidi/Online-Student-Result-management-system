@@ -3,6 +3,7 @@ const {errorReport, renderErrorPage} = require('./errorReport')
 
 const Grade = require('../models/Grade')
 const Course = require('../models/Course')
+const e = require('connect-flash')
 
 
 const gradeWritableField = {
@@ -41,19 +42,22 @@ const displayNameMap = {
 
 async function getGradesRecords(grades , fields , role){
     let records = [];
-    grades.forEach(async function(grade){
+    for(j in grades){
+        let grade = grades[j];
         let newRecord = {};
         newRecord.studentId = grade.student._id; //Tempary will be hashed and mapped into a cash
-        fields.forEach(async field =>{
+        for(i in fields){
+            let field = fields[i]
             newRecord[field] = {};
             if(field === 'studentFullName')
                 newRecord[field].value =  grade.student[field];
             else
                 newRecord[field].value =  await grade[field];
             newRecord[field].isWritable = gradeWritableField[role](grade.gradeStatus , field);
-        })
+        }
         records.push(newRecord);
-    })
+
+    }
     return records;
 }
 
@@ -72,17 +76,12 @@ async function parseGrades(fieldsNames , courseTitle , res , role){
     try{
         courseTitle = courseTitle.split('-').join(' ');
         const course = await Course.findOne({courseTitle}) //Temprary way to get course
-        courseId = course._id
-        const grades = await Grade.find({course:courseId})
-        .select(fieldsNames.slice(1)
-        .concat(['student'])
-        .join(' '))
-        .populate({
+        const courseId = course._id
+        const grades = await Grade.find({course:courseId}).populate({
             path:'student',
             select:'studentFullName'
         })
-        const x = await Grade.find({course:courseId}).select('totalScore')
-        console.log(x)
+
         const records = await getGradesRecords(grades , fieldsNames , role);
         const fields = getGradesFields(fieldsNames)
         return {fields , records};
@@ -94,4 +93,4 @@ async function parseGrades(fieldsNames , courseTitle , res , role){
 }
 
 
-module.exports = {parseGrades , getGradesRecords , getGradesFileds: getGradesFields , displayNameMap  , gradeWritableField}
+module.exports = {parseGrades , getGradesRecords , getGradesFields , displayNameMap  , gradeWritableField}

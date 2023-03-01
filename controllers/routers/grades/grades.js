@@ -24,7 +24,7 @@ router.get('/:courseTitle/branchHead' , async (req , res)=>{
 })
 
 router.get('/:courseTitle/examCommittee' , async (req , res)=>{
-    const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'preFinalScore' , 'finalExamScore'  , 'totalScore'] , req.params.courseTitle , res , 'examCommittee')
+    const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'finalExamScore'  , 'totalScore'] , req.params.courseTitle , res , 'examCommittee')
     res.json({fields , records})
 })
 

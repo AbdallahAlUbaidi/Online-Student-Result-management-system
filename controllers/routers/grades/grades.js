@@ -34,6 +34,8 @@ router.get('/student' , async (req , res)=>{
 
 //Only faculty and exam committee
 router.post('/:courseTitle/save' , async (req , res)=>{
+    const {courseTitle} = req.params;
+    const course = await Course.findOne({courseTitle})
     const updatedRecordsArray = req.body;
     let bulkOperations = [];
     const getUpdatedFields = (record)=>{
@@ -60,8 +62,28 @@ router.post('/:courseTitle/save' , async (req , res)=>{
 })
 
 //Only faculty
-router.post('/:courseTitle/submit' , (req , res)=>{
-
+router.post('/:courseTitle/submit' , async (req , res)=>{
+    try{
+        let {courseTitle} = req.params;
+        courseTitle = courseTitle.split('-').join(' ');
+        const course = await Course.findOne({courseTitle})
+        courseId = course._id;
+        const submitedRecords = req.body;
+        let bulkOperations = [];
+        submitedRecords.forEach(record =>{
+            bulkOperations.push({
+                updateOne:{
+                    filter:{course:courseId , student:record.studentId , gradeStatus:'notGraded'},
+                    update:{gradeStatus:'pendingApproval'}
+                }
+            })
+        })
+        await Grade.bulkWrite(bulkOperations);
+        res.sendStatus(200);
+    }catch(err){
+        const {statusCode} = errorReport(err)
+        renderErrorPage(res ,statusCode);
+    }
 })
 
 //Only branch head

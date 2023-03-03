@@ -36,8 +36,9 @@ function parseStudentRecordsFromTable(){
     return studentRecords;
 }
 
-saveButton.addEventListener('click' , ()=>{
-    saveGrades(table.getAttribute('course'))
-})
-
-
+if(saveButton)
+{
+    saveButton.addEventListener('click' , ()=>{
+        saveGrades(table.getAttribute('course'))
+    })    
+}

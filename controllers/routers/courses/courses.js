@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const {errorReport, renderErrorPage} = require('../../errorReport')
+const { uploadImage } = require('../../imageUpload')
+const {imageResize} = require('../../imageResize')
 
 const Course = require('../../../models/Course')
 const Faculty = require('../../../models/Faculty')
@@ -29,20 +31,21 @@ router.get('/' , async(req , res)=>
 })
 
 router.get('/createCourse' , (req , res)=>{
-    res.render('courses/createCourse')
+    res.render('courses/createCourse' , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0]})
 })
 
-router.post('/createCourse' , async(req , res )=>{
+router.post('/createCourse' , uploadImage , async(req , res )=>{
     const {roleInfo , role} = req.info;
-
     try{
         const {courseTitle , stage , courseType , bothBranches} = req.body;
         const branch = bothBranches? 'both branches': roleInfo.branch;
+        if(req.file)
+            await imageResize(res , req , req.file.buffer , courseTitle);
         await Course.createCourse(courseTitle , stage , branch , courseType , roleInfo);
         res.redirect('/courses')
     }catch(err){
         const {errors} = errorReport(err)
-        res.render( rolesMap[role] , {errors})
+        res.render( 'courses/createCourse' , {errors})
     }
 })
 

@@ -4,35 +4,13 @@ if(table)
 {
     window.addEventListener('load' , async ()=>{
         const {fields , records} = await getGrades(table.attributes.role.value , table.attributes.course.value);
-        makeTableHeadings(fields , table,"col","text-white");
+        makeTableHeadings(fields , table , "" ,'bg-secondary text-white col');
         records.forEach(record =>{
-            const newTableRecord = makeTableRecord(record , fields,"row");
+            const newTableRecord = makeTableRecord(record , fields , "" , "" ,  'input-course');
             table.appendChild(newTableRecord);
         })
     });
 }
-// كلاسات table ما عرفت شحط
-// انت حطهن
-// {/* <div class="container my-5   container-e">
-//   <div class="row  ">
-//     <div class="col-md-12">
-//       <table class="table table-hover  ">
-//         <thead class="bg-secondary text-white">
-//           <tr>
-//             <th scope="col" >Student</th>
-//             <th scope="col" >grade status</th>
-//             <th scope="col">Daily grade</th>
-//             <th scope="col">Mid grade</th>
-//              */}
-          
-
-//مال input 
-//input-animation   
-//input-course
-//bottom span-course
-//right span-course
-//top span-course
-//left span-course
 
 async function getGrades(role , courseTitle){
     try{
@@ -46,39 +24,74 @@ async function getGrades(role , courseTitle){
     }
 }
 
-function makeTableHeadings(fields , table  , tableHeadingClasses = ''){
+function makeTableHeadings(fields , table  , tableHeadingCellClasses = "" , tableHeadingClasses = ""){
+    const thClasses = tableHeadingCellClasses.trim().split(' ');
+    const tHeadClasses = tableHeadingClasses.trim().split(' ');
+    const tHead = document.createElement('thead')
+    tHeadClasses.forEach(className =>{
+        tHead.classList.add(className)
+    })
+    const thRow = document.createElement('tr')
     fields.forEach(field =>{
         const tableHeading = document.createElement('th');
         tableHeading.innerHTML = field.displayName;
-        if(tableHeadingClasses)
-            tableHeading.classList.add(tableHeadingClasses);
-        table.appendChild(tableHeading);
+        if(tableHeadingCellClasses)
+        thClasses.forEach(className =>{
+                tableHeading.classList.add(className)
+            })
+            tableHeading.scope = 'col'
+        thRow.appendChild(tableHeading);
+        tHead.appendChild(thRow)
     })
+    table.appendChild(tHead)
 }
 
 
-function makeTableRecord(recordValues , fields , tableRecordClasses = '' , tableCellClasses = ''){
+function makeTableRecord(recordValues , fields , tableRecordClasses = '' , tableCellClasses = '' , inputFieldClasses = ''){
     const tableRecord = document.createElement('tr');
     tableRecord.setAttribute('student-id' , recordValues.studentId);
-    if(tableCellClasses)
+    if(tableRecordClasses)
         tableRecord.classList.add(tableRecordClasses);
     fields.forEach(field =>{
         const {value , isWritable} = recordValues[field.name];
-        const tableCell = makeTableCell(value , isWritable ,  field.name , tableCellClasses);
+        const tableCell = makeTableCell(value , isWritable ,  field.name , tableCellClasses , inputFieldClasses);
         tableRecord.appendChild(tableCell);
     })
     return tableRecord;
 }
 
-function makeTableCell(value , isWritable  , field , tableCellClasses = ''){
+function makeTableCell(value , isWritable  , field , tableCellClasses = '' , inputFieldClasses = ''){
     const tableCell = document.createElement('td');
-    if(tableCellClasses)
-        tableCell.classList.add(tableCellClasses);
+    const tdClasses = tableCellClasses.trim().split(' ')
+    console.log(inputFieldClasses)
+    if(tableCellClasses){
+        tdClasses.forEach(className =>{
+            tableCell.classList.add(className)
+        })
+    }
     if(!isWritable)
+    {
         tableCell.innerHTML = value? value: '';
+        tableCell.scope = 'row'
+    }
     else if(!value)
-        tableCell.innerHTML = `<input type = "text" field=${field}>`;
+        tableCell.innerHTML = `
+        <div class = "input-animation">
+            <input type = "text" field=${field} class = "${inputFieldClasses}" placeholder = 'Enter Score'>
+            <span class="bottom span-course"></span>
+            <span class="right span-course"></span>
+            <span class="top span-course"></span>
+            <span class="left span-course"></span>
+        </div>`;
     else
-        tableCell.innerHTML = `<input type = "text" field=${field} value = "${value}">`;
+        tableCell.innerHTML = `
+        <div class = "input-animation">
+            <input type = "text" field=${field} value = "${value}" class = "${inputFieldClasses} placeholder = 'Enter Score'>
+            <span class="bottom span-course"></span>
+            <span class="right span-course"></span>
+            <span class="top span-course"></span>
+            <span class="left span-course"></span>
+        </div>
+        `;
     return tableCell;
 }

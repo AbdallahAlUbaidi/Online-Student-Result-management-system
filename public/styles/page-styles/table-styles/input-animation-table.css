@@ -1,0 +1,94 @@
+.input-course {
+    width: 6.5em;
+    color: rgb(0, 0, 0);
+    font-size: inherit;
+    font-family: inherit;
+   background-color:rgba(237, 237, 237, 0.124) ;
+   
+    padding: 0.35em 0.45em;
+    border: 1.5px solid rgb(217, 211, 211);
+    transition: background-color 0.3s ease-in-out;
+    text-align: center !important;
+   
+   
+  }
+  
+  .input-course:focus {
+    outline: none;
+  }
+  
+  .input-course::placeholder {
+    color: hsla(0, 4%, 5%, 0.6);
+  }
+  
+  .span-course {
+    position: absolute;
+    background-color: #3d52d5;
+    transition: transform 0.5s ease;
+   
+  }
+  
+  .bottom,
+  .top {
+    height: 2px;
+    left: 0;
+    right: 0;
+    transform: scaleX(0);
+   
+  }
+  
+  .left,
+  .right {
+    width: 2px;
+    top: 0;
+    bottom: 0;
+    transform: scaleY(0);
+   
+  }
+  
+  .bottom {
+    bottom: 0;
+    transform-origin: bottom right;
+  
+  }
+  
+  input:focus ~ .bottom {
+    transform-origin: bottom left;
+    transform: scaleX(1);
+  }
+  
+  .right {
+    right: 0;
+    transform-origin: top right;
+  }
+  
+  input:focus ~ .right {
+    transform-origin: bottom right;
+    transform: scaleY(1);
+  }
+  
+  .top {
+    top: 0;
+    transform-origin: top left;
+  }
+  
+  input:focus ~ .top {
+    transform-origin: top right;
+    transform: scaleX(1);
+  }
+  
+  .left {
+    left: 0;
+    transform-origin: bottom left;
+  }
+  
+  input:focus ~ .left {
+    transform-origin: top left;
+    transform: scaleY(1);
+  }
+  .input-animation {
+    position: relative;
+    width: 6.5em;
+  margin: 0 auto !important;
+  }
+  

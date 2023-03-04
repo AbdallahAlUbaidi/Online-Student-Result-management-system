@@ -1,5 +1,6 @@
 @import url("./nav-bar.css");
 @import url("./course-card.css");
+@import url("./side-menu-styles/side-menu-main.css");
 
 .page-container {
   font-family: sans-serif !important;
@@ -44,10 +45,10 @@
   color: #ffffff;
 }
 
-@media (max-width: 450px) {
+/* @media (max-width: 450px) {
   .container {
     width: 80vw;
     margin-top: 3vh;
     background-color: rgba(244, 244, 244, 0.379) !important;
   }
-}
+} */

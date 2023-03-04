@@ -4,14 +4,35 @@ if(table)
 {
     window.addEventListener('load' , async ()=>{
         const {fields , records} = await getGrades(table.attributes.role.value , table.attributes.course.value);
-        makeTableHeadings(fields , table);
+        makeTableHeadings(fields , table,"col","text-white");
         records.forEach(record =>{
-            const newTableRecord = makeTableRecord(record , fields);
+            const newTableRecord = makeTableRecord(record , fields,"row");
             table.appendChild(newTableRecord);
         })
     });
 }
+// كلاسات table ما عرفت شحط
+// انت حطهن
+// {/* <div class="container my-5   container-e">
+//   <div class="row  ">
+//     <div class="col-md-12">
+//       <table class="table table-hover  ">
+//         <thead class="bg-secondary text-white">
+//           <tr>
+//             <th scope="col" >Student</th>
+//             <th scope="col" >grade status</th>
+//             <th scope="col">Daily grade</th>
+//             <th scope="col">Mid grade</th>
+//              */}
+          
 
+//مال input 
+//input-animation   
+//input-course
+//bottom span-course
+//right span-course
+//top span-course
+//left span-course
 
 async function getGrades(role , courseTitle){
     try{

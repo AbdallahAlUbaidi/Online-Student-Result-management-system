@@ -46,6 +46,10 @@
     margin-top: 9px !important;
     
   }
+  .icon-course{
+    color: rgb(96, 95, 95);
+    transition: all 0.13s ease;
+  }
   .navbar-brand:hover{
   transform: scale(1.65) !important;
   }

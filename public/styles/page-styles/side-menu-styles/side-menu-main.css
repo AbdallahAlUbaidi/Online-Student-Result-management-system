@@ -33,7 +33,12 @@
     margin-bottom: 18px !important;
   }
   
- 
+  @media (min-width:1900px) {
+    .sidebar:hover .sidebar-toggle{
+      margin-left: 6vw;
+    }
+    
+  }
   
 
 

@@ -56,7 +56,57 @@ const gradeSchema = mongoose.Schema({
 
 })
 
+// gradeSchema.statics.getNumberOfAbsencesInMid = async function(courseId){
+//     const grades = await this.find({course:courseId})
+//     const numAbsences = grades.reduce((total , grade)=>{
+//         if(grade.midTermScore === "ABSENT")
+//             return total + 1;
+//         return total
+//     } , 0);
+//     return numAbsences;
 
+// }
+
+// gradeSchema.statics.getNumberOfAbsencesInFinal = async function(courseId){
+//     const grades = await this.find({course:courseId});
+//     const numAbsences = grades.reduce((total , grade) => {
+//         if(grade.finalExamScore === "ABSENT")
+//             return total + 1;
+//         return total
+//     } , 0);
+//     return numAbsences;
+// }
+
+// gradeSchema.statics.getMidExamScoreMeanValue = async function (courseId) {
+//     const grades = await this.find({course:courseId})
+//     const totalSum = grades.reduce((total , grade) => {
+//         if(grade.midTermScore === 'ABSENT');
+//             return total;
+//         return total + 1;
+//     } , 0);
+//     return totalSum / grades.length;
+    
+// }
+
+// gradeSchema.statics.getPreFinalScoreMeanValue = async function (courseId) {
+//     const grades = await this.find({course:courseId});
+//     const totalSum = grades.reduce((total , grade) => {
+//         if(grade === 'ABSENT')
+//             return total;
+//         return total + 1;
+//     } , 0);
+//     return totalSum / gredes.length;
+// }
+
+// gradeSchema.statics.getFinalExamScoreMeanValue = async function (courseId) {
+//     const grades = await this.find({course:courseId})
+//     const totalSum = grades.reduce((total , grade) => {
+//         if(Grade.finalExamScore === 'ABSENT');
+//             return total;
+//         return total + 1;
+//     } , 0);
+//     return totalSum / grades.length;
+// }
 
 gradeSchema.virtual('preFinalScore')
 .get(async function(){

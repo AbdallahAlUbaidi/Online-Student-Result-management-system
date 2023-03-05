@@ -34,30 +34,42 @@ router.get('/student' , async (req , res)=>{
 
 //Only faculty and exam committee
 router.post('/:courseTitle/save' , async (req , res)=>{
-    const {courseTitle} = req.params;
+    const {role} = req.info.userInfo;
+    const gradeStageRequirement = role === 'faculty' ? 'notGraded' : 'pendingFinalExam' //Temprary
+    let {courseTitle} = req.params;
+    courseTitle = courseTitle.split('-').join(' ');
     const course = await Course.findOne({courseTitle})
+    const courseId = course._id;
     const updatedRecordsArray = req.body;
     let bulkOperations = [];
     const getUpdatedFields = (record)=>{
         const fields = Object.keys(record);
-        let updateObj = {}
-        fields.forEach(field =>{updateObj[field] = record[field]})
+        let updateObj = {};
+        fields.forEach(field => {
+            if(field !== 'studentId'){
+                updateObj['$set'] = updateObj['$set'] || {};
+                updateObj['$set'][field] = record[field];
+        }
+        });
         return updateObj;
     }
     updatedRecordsArray.forEach(async record =>{
-        bulkOperations.push({
-            updateOne:{
-                filter:{student:record.studentId},
-                update:getUpdatedFields(record)
-            }
-        })
+        const updatedFields = getUpdatedFields(record);
+        if(Object.keys(updatedFields).length !== 0)
+            bulkOperations.push({
+                updateOne:{
+                    filter:{student:record.studentId , course:courseId , gradeStatus:gradeStageRequirement},
+                    update:updatedFields
+                }
+            })
     })
     try{
-        const results = await Grade.bulkWrite(bulkOperations);
+        if(bulkOperations.length !== 0)
+             await Grade.bulkWrite(bulkOperations);
         res.sendStatus(200);
     }catch(err){
-        const {statusCode} = errorReport(err)
-        renderErrorPage(statusCode , res);
+        const {statusCode , message , errors} = errorReport(err)
+        res.status(statusCode).json({ message , errors});
     }
 })
 
@@ -67,7 +79,7 @@ router.post('/:courseTitle/submit' , async (req , res)=>{
         let {courseTitle} = req.params;
         courseTitle = courseTitle.split('-').join(' ');
         const course = await Course.findOne({courseTitle})
-        courseId = course._id;
+        const courseId = course._id;
         const submitedRecords = req.body;
         let bulkOperations = [];
         submitedRecords.forEach(record =>{

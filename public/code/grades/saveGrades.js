@@ -18,13 +18,14 @@ async function saveGrades(courseTitle){
 
 function parseStudentRecordsFromTable(){
     let studentRecords = [];
-    const tableRows = document.querySelectorAll('table tr');
+    const tableRows = document.querySelectorAll('table tbody tr');
     tableRows.forEach(row =>{
         let record = {};
         const cellsArray = Array.from(row.children).filter(cell => cell.childElementCount === 1);       
         record.studentId = row.getAttribute('student-id');
         cellsArray.forEach(cell => {
-            const inputField = cell.firstElementChild;
+            const inputFieldContainer = cell.firstElementChild;
+            const inputField = inputFieldContainer.firstElementChild;
             const field = inputField.getAttribute('field');
             const value = inputField.value;
             if(value)

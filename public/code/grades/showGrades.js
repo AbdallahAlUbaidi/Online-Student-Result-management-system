@@ -5,10 +5,12 @@ if(table)
     window.addEventListener('load' , async ()=>{
         const {fields , records} = await getGrades(table.attributes.role.value , table.attributes.course.value);
         makeTableHeadings(fields , table , "" ,'bg-secondary text-white col');
+        const tableBody = document.createElement("tbody")
         records.forEach(record =>{
             const newTableRecord = makeTableRecord(record , fields , "" , "" ,  'input-course');
-            table.appendChild(newTableRecord);
+            tableBody.appendChild(newTableRecord);
         })
+        table.appendChild(tableBody);
     });
 }
 
@@ -63,7 +65,6 @@ function makeTableRecord(recordValues , fields , tableRecordClasses = '' , table
 function makeTableCell(value , isWritable  , field , tableCellClasses = '' , inputFieldClasses = ''){
     const tableCell = document.createElement('td');
     const tdClasses = tableCellClasses.trim().split(' ')
-    console.log(inputFieldClasses)
     if(tableCellClasses){
         tdClasses.forEach(className =>{
             tableCell.classList.add(className)

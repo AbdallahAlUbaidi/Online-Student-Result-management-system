@@ -93,8 +93,9 @@ router.post('/:courseTitle/submit' , async (req , res)=>{
         await Grade.bulkWrite(bulkOperations);
         res.sendStatus(200);
     }catch(err){
-        const {statusCode} = errorReport(err)
-        renderErrorPage(res ,statusCode);
+        const {statusCode , message , errors} = errorReport(err)
+        res.status(statusCode).json({ message , errors});
+
     }
 })
 

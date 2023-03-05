@@ -1,6 +1,7 @@
 if(submitButton){
   submitButton.addEventListener('click' , async ()=>{
-    const rows = Array.from(document.querySelectorAll('table tr'));
+    const rows = Array.from(document.querySelectorAll('table tbody tr'));
+    console.log(rows)
     let records = [];
     rows.forEach(row =>{
       const newRecord = {studentId:row.getAttribute('student-id')}

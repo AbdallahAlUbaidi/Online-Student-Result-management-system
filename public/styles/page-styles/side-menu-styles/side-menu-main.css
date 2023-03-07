@@ -70,8 +70,81 @@
   .sidebar-toggle{
     transition:all 0.5s ease;
   }
-
+  @media (min-width:451px)and (max-width:600px) {
+    .sidebar:hover .sidebar-toggle{
+      margin-left: 32vw !important;
+    }
+  
+  }
+  @media (min-width:601px)and (max-width:800px) {
+    .sidebar:hover .sidebar-toggle{
+      margin-left: 24vw !important;
+    }
+  
+  }
+  @media (min-width:800px)and (max-width:950px) {
+    .sidebar:hover .sidebar-toggle{
+      margin-left: 18vw !important;
+    }
+  
+  }
+  
+  @media (min-width:400px)and (max-width:450px) {
+    .navbar-brand{
+   
+      width: 120px !important;
+      margin-left: 35px !important;
+      transform: scale(1.78) !important;
+    }
+   
+   
+    .yes{
+      height: 30px !important;
+      width: 30px !important;
+    }
+  
+    .sidebar:hover .sidebar-toggle{
+      margin-left: 21vw !important;
+    }
+    .sidebar{
+      width: 150px !important;
+    }
+    .navbar-brand{
+      margin-left: 80px !important;
+    }
+   
+  }
   @media (min-width:300px)and (max-width:400px) {
+    .sidebar:hover .sidebar-toggle{
+      margin-left: 26vw !important;
+    }
+    .input-course-title{
+      width: 3.5em !important;
+      border: 1px solid gray !important;
+      border-radius: 2px !important;
+    }
+   
+    .navbar-brand{
+      transform: scale(1.5) !important;
+      margin-left: 80px !important;
+    }
+    .navbar-brand:hover{
+      transform: scale(1.47);
+    }
+    .sidebar{
+      width: 150px;
+    }
+    .container-e{
+      margin-left: 20px auto !important;
+      
+    }
+    table{
+      width: 200px !important;
+    }
+   
+  }
+  
+  /* @media (min-width:300px)and (max-width:400px) {
     .sidebar:hover .sidebar-toggle{
       margin-left: 26vw !important;
     }
@@ -118,4 +191,4 @@
     }
   
   }
-  
+   */

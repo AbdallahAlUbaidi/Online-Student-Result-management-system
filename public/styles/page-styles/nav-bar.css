@@ -47,26 +47,26 @@
     transition: all 0.4s ease;
     width: 150px !important;
     transform: scale(1.8) !important;
-    margin-left: 45px !important;
-    margin-bottom: 10px !important;
-    margin-top: 9px !important;
+    margin-left: 102px !important;
+    margin-bottom: 9px !important;
+    margin-top: 1px !important;
     
+  }
+  .navbar-brand:hover{
+  transform: scale(1.75) !important;
   }
   .icon-course{
     color: rgb(96, 95, 95);
     transition: all 0.13s ease;
   }
+  ul .nav-link:hover .icon-course{
+    color: #3d52d5 !important;
+  }
   .navbar-brand:hover{
   transform: scale(1.65) !important;
   }
   
-  ul a:hover::before {
-    transform: scaleY(1);
-  }
-  ul a:hover {
-    color: white !important;
-  }
-  
+
   img {
     width: 100px;
     height: 30vh !important;

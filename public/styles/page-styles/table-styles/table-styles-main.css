@@ -32,12 +32,12 @@ th{
   table {
     font-size: 14px;
     margin-bottom: 0;
-    width: 60% !important;
+    width: 100% !important;
   }
   @media (min-width:950px){
 
     .container-e{
-     width: 70% !important;
+     width: 90% !important;
     }
    }
    

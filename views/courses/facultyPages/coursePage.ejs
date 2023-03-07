@@ -68,14 +68,19 @@
 <div class="container my-5   container-e">
   <div class="row">
     <div class="col-md-12">
-      <table id="grades-table" class="table table-hover" course="<%- locals.course.courseTitle.replace(/\s/gm , '-') %>" role="faculty">
+      <table id="grades-table" class="table table-hover  " course="<%- locals.course.courseTitle.replace(/\s/gm , '-') %>" role="faculty">
     </table>
+    <button type="button" class="btn btn-success exel" onclick="exportToExcel()">Import Excel</button>
+    <button type="button" class="btn btn-success exel" onclick="exportToExcel()">Upload</button>
+    <button class="btn  btn-primary-course btn-sm me-2">Save</button>
+      <button class="btn  btn-primary-course btn-sm exel">Submit</button>
+  
     </div>
   </div>
 </div>
 
-
+<!-- 
 
 <button id="faculty-save-button" class="btn btn-primary btn-primary-course btn-sm me-2">Save</button>
-<button id="faculty-submit-button" class="btn  btn-primary-course btn-sm">Submit</button>
+<button id="faculty-submit-button" class="btn  btn-primary-course btn-sm">Submit</button> -->
 </div>

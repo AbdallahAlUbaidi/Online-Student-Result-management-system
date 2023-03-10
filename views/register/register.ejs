@@ -1,5 +1,5 @@
 <%- include('../partials/flash-message-box.ejs') %>
-<div class="form-container">
+<!-- <div class="form-container">
   <div class="content fade-in">
     <div class="container shadow-lg p-3 bg-body">
       <div class="image-container">
@@ -9,14 +9,82 @@
         <h2 data-text="Sign&nbsp;up" class="mt-3 mb-0 title" id="register-title">Sign up</h2>
       </div>
       <form action="/register" method="post">
-        <% const errors = !locals.errors ? {} : locals.errors %>
-        <%- include('../partials/text-input-field.ejs' , {error:errors.username , fieldName:'username' , fieldId:'register-username-field' , placeholder:'User Name' , boostrapIconName:"bi-person-fill" , isEmail:false}) %>
-        <%- include('../partials/text-input-field.ejs' , {error:errors.emailAddress , fieldName:'emailAddress' , fieldId:'register-email-field' , placeholder:'Email address' , boostrapIconName:'bi-envelope-fill' , isEmail:true}) %>
-        <%- include('../partials/password-input-field.ejs' , {error:errors.password , fieldName:"password" , fieldId:'register-password-field' , placeholder:'Password'}) %>
-        <%- include('../partials/password-input-field.ejs' , {error:errors.confirmPassword , fieldName:'confirmPassword' , fieldId:'register-confirm-password' , placeholder:'Confirm Password'}) %>
-        <%- include('../partials/select-input-field.ejs' , {error:errors.role , fieldName:'role' ,  fieldId:"register-select-role" ,  selectedOptionText:"Select Role" , options:['student' , 'faculty']}) %>
-        <%- include('../partials/form-submit-button.ejs' , {buttonText:'Register Now'}) %>
+        <%// const errors = !locals.errors ? {} : locals.errors %>
+        <%-// include('../partials/text-input-field.ejs' , {error:errors.username , fieldName:'username' , fieldId:'register-username-field' , placeholder:'User Name' , boostrapIconName:"bi-person-fill" , isEmail:false}) %>
+        <%- //include('../partials/text-input-field.ejs' , {error:errors.emailAddress , fieldName:'emailAddress' , fieldId:'register-email-field' , placeholder:'Email address' , boostrapIconName:'bi-envelope-fill' , isEmail:true}) %>
+        <%- //include('../partials/password-input-field.ejs' , {error:errors.password , fieldName:"password" , fieldId:'register-password-field' , placeholder:'Password'}) %>
+        <%- //include('../partials/password-input-field.ejs' , {error:errors.confirmPassword , fieldName:'confirmPassword' , fieldId:'register-confirm-password' , placeholder:'Confirm Password'}) %>
+        <%-// include('../partials/select-input-field.ejs' , {error:errors.role , fieldName:'role' ,  fieldId:"register-select-role" ,  selectedOptionText:"Select Role" , options:['student' , 'faculty']}) %>
+        <%- //include('../partials/form-submit-button.ejs' , {buttonText:'Register Now'}) %>
+      </form>
+    </div>
+  </div>
+</div> -->
+
+
+<!-- <div class="form-container"><div class="content fade-in"><div class="container shadow-lg p-3 bg-body"><div class="image-container"><img src="/images/formImage.png" alt="" class="rounded mx-auto d-block "></div><div class="title-container"><h2 data-text="Sign&nbsp;up" class="mt-3 mb-0 title" id="register-title">Sign up</h2></div><form action="/register" method="post"><%// const errors = !locals.errors ? {} : locals.errors %><%-// include('../partials/text-input-field.ejs' , {error:errors.username , fieldName:'username' , fieldId:'register-username-field' , placeholder:'User Name' , boostrapIconName:"bi-person-fill" , isEmail:false}) %><%- //include('../partials/text-input-field.ejs' , {error:errors.emailAddress , fieldName:'emailAddress' , fieldId:'register-email-field' , placeholder:'Email address' , boostrapIconName:'bi-envelope-fill' , isEmail:true}) %><%- //include('../partials/password-input-field.ejs' , {error:errors.password , fieldName:"password" , fieldId:'register-password-field' , placeholder:'Password'}) %><%- //include('../partials/password-input-field.ejs' , {error:errors.confirmPassword , fieldName:'confirmPassword' , fieldId:'register-confirm-password' , placeholder:'Confirm Password'}) %><%- //include('../partials/select-input-field.ejs' , {error:errors.role , fieldName:'role' ,  fieldId:"register-select-role" ,  selectedOptionText:"Select Role" , options:['student' , 'faculty']}) %><%- //include('../partials/form-submit-button.ejs' , {buttonText:'Register Now'}) %></form></div></div></div> -->
+<div class="mm-register">
+  <div class="content fade-in ">
+    <div class="container container-register shadow-lg p-3   bg-body ">
+      <div class="img ">
+        <img src="/images/formImage.png" alt="" class="rounded mx-auto w-25  d-block  ">
+      </div>
+      <div class="body-register">
+        <h2 data-text="Sign&nbsp;up" class="mt-3 mb-0 " id="text">Sign up</h2>
+      </div>
+      <form action="/register" method="post">
+        <div class="mb-2">
+          <div class="position-relative"><% const errors = !locals.errors ? {} : locals.errors %> <div>
+              <input type="text" class="form-control input-register mt-3 pt-0 pt-0 form-text-field inputTextField <%- errors.username? "form-control-error" : ""  %>" name='username' id='register-username-field' placeholder="User Name">
+              <p class="error1  position-absolute top-0 inputTextFieldError" id="username" style="display: none;"><%- errors.username ? errors.username : "" %> </p>
+              <i class="bi bi-person-fill position-absolute top-0 form-field-icon person"></i>
+              <span class="span-register"></span>
+            </div>
+          </div>
+          <div class="position-relative">
+            <div>
+              <input type="email" class="form-control input-register mt-3 pt-0 form-text-field inputTextField <%- errors.emailAddress? "form-control-error" : ""  %>" name="emailAddress" id="register-email-field" aria-describedby="emailHelp" placeholder="Email address">
+              <p class="error1  position-absolute top-0 inputTextFieldError" id="emailAddress" style="display: none;"><%-errors.emailAddress ? errors.emailAddress : "" %> </p>
+              <i class="bi bi-envelope-fill position-absolute form-field-icon top-0 e"></i>
+              <span class="span-register"></span>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 ">
+          <div class="position-relative">
+            <div>
+              <input type="password" class="form-control input-register mt-3 pt-0  inputTextField passwordField form-text-field <%- errors.password ? "form-control-error" : ""  %>" name="password" id='register-password-field' placeholder="Password">
+              <p class="error1  position-absolute top-0 inputTextFieldError" id="password" style="display: none;"><%-errors.password ? errors.password : "" %> </p>
+              <i class="bi bi-lock-fill position-absolute top-0 form-field-icon p"></i>
+              <i class="bi bi-eye-fill position-absolute top-0 end-0 form-field-icon eye " id="show-password"></i>
+<span class="span-register"></span>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 ">
+          <div class="position-relative">
+            <div>
+              <input type="password" class="form-control input-register mt-3 pt-0 passwordField form-text-field inputTextField <%- errors.confirmPassword ? "form-control-error" : ""  %>" name='confirmPassword' id='register-confirm-password' placeholder="Confirm Password">
+              <p class="error1  position-absolute top-0 inputTextFieldError" id="confirmPassword" style="display: none;"><%-errors.confirmPassword ? errors.confirmPassword : "" %> </p>
+              <i class="bi bi-lock-fill position-absolute top-0 form-field-icon p"></i>
+              <i class="bi bi-eye-fill position-absolute top-0 end-0 form-field-icon eye " id="show-pass"></i>
+              <span class="span-register"></span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <%- include('../partials/select-input-field.ejs' , {error:errors.role , fieldName:'role' ,  fieldId:"register-select-role" ,  selectedOptionText:"Select Role" , options:['student' , 'faculty']}) %>
+          <!-- <select class="form-select<%-// errors ? ' form-select-error': "" %> " name='role' id="register-select-role" aria-label="Default select example" aria-placeholder="Select Role">
+            <option selected value="">Select Role</option>
+            <option value="student">Student</option>
+            <option value="faculty">Faculty</option>
+          </select><%// if(errors.role) {%> <p class="select-field-error   <%-// errors.role ? "select-field-error" : "" %>  ">
+            <i class="bi bi-shield-fill-exclamation form-field-icon form-field-icon-static select-error-icon"></i><%-// errors.role %>
+          </p><% //} %>
+        </div> -->
+        <button type="submit" class="btn btn-primary btn-primary-register mb-4 rounded-pill w-100 rounded-pill mt-3 form-submit-button">Register Now</button>
       </form>
     </div>
   </div>
 </div>
+

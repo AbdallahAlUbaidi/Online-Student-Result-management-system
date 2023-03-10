@@ -65,15 +65,17 @@ th{
     background-color: #283483 !important;
   }
   .exel{
-    margin-left: 4px !important;
-  }
-  .exel{
+    transform: scale(0.9);
     margin-right: 8px !important;
   }
+ 
   @media (max-width:370px) {
     .exel{
       margin-right: 3px !important;
       margin-top: 5px !important;
+    }
+    .container-e{
+      overflow: scroll !important;
     }
   }
   .exel{
@@ -83,6 +85,12 @@ th{
     .exel{
       margin-right: 3px !important;
       margin-top: 5px !important;
+    }
+
+  }
+  @media (max-width:580px ) {
+    .container-e{
+      overflow: scroll !important;
     }
   }
   

@@ -1,5 +1,5 @@
 <%- include('../partials/flash-message-box.ejs') %>
-<div class="form-container">
+<!-- <div class="form-container">
   <div class="content fade-in ">
     <div class="container shadow-lg p-3 bg-body">
         <div class="image-container">
@@ -9,15 +9,15 @@
         <h2 data-text="Sign&nbsp;In" class="mt-4 mb-9 title" id="login-title">Sign In</h2>
       </div>
       <form action="/login" method="post">
-        <%- include('../partials/text-input-field.ejs' , {error:'' , fieldName:'emailAddress' , fieldId:'login-email-field' , placeholder:'Email address' , boostrapIconName:'bi-envelope-fill' , isEmail:true}) %>
-        <%- include('../partials/password-input-field.ejs' , {error : '' , fieldName:'password' , fieldId:'login-password-field' , placeholder:'Password'}) %>
+        <%- //include('../partials/text-input-field.ejs' , {error:'' , fieldName:'emailAddress' , fieldId:'login-email-field' , placeholder:'Email address' , boostrapIconName:'bi-envelope-fill' , isEmail:true}) %>
+        <%- //include('../partials/password-input-field.ejs' , {error : '' , fieldName:'password' , fieldId:'login-password-field' , placeholder:'Password'}) %>
         <div class="mb-3 form-check form-checkbox-container">
           <div class="form-checkbox-link-container">
-            <%- include('../partials/form-checkbox.ejs' , {fieldId:'login-remember-me-checkbox' , fieldName:'rememberMe' , labelText:'Remember me'}) %>
+            <%-// include('../partials/form-checkbox.ejs' , {fieldId:'login-remember-me-checkbox' , fieldName:'rememberMe' , labelText:'Remember me'}) %>
             <a href="/login/retrievePassword" class="text-decoration-none form-link">Forgot password</a>
           </div>
         </div>
-        <%- include('../partials/form-submit-button.ejs' , {buttonText:'Login'}) %>
+        <%-//include('../partials/form-submit-button.ejs' , {buttonText:'Login'}) %>
         <div class="d-flex justify-content-center">
           <p class="mr-3 form-link-label">Not member?</p>
           <a href="/register" class="text-decoration-none form-link" id="s"> Signup now</a>
@@ -25,4 +25,86 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->
+
+<div class="mm">
+  <div class="content fade-in ">
+
+  <div class="container container-login shadow-lg p-3 bg-body">
+    <img src="/images/formImage.png" class="rounded mx-auto d-block w-25 ">
+    <div class="body">
+    <h2 data-text="Sign&nbsp;In" class="mt-4 mb-9" id="text">Sign In</h2>
+    </div>
+   
+   
+  <form action="/login" method="post">
+    <div class="mb-3 ">
+      <div class="position-relative ">
+       
+        <div>
+        
+          <input type="email" class="form-control pt-0 input-login  inputTextField form-text-field "id='login-email-field'  name= 'emailAddress'  aria-describedby="emailHelp"   placeholder="Email address"  >
+          <p class="error1  position-absolute top-0 inputTextFieldError" id="emailFieldError" style="display: none;"></p>
+          <i class="bi bi-envelope-fill position-absolute top-0 e"></i>
+         
+          <span class="span-login"></span>
+        </div>
+      
+        
+ 
+      </div>
+  
+    
+  
+    </div>
+    <div class="mb-3 " >
+    
+      <div class="position-relative">
+        <div>
+      
+          <input type="password" class="form-control pt-0 inputTextField input-login passwordField form-text-field " name='password' id="login-password-field" placeholder="Password">
+          <p class="error1  position-absolute top-0  inputTextFieldError" id="passwordFieldError" style="display: none;"></p>
+          <i class="bi bi-lock-fill position-absolute top-0 p"></i>
+    
+          <i class="bi bi-eye-fill position-absolute top-0 end-0 eye " id="show-password"></i>
+          <span class="span-login"></span>
+        </div>
+    
+       
+      </div>
+ 
+    </div>
+    <div class="mb-3 form-check">
+     
+      <input type="checkbox" class="form-check-input form-checkbox-input " name="rememberMe" id="login-remember-me-checkbox">
+     
+      <div class="o">
+     
+        <label class="form-check-label remember" for="exampleCheck1">Remember me</label>
+    
+      
+        <a href="/login/retrievePassword" class="text-decoration-none login-link forgot">Forgot password </a>
+        
+     
+      </div>
+   
+    </div>
+    
+    <button type="submit" class="btn btn-primary btn-primary-login  mb-4 rounded-pill w-100 rounded-pill form-submit-button" >Login</button>
+    
+    
+        <div class="d-flex justify-content-center  ">
+          
+         <p class="mr-2 Notmember">Not member? </p> 
+         
+        
+          <a href="/register" class="text-decoration-none login-link now " id="s"> Signup now</a>
+          
+    
+        </div>
+      
+  </form>
+
+  </div>
+  </div>
+  </div>

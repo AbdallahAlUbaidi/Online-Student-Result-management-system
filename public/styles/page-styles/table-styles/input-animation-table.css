@@ -29,61 +29,61 @@
   
   .bottom,
   .top {
-    height: 2px;
+    height: 2px !important;
     left: 0;
     right: 0;
-    transform: scaleX(0);
+    transform: scaleX(0) !important;
    
   }
   
   .left,
   .right {
-    width: 2px;
+    width: 2px !important;
     top: 0;
     bottom: 0;
-    transform: scaleY(0);
+    transform: scaleY(0) !important;
    
   }
   
   .bottom {
     bottom: 0;
-    transform-origin: bottom right;
+    transform-origin: bottom right !important;
   
   }
   
   input:focus ~ .bottom {
-    transform-origin: bottom left;
-    transform: scaleX(1);
+    transform-origin: bottom left !important;
+    transform: scaleX(1) !important;
   }
   
   .right {
-    right: 0;
-    transform-origin: top right;
+    right: 0 !important;
+    transform-origin: top right !important;
   }
   
   input:focus ~ .right {
-    transform-origin: bottom right;
-    transform: scaleY(1);
+    transform-origin: bottom right !important;
+    transform: scaleY(1) !important;
   }
   
   .top {
     top: 0;
-    transform-origin: top left;
+    transform-origin: top left !important;
   }
   
   input:focus ~ .top {
-    transform-origin: top right;
-    transform: scaleX(1);
+    transform-origin: top right !important;
+    transform: scaleX(1) !important;
   }
   
   .left {
     left: 0;
-    transform-origin: bottom left;
+    transform-origin: bottom left !important;
   }
   
   input:focus ~ .left {
-    transform-origin: top left;
-    transform: scaleY(1);
+    transform-origin: top left !important;
+    transform: scaleY(1) !important;
   }
   .input-animation {
     position: relative;

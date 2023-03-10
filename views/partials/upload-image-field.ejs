@@ -1,7 +1,12 @@
 <div class="mb-3">
     <div class="position-relative">
         <div>
-            <input type="file" name="courseImage" id="course-image-upload-field">  <!==Maybe changed to accept variables as a name and id -->
+            <!-- <input type="file" name="courseImage" class="img-down" id="course-image-upload-field">  <!==Maybe changed to accept variables as a name and id --> 
+            <label for="course-image-upload-field" class="file-upload-label">
+                <i class="fas fa-upload"></i> select img
+              </label>
+              <input type="file" name="courseImage" class="file-upload-input" id="course-image-upload-field">
+              
             <span class="form-input-line"></span>
         </div>
     </div>

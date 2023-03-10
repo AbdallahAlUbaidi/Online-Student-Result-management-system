@@ -1,10 +1,13 @@
 <div class="mb-3">
     <div class="position-relative">
         <div>
-            <input type="<%- isEmail ? "email" : "text" %>" class="form-control mt-3 pt-0 inputTextField form-text-field <%- error? "form-control-error" : "" %>" name="<%- fieldName %>" id="<%- fieldId %>" placeholder="<%- placeholder %>">
+            <input type="<%- isEmail ? "email" : "text" %>" class="form-control mt-3 pt-0 inputTextField input-login form-text-field <%- error? "form-control-error" : "" %>" name="<%- fieldName %>" id="<%- fieldId %>" placeholder="<%- placeholder %>">
+            <%- //errors.fieldName? "form-control-error" : "" Input field class %>
             <p class="position-absolute top-0 inputTextFieldError" id="<%-fieldName %>Error" style="display: none;"><%- error ? error : ""%></p>
+            <%-// errors.fieldName ? errors.fieldName : "" Error paragrph content%>
+
             <i class="bi <%- boostrapIconName %> position-absolute top-0 form-field-icon form-field-icon-static"></i>
-            <span class="form-input-line"></span>
+            <span class="form-input-line span-login"></span>
         </div>
     </div>
   </div>

@@ -1,6 +1,9 @@
-@import url('./form-styles/form-main.css');
-@import url('./page-styles/page-main.css');
+@import url('./form-styles/form-main.css'); 
+ @import url('./page-styles/page-main.css');
 @import url('./flash-message-box.css');
 @import url('./confirm-email-page.css');
 @import url('./error-page.css');
+@import url('./form-styles/login.css');
+@import url('./form-styles/Register.css');
+
 

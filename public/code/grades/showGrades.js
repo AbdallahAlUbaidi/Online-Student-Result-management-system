@@ -87,7 +87,7 @@ function makeTableCell(value , isWritable  , field , tableCellClasses = '' , inp
     else
         tableCell.innerHTML = `
         <div class = "input-animation">
-            <input type = "text" field=${field} value = "${value}" class = "${inputFieldClasses} placeholder = 'Enter Score'>
+            <input type = "text" field=${field} value = "${value}" class = "${inputFieldClasses}" placeholder = 'Enter Score'>
             <span class="bottom span-course"></span>
             <span class="right span-course"></span>
             <span class="top span-course"></span>

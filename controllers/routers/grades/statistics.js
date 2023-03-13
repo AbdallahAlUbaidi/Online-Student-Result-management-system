@@ -58,15 +58,6 @@ router.get('/:courseTitle/faculty', async (req, res) => {
           preFinalScoreMean: { $avg: "$preFinalScore" },
           midTermExamScoreStdDev: { $stdDevPop: "$midTermScore" },
           preFinalScoreStdDev: { $stdDevPop: "$preFinalScore" },
-          // midExamAbsences: {
-          //   $sum: {
-          //     $cond:{ 
-          //       if:{ $eq: ["$midExamScore", "ABSENT"] },
-          //       then:1,
-          //       else:0,
-          //     }
-          //   },
-          // },
           midTermScores: { $push: "$midTermScore" },
           preFinalScores: { $push: "$preFinalScore" },
         },
@@ -123,19 +114,23 @@ router.get('/:courseTitle/faculty', async (req, res) => {
         preFinalFailPercentage = (preFinalFailPercentage / preFinalScores.length) * 100;
         preFinalCriticalFailPercentage = (preFinalCriticalFailPercentage / preFinalScores.length) * 100;
         res.status(200).json({
-          midTermScores , 
-          midExamMaxScore , 
-          midPercentageOfAbsence ,
-          midTermFailPercentage ,
-          midTermCriticalFailPercentage ,
-          midTermExamScoreMean , 
-          midTermExamScoreStdDev , 
-          preFinalScores , 
-          preFinalMaxScore , 
-          preFinalFailPercentage ,
-          preFinalCriticalFailPercentage ,
-          preFinalScoreMean , 
-          preFinalScoreStdDev
+          midTerm:{
+            scores:midTermScores , 
+            maxScore:midExamMaxScore , 
+            percentageOfAbsence:midPercentageOfAbsence ,
+            failPercentage:midTermFailPercentage ,
+            criticalFailPercentage:midTermCriticalFailPercentage ,
+            meanValue:midTermExamScoreMean , 
+            standardDeviation:midTermExamScoreStdDev , 
+          },
+          preFinal:{
+            scores:preFinalScores , 
+            maxScore:preFinalMaxScore , 
+            failPercentage:preFinalFailPercentage ,
+            criticalFailPercentage:preFinalCriticalFailPercentage ,
+            meanValue:preFinalScoreMean , 
+            standardDeviation:preFinalScoreStdDev
+          }
         });
     }
     } catch (err) {

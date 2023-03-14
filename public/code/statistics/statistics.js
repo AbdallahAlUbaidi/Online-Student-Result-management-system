@@ -1,6 +1,4 @@
 const statisticContainer = document.getElementById('statistics-container')
-const chart = document.getElementById('Chart');
-const myChart = document.getElementById('myChart');
 const fieldNames = {
   midTerm: 'Mid Term Exam',
   preFinal: 'Pre Final Score',
@@ -9,32 +7,33 @@ const fieldNames = {
 }
 
 
-window.addEventListener('load' , async () => {
-    const result = await getStatisticsData(statisticContainer.getAttribute('role'));
-    const fields = Object.keys(result);
-    fields.forEach(field => {
-      const {failPercentage , criticalFailPercentage , percentageOfAbsence , scores , maxScore , standardDeviation , meanValue} = result[field];
-      const filteredScores = scores.filter(score => typeof score === "number");
-      const {fieldContainer , canvases} = makeFieldStatistics(
-          result[field] , 
-          field , 
-          fieldNames[field] , 
-          Boolean(percentageOfAbsence) , 
-          filteredScores.length , 
-          standardDeviation.toFixed(2) , 
-          meanValue.toFixed(2) , 
-          ['chart-container'] , //Chart container classes
-          ['shadow' , 'chart-canvas'] , //Canvas classes
-          ['field-container'] , //Field container classes
-          ['field-div' , 'shadow'] , //Field Title Classes
-          ['field-div' , 'shadow']  //Field Parameters Classes
-      );
-      statisticContainer.appendChild(fieldContainer);
-      makeDoughnutChart(canvases[0] , failPercentage , criticalFailPercentage , percentageOfAbsence);
-      makeHistogramChart(canvases[1] , scores , maxScore);
+if(statisticContainer){
+    window.addEventListener('load' , async () => {
+        const result = await getStatisticsData(statisticContainer.getAttribute('role'));
+        const fields = Object.keys(result);
+        fields.forEach(field => {
+          const {failPercentage , criticalFailPercentage , percentageOfAbsence , scores , maxScore , standardDeviation , meanValue} = result[field];
+          const filteredScores = scores.filter(score => typeof score === "number");
+          const {fieldContainer , canvases} = makeFieldStatistics(
+              result[field] , 
+              field , 
+              fieldNames[field] , 
+              Boolean(percentageOfAbsence) , 
+              filteredScores.length , 
+              standardDeviation.toFixed(2) , 
+              meanValue.toFixed(2) , 
+              ['chart-container'] , //Chart container classes
+              ['shadow' , 'chart-canvas'] , //Canvas classes
+              ['field-container'] , //Field container classes
+              ['field-div' , 'shadow'] , //Field Title Classes
+              ['field-div' , 'shadow']  //Field Parameters Classes
+          );
+          statisticContainer.appendChild(fieldContainer);
+          makeDoughnutChart(canvases[0] , failPercentage , criticalFailPercentage , percentageOfAbsence);
+          makeHistogramChart(canvases[1] , scores , maxScore);
+        })
     })
-    
-})
+}
 
 // {
 //     midTerm:{
@@ -211,9 +210,15 @@ function distriputeScores(ranges , scores){
   const distripution = new Array(ranges.length).fill(0);
   scores.forEach(score => {
       for(binIndex in ranges){
-          const range = ranges[binIndex];
-          if(score >= range[0] && score < range[1])
-              distripution[binIndex]++;
+        const range = ranges[binIndex];
+        if(binIndex == ranges.length - 1){
+            if(score >= range[0] && score <= range[1])
+                distripution[binIndex]++;
+        }
+        else{
+            if(score >= range[0] && score < range[1])
+                distripution[binIndex]++;
+        }
       }
   });
   let distriputionInPercentage = [];

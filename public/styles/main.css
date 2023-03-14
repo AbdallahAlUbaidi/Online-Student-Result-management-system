@@ -6,4 +6,8 @@
 @import url('./form-styles/login.css');
 @import url('./form-styles/Register.css');
 
+@import url('./password-change-succ.css');
+@import url('./Email-configured.css');
+/* @import url('./page-styles/Statistics'); */
+
 

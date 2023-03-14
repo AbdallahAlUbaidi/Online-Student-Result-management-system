@@ -1,0 +1,38 @@
+.container-Email-confirmed {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .fa-envelope-open-text {
+    color: #28a745;
+    font-size: 8rem;
+    margin-bottom: 50px;
+  }
+   .h-Email-confirmed{
+    font-size: 3rem;
+    color: #3d51d5f7;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  .p-Email-confirmed {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-bottom: 50px;
+  }
+  a.btn-primary-Email-confirmed{
+    background-color: #3d52d5;
+    border-color: #3d52d5;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: all 0.2s;
+  }
+  a.btn-primary-Email-confirmed:hover {
+    background-color: #2e3d9c;
+    border-color: #273591;
+  }
+  a.btn-primary-Email-confirmed:focus {
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+  }

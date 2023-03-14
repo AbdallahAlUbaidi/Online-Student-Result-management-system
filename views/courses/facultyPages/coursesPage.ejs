@@ -1,7 +1,11 @@
-<%- include('../../partials/flash-message-box.ejs') %> <div class="page-container">
+<%- include('../../partials/flash-message-box.ejs') %> 
+
+<div class="content fade-in ">
+<div class="page-container">
   <!-- <nav class="navbar navbar-expand-lg navbar-light  "><div class="container-fluid position-relative"><img src="/images/logo.png" alt="" class=" h-100  navbar-brand"><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><svg
 	xmlns="http://www.w3.org/2000/svg" width="36" height="27" fill="currentColor" class="bi bi-list" viewBox="0 0 14 16"><path fill-rule="evenodd" d="M1.5 4.5A.5.5 0 0 1 2 4h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1zm0 4A.5.5 0 0 1 2 8h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1zm0 4A.5.5 0 0 1 2 12h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1z" /></svg></button></div><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav ms-auto"><% //if(role === 'faculty') {%><%- //include('../../partials/nav-bar-link.ejs' , {link:'/courses/createCourse' , linkText:'Create Course' , customIconClass:'fa fa-arrow-circle-up'}) %><% //} %><%-// include('../../partials/nav-bar-link.ejs' , {link:'/logout' , linkText:'Logout' , customIconClass:'bi bi-x-circle-fill'}) %></ul></div></nav>
      -->
+
   <nav class="navbar navbar-expand-lg fixed-top navbar-light  ">
     <div class="container-fluid position-relative">
       <aside class="sidebar">
@@ -11,8 +15,11 @@
         </button>
         <ul>
           <li>
-            <a href="#" class="aside-link">
-              <img src="photo_2023-02-24_20-35-20.jpg" class="p" alt=""> Email </a>
+            <label for="file-input" class="circular-button">
+              <!-- <img src=""> -->
+            </label>
+            <input id="file-input" type="file" accept="image/*">
+               </a>
           </li>
           <!-- <li><a href="#" class="aside-link"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Email</a></li> -->
           <li>
@@ -33,8 +40,8 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link a1" href="/courses">
-            <i class="fa fa-home  icon-course" aria-hidden="true"></i>&nbsp; Courses </a>
+          <a class="nav-link courses" href="/courses">
+            <i class="fa fa-home courses-icon   icon-course" aria-hidden="true"></i>&nbsp; Courses </a>
         </li>
         <li class="nav-item">
           <a class="nav-link a2" href="#">
@@ -42,14 +49,15 @@
         </li>
         <li class="nav-item">
           <a class="nav-link a3" href="/logout">
-            <i class="fas fa-sign-out-alt icon-course"></i>&nbsp; Logout </a>
+            <i class="fas  fa-sign-out-alt icon-course"></i>&nbsp; Logout </a>
         </li>
       </ul>
     </div>
 </div>
 </nav>
-<div class="container container-e margin-on-nav p-3 ">
+<div class="container container-e  margin-on-nav-courses margin-on-nav p-3 ">
   <div class="row row-cols-1 row-cols-md-3 g-4" id="empty-div"><% //const firstStageCourses = locals.courses.filter(course => course.stage === '1st') %><% //const secondStageCourses = locals.courses.filter(course => course.stage === '2nd') %><% //const thirdStageCourses = locals.courses.filter(course => course.stage === '3rd') %><% //const forthStageCourses = locals.courses.filter(course => course.stage === '4th') %><% locals.courses.forEach(course => { %><%- include('../../partials/course-card.ejs' , {course}) %><% }) %> </div>
 </div>
 </div>
 <button id="scroll-to-top" ><i class="fas fa-chevron-up"></i></button>
+</div>

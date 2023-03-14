@@ -59,3 +59,9 @@
    }
   
    }
+   
+   @media (min-width:1900px) {
+    .margin-on-nav-courses{
+      margin-top: 600px !important;
+    }
+   }

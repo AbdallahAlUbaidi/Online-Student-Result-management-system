@@ -9,7 +9,9 @@ const fieldNames = {
 
 if(statisticContainer){
     window.addEventListener('load' , async () => {
-        const result = await getStatisticsData(statisticContainer.getAttribute('role'));
+      const role = statisticContainer.getAttribute('role');
+      const result = await getStatisticsData(role);
+        // const result = await getStatisticsData(statisticContainer.getAttribute('role'));
         const fields = Object.keys(result);
         fields.forEach(field => {
           const {failPercentage , criticalFailPercentage , percentageOfAbsence , scores , maxScore , standardDeviation , meanValue} = result[field];
@@ -25,8 +27,11 @@ if(statisticContainer){
               ['chart-container'] , //Chart container classes
               ['shadow' , 'chart-canvas'] , //Canvas classes
               ['field-container'] , //Field container classes
-              ['field-div' , 'shadow'] , //Field Title Classes
-              ['field-div' , 'shadow']  //Field Parameters Classes
+              ['field-div' , 'shadow' , "titl"], //Field Title Classes
+              ['field-div' , 'shadow' , 'sub1'] , //Field Total Students Classes
+              ['field-div' , 'shadow' , 'sub2'] , //Field Mean Classes
+              ['field-div' , 'shadow','sub3']   //Field stdDev Classess
+              
           );
           statisticContainer.appendChild(fieldContainer);
           makeDoughnutChart(canvases[0] , failPercentage , criticalFailPercentage , percentageOfAbsence);
@@ -58,6 +63,7 @@ if(statisticContainer){
 async function getStatisticsData(role) {
     try{
         const response = await axios.get(`/statistics/PHP-Lab/faculty`);
+        console.log(response);
         return response.data;
         
     }catch(err){
@@ -66,14 +72,18 @@ async function getStatisticsData(role) {
 }
 
 
-function makeFieldStatistics(field , fieldName , fieldText , isExam , totalNum , stdDev , meanValue , chartContainerClasses = [] , canvasClasses = [] , fieldContainerClasses = [] , fieldTitleClasses = [] , fieldParametersClasses = []) {
+function makeFieldStatistics(field , fieldName , fieldText , isExam , totalNum , stdDev , meanValue , chartContainerClasses = [] , canvasClasses = [] , fieldContainerClasses = [] , fieldTitleClasses = [] , fieldTotalClasses = [] , fieldMeanClasses = [] , fieldStdDevClasses = []) {
   const charts = ['doughtnut' , 'histogram'];
   let canvases = [];
   const fieldContainer = createDiv(`${fieldName}-statistics-container` , '' , fieldContainerClasses);
-  const fieldTitleDiv = createDiv(`${fieldName}-field-title` , fieldText , fieldTitleClasses);
-  const totalNumDiv = createDiv( `${fieldName}-title-div` , `Total Number of ${isExam ? "Participants" :"Students"} : ${totalNum}` , fieldParametersClasses);
-  const standardDeviationDiv = createDiv( `${fieldName}-stdDev-div` , `Standard Deviation : ${stdDev}` , fieldParametersClasses);
-  const meanValueDiv = createDiv( `${fieldName}-meanValue-div` , `Mean Value : ${meanValue}` , fieldParametersClasses);
+  const fieldTitleDiv = createDiv(`${fieldName}-field-title` , fieldText , fieldTitleClasses,['fas fa-clipboard-list']);
+  const totalNumDiv = createDiv( `${fieldName}-title-div` , `Total Number of ${isExam ? "Participants" :"Students"} : ${totalNum}` ,fieldTotalClasses ,['fas fa-user-graduate']);
+  const standardDeviationDiv = createDiv( `${fieldName}-stdDev-div` , `Standard Deviation : ${stdDev}` , fieldStdDevClasses,['fa fa-bar-chart fa-bar-chart-title']);
+  const meanValueDiv = createDiv( `${fieldName}-meanValue-div` , `Mean Value : ${meanValue}` , fieldMeanClasses,['fas fa-angle-double-down']);
+  // const totalNumDiv = createDiv( ${fieldName}-title-div , Total Number of ${isExam ? "Participants" :"Students"} : ${totalNum} , fieldTotalClasses);
+  // const standardDeviationDiv = createDiv( ${fieldName}-stdDev-div , Standard Deviation : ${stdDev} , fieldStdDevClasses);
+  // const meanValueDiv = createDiv( ${fieldName}-meanValue-div , Mean Value : ${meanValue} , fieldMeanClasses);
+  // LLLL
   fieldContainer.appendChild(fieldTitleDiv);
   fieldContainer.appendChild(totalNumDiv);
   fieldContainer.appendChild(standardDeviationDiv);
@@ -228,11 +238,23 @@ function distriputeScores(ranges , scores){
   return {distripution , distriputionInPercentage};
 }
 
-function createDiv(id , text = '' , classes = []){
+// function createDiv(id , text = '' , classes = []){
+//   const div = document.createElement('div');
+//   div.id = id;
+//   if(text)
+//     div.innerHTML = text;
+//   classes.forEach(className => {div.classList.add(className)});
+//   return div;
+// }
+function createDiv(id , text = '' , classes = [] , iconClasses = []){
   const div = document.createElement('div');
+  let icon = "";
+  if(iconClasses.length !== 0){
+    icon =  `<i class="${iconClasses.join(' ')}"></i>`;
+  }
   div.id = id;
   if(text)
-    div.innerHTML = text;
+  div.innerHTML =` ${icon} ${text}`;
   classes.forEach(className => {div.classList.add(className)});
   return div;
 }

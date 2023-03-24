@@ -13,5 +13,13 @@ document.getElementById("scroll-to-top").addEventListener("click", function() {
   document.documentElement.scrollTop = 0;
 });
 
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('grades-table').style.display = 'table';
+  }, 3000); // زمن التأخير بالميلي ثانية (هنا 3 ثواني)
+});
+
+
 
 

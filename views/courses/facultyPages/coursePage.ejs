@@ -75,7 +75,17 @@
 <div class="container margin-on-nav    container-e">
   <div class="row">
     <div class="col-md-12">
+   
+   
+     
       <table id="grades-table" class="table table-hover  " course="<%- locals.course.courseTitle.replace(/\s/gm , '-') %>" role="faculty">
+       
+      <div id="loader">
+        <div class="outer"></div>
+        <div class="middle"></div>
+        <div class="inner"></div>
+      </div>
+        
     </table>
     <button type="button" class="btn btn-success exel" onclick="exportToExcel()">Import Excel</button>
     <button type="button" class="btn btn-success exel" onclick="exportToExcel()">Upload</button>

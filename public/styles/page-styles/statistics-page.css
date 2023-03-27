@@ -74,10 +74,45 @@ This example assumes that the backend only responded with midTerm field which is
     margin-left: -100px  !important;
   
 } */
-@media (min-width:700px)and (max-width:800px) {
+@media (min-width:1800px) {
     .field-container{
         display: grid;
-        grid-template-columns: repeat(3,200px) !important;
+        grid-template-columns: repeat(3,350px) !important;
+        grid-template-rows: repeat(3,70px);
+        gap: 30px 20px;
+        justify-content: center;
+        align-content: center;
+        text-align: center;
+     transition: all 0.5s ease-in;
+     margin-top: 150px ;
+      
+    }
+    #doughtnut-chart-container{
+
+
+        grid-column: 1/2;
+        justify-content: center;
+        align-content: center;
+        width:350px !important ;
+      
+        /* grid-row: 3/4; */
+    }
+    #histogram-chart-container{
+        grid-column: 2/4;
+        width:690px !important ;
+       
+    } 
+    .field-container{
+     
+        margin-bottom: 340px !important;
+    }
+  
+    
+}
+@media (min-width:600px)and (max-width:800px) {
+    .field-container{
+        display: grid;
+        grid-template-columns: repeat(3,180px) !important;
         grid-template-rows: repeat(3,70px);
         gap: 30px 20px;
         justify-content: center;
@@ -92,14 +127,15 @@ This example assumes that the backend only responded with midTerm field which is
         grid-column: 1/2;
         justify-content: center;
         align-content: center;
-        width:200px !important ;
+        width:190px !important ;
       
         /* grid-row: 3/4; */
     }
     #histogram-chart-container{
         grid-column: 2/4;
-        width:400px !important ;
-       
+        width:380px !important ;
+        margin-left: 2px !important;
+        
     } 
   
     
@@ -115,7 +151,7 @@ This example assumes that the backend only responded with midTerm field which is
     align-content: center;
     text-align: center;
  transition: all 0.5s ease-in;
-    margin-bottom: 220px !important;
+    margin-bottom: 220px ;
 }
 /* div .titl{
     grid-column: 1/4;
@@ -206,7 +242,7 @@ This example assumes that the backend only responded with midTerm field which is
 #histogram-chart-container{
     grid-column: 2/4;
     width:490px ;
-    margin-left: 30px !important;
+    margin-left: 30px ;
 }
 
 .chart-container{
@@ -252,7 +288,7 @@ This example assumes that the backend only responded with midTerm field which is
         justify-content: center;
         align-content: center;
         text-align: center;
-        font-size: 9px;
+        font-size: 10px;
         
     
       
@@ -272,17 +308,17 @@ This example assumes that the backend only responded with midTerm field which is
     .sub1{
         grid-column: 1/2;
         grid-row: 2/3;
-        width: 173px !important;
+        width: 178px !important;
     }
     .sub2{
         grid-column: 1/2;
         grid-row: 3/4;
-        width: 85px !important;
+        width: 88px !important;
     }
     .sub3{
         grid-column: 2/3;
         grid-row: 3/4;
-        width: 85px !important;
+        width: 88px !important;
         margin-left: -34px;
     }
       
@@ -294,7 +330,7 @@ This example assumes that the backend only responded with midTerm field which is
         margin-top: 40px !important;
 
 
-margin-left: 5px  !important;
+margin-left: 5px ;
         
     }
     #doughtnut-chart-container{
@@ -387,7 +423,7 @@ margin-left: -60px !important;
         margin-top: 30px !important;
 
 
-margin-left: 10px  !important;
+margin-left: 10px ;
         
     }
     #doughtnut-chart-container{

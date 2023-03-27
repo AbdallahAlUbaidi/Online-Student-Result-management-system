@@ -78,6 +78,7 @@
    
    
      
+      
       <table id="grades-table" class="table table-hover  " course="<%- locals.course.courseTitle.replace(/\s/gm , '-') %>" role="faculty">
        
       <div id="loader">
@@ -85,8 +86,18 @@
         <div class="middle"></div>
         <div class="inner"></div>
       </div>
-        
+    
     </table>
+
+    <div id="myDiv">
+    
+
+        <!-- <i class="bi bi-database-fill-slash"></i> -->
+     
+    </div>
+    
+    
+
     <button type="button" class="btn btn-success exel" onclick="exportToExcel()">Import Excel</button>
     <button type="button" class="btn btn-success exel" onclick="exportToExcel()">Upload</button>
     <button class="btn  btn-primary-course btn-sm me-2" id ="faculty-save-button">Save</button>

@@ -147,5 +147,21 @@ th{
 #grades-table {
   display: none;
 }
-  
+#myTable:empty {
+  display: none;
+}
+#myTable:empty + #myDiv {
+  display: block;
+}
+
+#myDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} 
  
+.bi-database-fill-slash{
+font-size: 65px;
+color: #2f3fa5;
+
+}

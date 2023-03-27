@@ -17,9 +17,17 @@ window.addEventListener('load', function() {
   setTimeout(function() {
     document.getElementById('loader').style.display = 'none';
     document.getElementById('grades-table').style.display = 'table';
+ 
+
   }, 3000); // زمن التأخير بالميلي ثانية (هنا 3 ثواني)
+ 
+  var table = document.getElementById("myTable");
+  if (table.rows.length === 0) {
+    var div = document.getElementById("myDiv");
+    table.parentNode.insertBefore(div, table);
+  }
+  
+
 });
-
-
 
 

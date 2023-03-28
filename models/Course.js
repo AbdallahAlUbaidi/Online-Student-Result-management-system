@@ -40,6 +40,27 @@ courseSchema.statics.createCourse = async function(courseTitle , stage , branch 
     newCourse.lecturers.push(courseCreator._id)
     newCourse.save()
     await Faculty.updateOne({_id:courseCreator._id} , {$push:{courses:newCourse._id}} , {runValidators:true})
+};
+
+courseSchema.statics.deleteRelatedData = async function (course , courseCreator) {
+    const filter = course.branch !== 'both branches' ? {"stage": course.stage, "branch": course.branch} : {"stage": course.stage}
+    const deleteGrades = Grade.deleteMany({course:course._id});
+    const updateStudents = mongoose.model('Student').updateMany(filter , {$pull:{courses:course._id}} , {runValidators: true});
+    let queryArray = [deleteGrades , updateStudents];
+    if(courseCreator) {
+        const updateFaculty = Faculty.updateOne({_id:courseCreator._id} , {$pull:{courses:course._id}} , {runValidators:true})
+        queryArray.push(updateFaculty);
+    }
+    await Promise.all(queryArray);
+};
+
+courseSchema.statics.updateRelatedData = async function (newCourse) {
+    const filter = newCourse.branch !== 'both branches' ? {"stage": newCourse.stage, "branch": newCourse.branch} : {"stage": newCourse.stage}
+    const students = await mongoose.model('Student').find(filter)
+    students.forEach(student =>{
+         Grade.create({student , course:newCourse._id})
+    })
+    await mongoose.model('Student').updateMany(filter , {$push:{courses:newCourse._id}} , { runValidators: true })
 }
 
 courseSchema.pre('save' , async function(next){

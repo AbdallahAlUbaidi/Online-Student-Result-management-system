@@ -1,5 +1,5 @@
 <%- include('../../partials/flash-message-box.ejs') %> 
-
+<% const courseTitle = locals.course.courseTitle.replace(/\s/gm , '-') %> 
 <div class="content fade-in ">
 <div class="page-container">
   <!-- <nav class="navbar navbar-expand-lg navbar-light  "><div class="container-fluid position-relative"><img src="/images/logo.png" alt="" class=" h-100  navbar-brand"><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><svg
@@ -22,11 +22,11 @@
               </a>
           </li>
           <li>
-            <a href="/statistics" class="aside-link">
+            <a href="/courses/statistics/<%- courseTitle %>" class="aside-link" id = "show-statistics">
               <i class="fas fa-chart-bar"></i> &nbsp;&nbsp; Statistics </a>
           </li>
           <li>
-            <a href="#" class="aside-link">
+            <a href="/courses/<%- courseTitle %>/delete" class="aside-link" id="delete-course">
               <i class="fa fa-trash" aria-hidden="true"></i> &nbsp;&nbsp; Delete course </a>
           </li>
           <!-- <li><a href="#" class="aside-link">Edit course</a></li> -->
@@ -38,7 +38,7 @@
           -->
           <li>
             <!-- <button id="edit-btn"  class="edit aside-link"> &nbsp; Edit</button> -->
-            <a href="#" class="aside-link">
+            <a href="<%- courseTitle %>/edit" class="aside-link" id="edit-course">
               <i class="fas fa-edit icon"></i>&nbsp;&nbsp; Edit course </a>
           </li>
         </ul>
@@ -75,18 +75,12 @@
 <div class="container margin-on-nav    container-e">
   <div class="row">
     <div class="col-md-12">
-   
-   
-     
-      
-      <table id="grades-table" class="table table-hover  " course="<%- locals.course.courseTitle.replace(/\s/gm , '-') %>" role="faculty">
-       
+    <table id="grades-table" class="table table-hover  " course="<%- courseTitle %>" role="faculty">
       <div id="loader">
         <div class="outer"></div>
         <div class="middle"></div>
         <div class="inner"></div>
       </div>
-    
     </table>
 
     <div id="myDiv">

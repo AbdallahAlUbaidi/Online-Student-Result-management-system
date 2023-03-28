@@ -73,7 +73,7 @@
           </div>
         </div>
         <div>
-          <%- include('../partials/select-input-field.ejs' , {error:errors.role , fieldName:'role' ,  fieldId:"register-select-role" ,  selectedOptionText:"Select Role" , options:['student' , 'faculty']}) %>
+          <%- include('../partials/select-input-field.ejs' , {error:errors.role , fieldName:'role' ,  fieldId:"register-select-role" ,  selectedOptionText:"Select Role" , options:['student' , 'faculty'] , selectedOption:undefined}) %>
           <!-- <select class="form-select<%-// errors ? ' form-select-error': "" %> " name='role' id="register-select-role" aria-label="Default select example" aria-placeholder="Select Role">
             <option selected value="">Select Role</option>
             <option value="student">Student</option>

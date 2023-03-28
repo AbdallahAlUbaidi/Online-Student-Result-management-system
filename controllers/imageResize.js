@@ -4,7 +4,7 @@ const { showFlashMessage } = require('./flashMessage');
 const path = require('path')
 
 
-async function imageResize(res , req , imageBuffer , courseTitle ,){
+async function imageResize(res , req , imageBuffer , courseTitle){
     try{
         let dir = path.join(__dirname , '..' , 'public' , 'images' , 'courseImages' , courseTitle);
         if (!fs.existsSync(dir)) {
@@ -23,5 +23,15 @@ async function imageResize(res , req , imageBuffer , courseTitle ,){
     }
 }
 
+function renameImageDirectory(currentName , newName){
+    let prevPath = path.join(__dirname , '..' , 'public' , 'images' , 'courseImages' , currentName);
+    let newPath = path.join(__dirname , '..' , 'public' , 'images' , 'courseImages' , newName);
+    fs.renameSync(prevPath , newPath);
+}
 
-module.exports = {imageResize}
+function deleteImageDirectory(){
+
+}
+
+
+module.exports = {imageResize , renameImageDirectory , deleteImageDirectory}

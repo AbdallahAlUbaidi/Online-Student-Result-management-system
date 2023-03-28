@@ -40,8 +40,8 @@ const facultySchema = mongoose.Schema(
             type:String,
             lowercase:true,
             required:[true , 'You must specify your specialty'],
-            minLength:3,
-            maxLength:30
+            minLength:[3 , "Your specility desciption is too short"],
+            maxLength:[60 , "Too long of specility desciption"]
         },
         branch:{
             type:String,

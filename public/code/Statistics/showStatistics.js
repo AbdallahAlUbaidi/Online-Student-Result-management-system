@@ -9,9 +9,13 @@ const fieldNames = {
 
 if(statisticContainer){
     window.addEventListener('load' , async () => {
-      const role = statisticContainer.getAttribute('role');
-      const result = await getStatisticsData(role);
-        // const result = await getStatisticsData(statisticContainer.getAttribute('role'));
+        const role = statisticContainer.getAttribute('role');
+        const courseTitle = statisticContainer.getAttribute('courseTitle');
+        const result = await getStatisticsData(role , courseTitle);
+        if(result.message){
+          statisticContainer.innerHTML = `<p>${result.message}</p>`;
+          return;
+        }
         const fields = Object.keys(result);
         fields.forEach(field => {
           const {failPercentage , criticalFailPercentage , percentageOfAbsence , scores , maxScore , standardDeviation , meanValue} = result[field];
@@ -31,7 +35,6 @@ if(statisticContainer){
               ['field-div' , 'shadow' , 'sub1'] , //Field Total Students Classes
               ['field-div' , 'shadow' , 'sub2'] , //Field Mean Classes
               ['field-div' , 'shadow','sub3']   //Field stdDev Classess
-              
           );
           statisticContainer.appendChild(fieldContainer);
           makeDoughnutChart(canvases[0] , failPercentage , criticalFailPercentage , percentageOfAbsence);
@@ -40,30 +43,11 @@ if(statisticContainer){
     })
 }
 
-// {
-//     midTerm:{
-//         scores , 
-//         maxScore , 
-//         percentageOfAbsence ,
-//         failPercentage ,
-//         criticalFailPercentage ,
-//         meanValue , 
-//         standardDeviation , 
-//   },
-//     preFinal:{
-//         scores , 
-//         maxScore , 
-//         failPercentage ,
-//         criticalFailPercentage ,
-//         mean , 
-//         standardDeviation , 
-//   }
-// }
 
-async function getStatisticsData(role) {
+
+async function getStatisticsData(role , courseTitle) {
     try{
-        const response = await axios.get(`/statistics/PHP-Lab/faculty`);
-        console.log(response);
+        const response = await axios.get(`/courses/statistics/${courseTitle}/faculty`);
         return response.data;
         
     }catch(err){
@@ -80,10 +64,6 @@ function makeFieldStatistics(field , fieldName , fieldText , isExam , totalNum ,
   const totalNumDiv = createDiv( `${fieldName}-title-div` , `Total Number of ${isExam ? "Participants" :"Students"} : ${totalNum}` ,fieldTotalClasses ,['fas fa-user-graduate']);
   const standardDeviationDiv = createDiv( `${fieldName}-stdDev-div` , `Standard Deviation : ${stdDev}` , fieldStdDevClasses,['fa fa-bar-chart fa-bar-chart-title']);
   const meanValueDiv = createDiv( `${fieldName}-meanValue-div` , `Mean Value : ${meanValue}` , fieldMeanClasses,['fas fa-angle-double-down']);
-  // const totalNumDiv = createDiv( ${fieldName}-title-div , Total Number of ${isExam ? "Participants" :"Students"} : ${totalNum} , fieldTotalClasses);
-  // const standardDeviationDiv = createDiv( ${fieldName}-stdDev-div , Standard Deviation : ${stdDev} , fieldStdDevClasses);
-  // const meanValueDiv = createDiv( ${fieldName}-meanValue-div , Mean Value : ${meanValue} , fieldMeanClasses);
-  // LLLL
   fieldContainer.appendChild(fieldTitleDiv);
   fieldContainer.appendChild(totalNumDiv);
   fieldContainer.appendChild(standardDeviationDiv);
@@ -237,15 +217,6 @@ function distriputeScores(ranges , scores){
   })
   return {distripution , distriputionInPercentage};
 }
-
-// function createDiv(id , text = '' , classes = []){
-//   const div = document.createElement('div');
-//   div.id = id;
-//   if(text)
-//     div.innerHTML = text;
-//   classes.forEach(className => {div.classList.add(className)});
-//   return div;
-// }
 function createDiv(id , text = '' , classes = [] , iconClasses = []){
   const div = document.createElement('div');
   let icon = "";

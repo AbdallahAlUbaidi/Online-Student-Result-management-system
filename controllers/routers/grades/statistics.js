@@ -16,6 +16,7 @@ router.get('/:courseTitle/faculty', async (req, res) => {
     const courseTitleFormatted = courseTitle.split('-').join(' ');
   
     const course = await Course.findOne({ courseTitle: courseTitleFormatted });
+
     const courseIdFromDB = course._id;
   
     const pipeline = [
@@ -34,22 +35,7 @@ router.get('/:courseTitle/faculty', async (req, res) => {
               then: "$evaluationScore",
               else: { $sum: ["$evaluationScore", "$midTermScore"] },
             },
-          },
-          maxMidTermScore: {$cond:{
-            if:{$eq:[course.courseType , 'theoretical']},
-            then:20,
-            else:30
-          }},
-          maxPreFinalScore: {$cond:{
-            if:{$eq:[course.courseType , 'theoretical']},
-            then:30,
-            else:50
-          }},
-          midTermScoreFail:{$lt:['$midTermScore' , {$multiply:[0.5 , '$maxMidTermScore']}]},
-          preFinalScoreFail:{$lt:['$preFinalScore' , {$multiply:[0.5 , '$maxPreFinalScore']}]},
-          midTermScoreCriticalFail:{$lt:['$midTermScore' , {$multiply:[0.33 , '$maxMidTermScore']}]},
-          preFinalScoreCriticalFail:{$lt:['$preFinalScore' , {$multiply:[0.33 , '$maxPreFinalScore']}]},
-
+          }
         },
       },
       {
@@ -83,8 +69,8 @@ router.get('/:courseTitle/faculty', async (req, res) => {
         res.status(200).json({message:"No valid grades was found"});
       else{
         const {midTermScores  , midTermExamScoreMean , midTermExamScoreStdDev , preFinalScoreMean , preFinalScoreStdDev , preFinalScores} = result[0];
-        const midExamMaxScore = course.courseType === '' ? 20 : 30;
-        const preFinalMaxScore = course.courseType === '' ? 30 : 50;
+        const midExamMaxScore = course.courseType === 'theoretical' ? 20 : 30;
+        const preFinalMaxScore = course.courseType === 'theoretical' ? 30 : 50;
         let midPercentageOfAbsence = 0;
         for(scoreIndex in midTermScores){
           if(midTermScores[scoreIndex] === "ABSENT")

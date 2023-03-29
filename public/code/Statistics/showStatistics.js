@@ -83,7 +83,7 @@ function makeFieldStatistics(field , fieldName , fieldText , isExam , totalNum ,
 function makeHistogramChart(canvas , scores , maxScore){
     const filteredScores = scores.filter(score => typeof score === "number");
     const {binWidth , numBins} = calculateBinWidth(filteredScores , maxScore);
-    const ranges = calculateBinRanges(binWidth , numBins);
+    const ranges = calculateBinRanges(binWidth , numBins , maxScore);
     const {distripution , distriputionInPercentage} = distriputeScores(ranges , filteredScores);
     const labels = ranges.map(range => `${range[0]}-${range[1]}`);
     const config = {
@@ -187,10 +187,10 @@ function calculateBinWidth(scores, maxScore) {
   return { binWidth, numBins };
 }
 
-function calculateBinRanges(binWidth , numBins){
+function calculateBinRanges(binWidth , numBins , maxScore){
   let ranges = [];
   for(let i = binWidth ; i <= numBins * binWidth; i += binWidth){
-      const bin = [i - binWidth , i];
+      const bin = [i - binWidth , i > maxScore ? maxScore : i];
       ranges.push(bin); 
   }
   return ranges;

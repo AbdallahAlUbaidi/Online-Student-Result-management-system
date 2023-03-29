@@ -144,7 +144,7 @@ th{
     transform: rotate(360deg);
   }
 }
-#grades-table {
+/* #grades-table {
   display: none;
 }
 #myTable:empty {
@@ -158,7 +158,7 @@ th{
   display: flex;
   justify-content: center;
   align-items: center;
-} 
+}  */
  
 .bi-database-fill-slash{
 font-size: 65px;

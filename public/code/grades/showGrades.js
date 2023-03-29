@@ -1,10 +1,10 @@
 const table = document.getElementById('grades-table');
-
+const loader = document.getElementById('loader');
 if(table)
 {
     window.addEventListener('load' , async ()=>{
         const {fields , records} = await getGrades(table.attributes.role.value , table.attributes.course.value);
-        table.innerHTML = "";
+        loader.style.display = 'none';
         makeTableHeadings(fields , table , "" ,'bg-secondary text-white col');
         const tableBody = document.createElement("tbody")
         records.forEach(record =>{

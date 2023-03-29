@@ -1,0 +1,11 @@
+.no-grades-message{
+    display: none;
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    text-align: center;
+}
+
+#table-container{
+    height: 100vh;
+}

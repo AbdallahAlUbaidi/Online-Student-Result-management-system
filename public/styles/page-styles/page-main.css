@@ -3,6 +3,8 @@
 @import url("./side-menu-styles/side-menu-main.css");
 @import url("./table-styles/table-styles-main.css");
 @import url("./statistics-page.css");
+@import url("./no-grades-message.css");
+@import url('./loader.css');
 
 
 .page-container {

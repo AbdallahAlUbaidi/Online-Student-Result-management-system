@@ -12,8 +12,10 @@ if(statisticContainer){
         const role = statisticContainer.getAttribute('role');
         const courseTitle = statisticContainer.getAttribute('courseTitle');
         const result = await getStatisticsData(role , courseTitle);
+        // await sleep(4000) //For Debug
+        loader.style.display = 'none';
         if(result.message){
-          statisticContainer.innerHTML = `<p>${result.message}</p>`;
+          noGradesMessage.style.display = 'block';
           return;
         }
         const fields = Object.keys(result);

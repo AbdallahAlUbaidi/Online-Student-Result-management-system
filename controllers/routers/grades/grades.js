@@ -14,8 +14,8 @@ const { updateOne } = require('../../../models/Faculty');
 //All roles aside from student
 
 router.get('/:courseTitle/faculty' , async (req , res)=>{
-    const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'evaluationScore' , 'midTermScore'] , req.params.courseTitle , res , 'faculty')
-    res.json({fields , records})
+    const {fields , records , message} = await parseGrades(['studentFullName' , 'gradeStatus' , 'evaluationScore' , 'midTermScore'] , req.params.courseTitle , res , 'faculty');
+    res.json({fields , records , message})
 })
 
 router.get('/:courseTitle/branchHead' , async (req , res)=>{

@@ -1,10 +1,19 @@
 const table = document.getElementById('grades-table');
-const loader = document.getElementById('loader');
+const tableContainer = document.getElementById('table-container');
+const loader = Array.from(document.getElementsByClassName('loader'))[0];
+const noGradesMessage = Array.from(document.getElementsByClassName('no-grades-message'))[0];
 if(table)
 {
     window.addEventListener('load' , async ()=>{
-        const {fields , records} = await getGrades(table.attributes.role.value , table.attributes.course.value);
+        const {fields , records , message} = await getGrades(table.attributes.role.value , table.attributes.course.value);
+        // await sleep(4000) //For Debug
         loader.style.display = 'none';
+        if(message){
+            tableContainer.innerHTML = '';
+            tableContainer.appendChild(noGradesMessage);
+            noGradesMessage.style.display = 'block';
+            return;
+        }
         makeTableHeadings(fields , table , "" ,'bg-secondary text-white col');
         const tableBody = document.createElement("tbody")
         records.forEach(record =>{
@@ -19,9 +28,9 @@ async function getGrades(role , courseTitle){
     try{
         const response = await axios.get(`/grades/${courseTitle}/${role}`);
         if (!response)
-            throw new Error('Server did not respond')
-        const {fields , records} = response.data;
-        return {fields , records};
+            throw new Error('Server did not respond');
+        const {fields , records , message} = response.data;
+        return {fields , records , message};
     }catch(err){
         console.log(err);
     }

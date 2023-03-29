@@ -81,7 +81,9 @@ async function parseGrades(fieldsNames , courseTitle , res , role){
             path:'student',
             select:'studentFullName'
         })
-
+        if(grades.length === 0){
+            return {message:"No valid grades was found"};
+        }
         const records = await getGradesRecords(grades , fieldsNames , role);
         const fields = getGradesFields(fieldsNames)
         return {fields , records};

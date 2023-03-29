@@ -77,7 +77,7 @@ app.use('/logout' , logoutRouter)
 app.use('/emailConfirmation' , emailConfirmationRouter)
 app.use('/courses' , coursesRouter)
 app.use('/grades' , gradesRouter)
-app.use('/statistics' , statisticsRouter)
+app.use('/courses/statistics' , statisticsRouter)
 
 
 

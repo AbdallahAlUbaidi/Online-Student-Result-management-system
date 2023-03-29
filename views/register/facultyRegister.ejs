@@ -10,15 +10,15 @@
         </div>
         <form action="/register/faculty" method="post">
             <% const errors = !locals.errors ? {} : locals.errors %>
-            <%- include('../partials/text-input-field.ejs' , {error:errors.id_num , fieldName:'id_num' , fieldId:'faculty-id-field' , placeholder:'ID' , boostrapIconName:'bi-person-vcard-fill' , isEmail:false})%>
-            <%- include('../partials/text-input-field.ejs' , {error:errors.specialty , fieldName:'specialty' , fieldId:'faculty-specialty-field' , placeholder:'Specialty' , boostrapIconName:'bi-mortarboard-fill' , isEmail:false}) %>
+            <%- include('../partials/text-input-field.ejs' , {error:errors.id_num , fieldName:'id_num' , fieldId:'faculty-id-field' , placeholder:'ID' , boostrapIconName:'bi-person-vcard-fill' , isEmail:false , value:undefined})%>
+            <%- include('../partials/text-input-field.ejs' , {error:errors.specialty , fieldName:'specialty' , fieldId:'faculty-specialty-field' , placeholder:'Specialty' , boostrapIconName:'bi-mortarboard-fill' , isEmail:false , value:undefined}) %>
             <%- include('../partials/select-input-field.ejs' , {error:errors.department , fieldName:'department' , fieldId:'faculty-department-field' , selectedOptionText:"Department" , options:[
             'computer engineering' , 'electrical engineering' , 'mechanical engineering' , 'elctromechanical engineering' , 'chemical engineering' , 'civil engineering',
             'production engineering and metallurgy' , 'material engineering' , 'architectural engineering' , 'laser and optoelectronics engineering' , 'comunication engineering',
             'petrolum technology engineering' , 'biomedical engineering' , 'applied sciences' , 'computer sciences' , 'english language center' , 'continous learning center', 
             'training and workshop center' , 'envoirmental research center' , 'information technology center' , 'nanotechnology and advanced materials research center' ,
-            'energy and renewable energies research center']}) %>
-            <%- include('../partials/select-input-field.ejs' , {error:errors.branch , fieldName:'branch' , fieldId:'faculty-branch-field' , selectedOptionText:"Branch" , options:['information engineering' , 'network engineering']}) %>
+            'energy and renewable energies research center'] , selectedOption:undefined}) %>
+            <%- include('../partials/select-input-field.ejs' , {error:errors.branch , fieldName:'branch' , fieldId:'faculty-branch-field' , selectedOptionText:"Branch" , options:['information engineering' , 'network engineering'] , selectedOption:undefined}) %>
             <%- include('../partials/form-submit-button.ejs' , {buttonText:'Save'}) %>
         </form>
       </div>

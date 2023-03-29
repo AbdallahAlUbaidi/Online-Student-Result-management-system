@@ -5,11 +5,12 @@ const Course = require('../../../models/Course')
 const mongoose = require('mongoose')
 const {errorReport} = require('../../errorReport');
 
-router.get('/' , (req , res) => {
-  res.render('courses/facultyPages/statisticsPage' , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0]});
+router.get('/:courseTitle' , (req , res) => {
+  const {courseTitle} = req.params;
+  res.render('courses/facultyPages/statisticsPage' , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , courseTitle});
 })
 
-//http://localhost/statistics/PHP-Lab/faculty
+//http://localhost/courses/statistics/PHP-Lab/faculty
 router.get('/:courseTitle/faculty', async (req, res) => {
     const { courseTitle } = req.params;
     const courseTitleFormatted = courseTitle.split('-').join(' ');

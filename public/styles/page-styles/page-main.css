@@ -15,7 +15,7 @@
 .img-container {
   width: 100%;
   height: 200px !important;
-  background: url("photo_2023-02-13_23-18-35.jpg") #555;
+  background: #555;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -88,13 +88,11 @@ color: #ffffff;
 }
 
 
-.circle{
+/* .circle{
   border-radius: 20px !important;
  
   margin-top: 30px !important;
-/* margin-right: 50px !important; */
-  /* max-width: 300px;
-  max-height: 300px; */
+
 }
 .chart{
   display: flex;
@@ -107,8 +105,8 @@ color: #ffffff;
   margin-top: 33px;
 height: 300px;
  border-radius: 16px !important;
-}
-@media (max-width:970px) {
+} */
+/* @media (max-width:970px) {
   .chart{
     display: flex;
     flex-direction: column !important;
@@ -129,7 +127,7 @@ height: 300px;
   height: 400px;
  }
 
-}
+} */
 @media (min-width:1900px) {
   .margin-on-nav-courses{
     margin-top: 200px !important;
@@ -163,4 +161,3 @@ height: 300px;
  
 
  }
-

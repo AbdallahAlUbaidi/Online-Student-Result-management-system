@@ -338,6 +338,8 @@ border: #3d52d5 !important;
    
   
   @media (min-width: 351px) and (max-width: 500px) {
+    
+ 
     .container-login{
       width: 70vw !important;
     margin-top: 8vh !important;

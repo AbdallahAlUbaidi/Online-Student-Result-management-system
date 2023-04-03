@@ -16,7 +16,15 @@
     height: max-content;
     transition:all 0.4s ease;
 }
-
+.messages-pool{
+    position: fixed;
+    height: max-content;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    width: 100%;
+    z-index: 1029;
+}
 .flash-message-container{
     position: absolute;
     top: 8px;
@@ -29,6 +37,10 @@
     z-index: 99;
     transition:all 0.4s ease;
 }
+.messages-pool .flash-message-container{
+    position: relative;
+    margin-bottom: 20px;
+} 
 .flash-message-box{
     position: relative;
     padding:15px 50px 15px 20px;

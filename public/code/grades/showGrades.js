@@ -1,6 +1,7 @@
 const table = document.getElementById('grades-table');
 const tableContainer = document.getElementById('table-container');
 const loader = Array.from(document.getElementsByClassName('loader'))[0];
+const submitButton = document.getElementById('faculty-submit-button');
 const noGradesMessage = Array.from(document.getElementsByClassName('no-grades-message'))[0];
 if(table)
 {
@@ -84,9 +85,8 @@ function makeTableCell(value , isWritable  , field , tableCellClasses = '' , inp
     {
         tableCell.innerHTML = value? value: '';
         tableCell.scope = 'row'
-    }
-    else if(!value)
-        tableCell.innerHTML = `
+    }else if(!value){
+                tableCell.innerHTML = `
         <div class = "input-animation">
             <input type = "text" field=${field} class = "${inputFieldClasses}" placeholder = 'Enter Score'>
             <span class="bottom span-course"></span>
@@ -94,7 +94,10 @@ function makeTableCell(value , isWritable  , field , tableCellClasses = '' , inp
             <span class="top span-course"></span>
             <span class="left span-course"></span>
         </div>`;
-    else
+        tableCell.firstElementChild.firstElementChild.addEventListener('change' , ()=>{
+            submitButton.disabled = true;
+        })
+    }else{
         tableCell.innerHTML = `
         <div class = "input-animation">
             <input type = "text" field=${field} value = "${value}" class = "${inputFieldClasses}" placeholder = 'Enter Score'>
@@ -104,5 +107,10 @@ function makeTableCell(value , isWritable  , field , tableCellClasses = '' , inp
             <span class="left span-course"></span>
         </div>
         `;
+        tableCell.firstElementChild.firstElementChild.addEventListener('change' , ()=>{
+            submitButton.disabled = true;
+        })
+
+    }
     return tableCell;
 }

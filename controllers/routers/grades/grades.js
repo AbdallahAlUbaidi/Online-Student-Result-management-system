@@ -15,17 +15,17 @@ const { updateOne } = require('../../../models/Faculty');
 
 router.get('/:courseTitle/faculty' , async (req , res)=>{
     const {fields , records , message} = await parseGrades(['studentFullName' , 'gradeStatus' , 'evaluationScore' , 'midTermScore'] , req.params.courseTitle , res , 'faculty');
-    res.json({fields , records , message})
+    res.json({fields , records , message});
 })
 
 router.get('/:courseTitle/branchHead' , async (req , res)=>{
     const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'preFinalScore'] , req.params.courseTitle , res , 'branchHead')
-    res.json({fields , records})
+    res.json({fields , records , message});
 })
 
 router.get('/:courseTitle/examCommittee' , async (req , res)=>{
     const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'finalExamScore'  , 'totalScore'] , req.params.courseTitle , res , 'examCommittee')
-    res.json({fields , records})
+    res.json({fields , records , message});
 })
 
 router.get('/student' , async (req , res)=>{
@@ -41,7 +41,7 @@ router.post('/:courseTitle/save' , async (req , res)=>{
     const course = await Course.findOne({courseTitle})
     const courseId = course._id;
     const updatedRecordsArray = req.body;
-    let bulkOperations = [];
+    let operations = [];
     const getUpdatedFields = (record)=>{
         const fields = Object.keys(record);
         let updateObj = {};
@@ -56,20 +56,45 @@ router.post('/:courseTitle/save' , async (req , res)=>{
     updatedRecordsArray.forEach(async record =>{
         const updatedFields = getUpdatedFields(record);
         if(Object.keys(updatedFields).length !== 0)
-            bulkOperations.push({
-                updateOne:{
-                    filter:{student:record.studentId , course:courseId , gradeStatus:gradeStageRequirement},
-                    update:updatedFields
-                }
-            })
+            operations.push(Grade.updateOne(
+                {student:record.studentId , course:courseId , gradeStatus:gradeStageRequirement},
+                updatedFields,
+                {runValidators: true}
+            ));
     })
     try{
-        if(bulkOperations.length !== 0)
-             await Grade.bulkWrite(bulkOperations);
-        res.sendStatus(200);
+        let results;
+        let errors ={
+            student:null,
+            reason:null
+        };
+        if(operations.length !== 0)
+            results = await Promise.allSettled(operations.map((p,index)=>p.catch(err=> Promise.reject({student:p._conditions.student , err}))));
+        errors = results.map((r , index)=>{
+            if(r.status !== "fulfilled"){
+                let error = {};
+                error.student = r.reason.student;
+                error.reason = {
+                    message: errorReport(r.reason.err).message,
+                    errors: errorReport(r.reason.err).errors
+                }
+                return error;
+            }
+        }).filter(err => err);
+        results = results.map((r,index)=>{
+            if(r.status === 'fulfilled')
+                return r.value;
+        }).filter(r => r);
+        if(errors.length > 0)
+            res.status(400).json({errors});
+        else
+            res.status(200).json({results});
+
     }catch(err){
+        console.log(err) //Debug
         const {statusCode , message , errors} = errorReport(err)
-        res.status(statusCode).json({ message , errors});
+        console.log({ message , errors , student:err.student}); //Debug
+        res.status(statusCode).json({ message , errors });
     }
 })
 

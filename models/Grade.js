@@ -23,7 +23,12 @@ const gradeSchema = mongoose.Schema({
     },
     evaluationScore:{
         type:Number,
-        min:[0 , 'Must be at least zero'] 
+        set:v => parseFloat(v)? v : null,
+        validate:{
+            validator:value => value != null,
+            message:"Evaluation score must be a number"
+        },
+        min:[0 , 'Evaluation score must be at least zero']
     },
     midTermScore:{
         type:mongoose.Schema.Types.Mixed,
@@ -33,11 +38,14 @@ const gradeSchema = mongoose.Schema({
             return parseFloat(value);
         },
         validate:{
-            validator:value => typeof value === 'number' || (typeof value === 'string' && value.toUpperCase() === 'ABSENT'),
-            message: props => `${props.value} is an invalid Score Must be a number or "ABSENT"`
+            validator:value => typeof value === 'number' && (Boolean(value) && value !== 0) || (typeof value === 'string' && value.toUpperCase() === 'ABSENT'),
+            message: props => `You have entered an invalid mid term score, Must be either a number or "ABSENT"`
         },
-        toUpperCase:true,
-        min:[0 , 'Must be at least zero']
+        validate:{
+            validator:value => parseFloat(value) >= 0 && typeof value !== 'string',
+            message: props => 'Mid term score must be at least zero'
+        },
+        toUpperCase:true
     },
     finalExamScore:{
         type:mongoose.Schema.Types.Mixed,
@@ -47,11 +55,14 @@ const gradeSchema = mongoose.Schema({
             return parseFloat(value);
         },
         validate:{
-            validator:value => typeof value === 'number' || (typeof value === 'string' && value.toUpperCase() === 'ABSENT'),
-            message: props => `${props.value} is an invalid Score Must be a number or "ABSENT"`
+            validator:value => typeof value === 'number' && (Boolean(value) && value !== 0) || (typeof value === 'string' && value.toUpperCase() === 'ABSENT'),
+            message: props => `You have entered an invalid final exam score, Must be either a number or "ABSENT"`
         },
-        toUpperCase:true,
-        min:[0 , 'Must be at least zero']
+        validate:{
+            validator:value => parseFloat(value) >= 0 && typeof value !== 'string',
+            message: props => 'Final Exam score must be at least zero'
+        },
+        toUpperCase:true
     }
 
 })
@@ -91,34 +102,48 @@ gradeSchema.virtual('finalGrade')
     
 })
 
-gradeSchema.path('evaluationScore').validate(async function(score){
-    const course = await Course.findById(this.course)
+gradeSchema.path('evaluationScore').validate({
+    validator:async function(score){
+    const course = await mongoose.model('Course').findOne({course:this.course})
     const maxScore = course.courseType === 'theoretical'? 10 : 20;
     return score <= maxScore
-} , async function(err){
-    const course = await Course.findById(this.course);
-    const maxScore = course.courseType === 'theoretical'? 10 : 20;
-    return `Evaluation score can't be higher than ${maxScore}`
+    },
+    message:"Evaluation score can't be higher than {MAX_SCORE}",
+    MAX_SCORE: function() {
+        const course = mongoose.model('Course').findOne({course: this.course});
+        const maxScore = course.courseType === 'theoretical' ? 10 : 20;
+        return maxScore;
+    }
+
 })
 
-gradeSchema.path('midTermScore').validate(async function(score){
-    const course = await Course.findById(this.course)
-    const maxScore = course.courseType === 'theoretical'? 20 : 30;
-    return score <= maxScore
-} , async function(err){
-    const course = await Course.findById(this.course)
-    const maxScore = course.courseType === 'theoretical'? 20 : 30;
-    return `Mid term Score can't be higher than ${maxScore}`
-})
+gradeSchema.path('midTermScore').validate({
+    validator: async function(score) {
+        score = Number(score) ? Number(score)  : 0;
+        const course = await mongoose.model('Course').findOne({course: this.course});
+        const maxScore = course.courseType === 'theoretical' ? 20 : 30;
+        return score <= maxScore;
+    },
+    message: "Mid term Score can't be higher than {MAX_SCORE}",
+    MAX_SCORE: function() {
+        const course = mongoose.model('Course').findOne({course: this.course});
+        const maxScore = course.courseType === 'theoretical' ? 20 : 30;
+        return maxScore;
+    }
+  });
 
-gradeSchema.path('finalExamScore').validate(async function(score){
-    const course = await Course.findById(this.course)
-    const maxScore = course.courseType === 'theoretical'? 70 : 50;
-    return score <= maxScore
-} , async function(err){
-    const course = await Course.findById(this.course)
-    const maxScore = course.courseType === 'theoretical'? 70 : 50;
-    return `Final exam score can't be higher than ${maxScore}`
+gradeSchema.path('finalExamScore').validate({
+    validator:async function(score){
+        const course = await mongoose.model('Course').findOne({course:this.course})
+        const maxScore = course.courseType === 'theoretical'? 70 : 50;
+        return score <= maxScore
+    }, 
+    message:`Final exam score can't be higher than {MAX_SCORE}`,
+    MAX_SCORE: function() {
+        const course = mongoose.model('Course').findOne({course: this.course});
+        const maxScore = course.courseType === 'theoretical' ? 70 : 50;
+        return maxScore;
+    }
 })
 
 

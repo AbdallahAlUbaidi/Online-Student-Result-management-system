@@ -26,7 +26,17 @@
     transition: transform 0.5s ease;
    
   }
+
+.inputField-container-error input{
+  color:#c92432;
+}
   
+.inputField-container-error .span-course{
+  transition:all 0.3s ease;
+  background-color: #c92432;
+  transform: scale(1) !important;
+}
+
   .bottom,
   .top {
     height: 2px !important;
@@ -85,6 +95,15 @@
     transform-origin: top left !important;
     transform: scaleY(1) !important;
   }
+
+  .inputField-container-error > input:focus{
+    color: #96131e;
+  }
+
+  .inputField-container-error > input:focus ~.span-course{
+    background-color: #96131e;
+  }
+
   .input-animation {
     position: relative;
     width: 6.5em;

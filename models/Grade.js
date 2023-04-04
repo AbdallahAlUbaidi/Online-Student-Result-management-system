@@ -35,14 +35,13 @@ const gradeSchema = mongoose.Schema({
         set:value=>{
             if(value === 'ABSENT')
                 return value;
-            return parseFloat(value);
+            return parseFloat(value)? parseFloat(value) : null;
         },
         validate:{
-            validator:value => typeof value === 'number' && (Boolean(value) && value !== 0) || (typeof value === 'string' && value.toUpperCase() === 'ABSENT'),
-            message: props => `You have entered an invalid mid term score, Must be either a number or "ABSENT"`
-        },
-        validate:{
-            validator:value => parseFloat(value) >= 0 && typeof value !== 'string',
+            validator:value => {
+                if(value !== null)
+                    return parseFloat(value) >= 0 || value === "ABSENT";
+            },
             message: props => 'Mid term score must be at least zero'
         },
         toUpperCase:true
@@ -121,7 +120,7 @@ gradeSchema.path('midTermScore').validate({
     validator: async function(score) {
         score = Number(score) ? Number(score)  : 0;
         const course = await mongoose.model('Course').findOne({course: this.course});
-        const maxScore = course.courseType === 'theoretical' ? 20 : 30;
+        const maxScore = course.courseType === 'theoretical' ? 20 : 30; 
         return score <= maxScore;
     },
     message: "Mid term Score can't be higher than {MAX_SCORE}",
@@ -131,6 +130,12 @@ gradeSchema.path('midTermScore').validate({
         return maxScore;
     }
   });
+  gradeSchema.path("midTermScore").validate({
+    validator:function(score){
+        return score != null;
+    },
+    message:'You have entered an invalid mid term score, Must be either a number or "ABSENT"'
+  })
 
 gradeSchema.path('finalExamScore').validate({
     validator:async function(score){

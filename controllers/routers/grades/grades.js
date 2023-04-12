@@ -68,27 +68,30 @@ router.post('/:courseTitle/save' , async (req , res)=>{
             student:null,
             reason:null
         };
-        if(operations.length !== 0)
+        if(operations.length !== 0){            
             results = await Promise.allSettled(operations.map((p,index)=>p.catch(err=> Promise.reject({student:p._conditions.student , err}))));
-        errors = results.map((r , index)=>{
-            if(r.status !== "fulfilled"){
-                let error = {};
-                error.student = r.reason.student;
-                error.reason = {
-                    message: errorReport(r.reason.err).message,
-                    errors: errorReport(r.reason.err).errors
+            errors = results.map((r , index)=>{
+                if(r.status !== "fulfilled"){
+                    let error = {};
+                    error.student = r.reason.student;
+                    error.reason = {
+                        message: errorReport(r.reason.err).message,
+                        errors: errorReport(r.reason.err).errors
+                    }
+                    return error;
                 }
-                return error;
+            }).filter(err => err);
+            results = results.map((r,index)=>{
+                if(r.status === 'fulfilled')
+                    return r.value;
+            }).filter(r => r);
+            if(errors.length > 0)
+                res.status(400).json({errors});
+            else
+                res.status(200).json({results});
+            }else{
+                res.status(200).json({message:"There are no grades to save or cannot be saved"});
             }
-        }).filter(err => err);
-        results = results.map((r,index)=>{
-            if(r.status === 'fulfilled')
-                return r.value;
-        }).filter(r => r);
-        if(errors.length > 0)
-            res.status(400).json({errors});
-        else
-            res.status(200).json({results});
 
     }catch(err){
         const {statusCode , message , errors} = errorReport(err)

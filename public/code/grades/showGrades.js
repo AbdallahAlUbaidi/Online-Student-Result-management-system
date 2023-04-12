@@ -178,6 +178,7 @@ function createPaginationButtons(table , filter , container) {
         button.innerHTML = i + 1;
         button.disabled  = Boolean(table.currentPage == i + 1);
         button.addEventListener('click' , ()=>{
+            saveGrades(table.getAttribute('course'));
             refreshTable(table  , i+1 , container);
         });
         container.appendChild(button);

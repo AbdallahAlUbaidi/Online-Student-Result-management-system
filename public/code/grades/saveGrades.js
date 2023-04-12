@@ -12,6 +12,10 @@ async function saveGrades(courseTitle){
             url,
             data
         });
+        if(response.data.message === "There are no grades to save or cannot be saved"){
+            showFlashMessage(response.data.message , 2  , 4000 , messagesPool);
+            return;
+        }
         const {results} = response.data;
         const modified = results.filter(r => r.modifiedCount > 0);
         let erroringCells;

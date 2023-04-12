@@ -72,21 +72,70 @@ function getGradesFields(fieldNames){
     return fields;
 }
 
-async function parseGrades(fieldsNames , courseTitle , res , role){
+async function parseGrades(fieldsNames , courseTitle , res , role , page , filter){
     try{
+        const gradePerPage = 5;
         courseTitle = courseTitle.split('-').join(' ');
         const course = await Course.findOne({courseTitle}) //Temprary way to get course
-        const courseId = course._id
-        const grades = await Grade.find({course:courseId}).populate({
-            path:'student',
-            select:'studentFullName'
-        })
+        const courseId = course._id;
+        let totalPages;
+        let grades;
+        let studentsFilter = Object.fromEntries(Object.entries(filter.student).filter(([_ , v]) => v).map(([k , v]) => [`student.${k}` , new RegExp(v , "u")]));
+        delete filter.student;
+        filter = Object.fromEntries(Object.entries(filter).filter(([_ , v]) => v ));
+        filter.course = courseId;
+        const gradeQuery = Grade.aggregate([
+            {
+              $match: filter
+            },
+            {
+              $lookup: {
+                from: 'students',
+                localField: 'student',
+                foreignField: '_id',
+                as: 'student'
+              }
+            },
+            {
+              $unwind: '$student'
+            },
+            {
+              $match: studentsFilter
+            },
+            {
+              $project: {
+                _id: 1,
+                course:1,
+                student: {
+                  studentFullName: 1,
+                  branch: 1
+                },
+                gradeStatus: 1,
+                evaluationScore: 1,
+                midTermScore: 1,
+                finalExamScore: 1,
+                preFinalScore: 1,
+                totalScore: 1
+              }
+            },
+            {
+              $skip: gradePerPage * (page - 1)
+            },
+            {
+              $limit: gradePerPage
+            }
+          ]).exec();
+        const totalGradesQuery = Grade.countDocuments({course:courseId});
+        const result = await Promise.all([gradeQuery , totalGradesQuery]);
+        grades = result[0];
+        totalPages = Math.ceil(result[1] / gradePerPage);
+
         if(grades.length === 0){
             return {message:"No valid grades was found"};
         }
         const records = await getGradesRecords(grades , fieldsNames , role);
         const fields = getGradesFields(fieldsNames)
-        return {fields , records};
+        return {fields , records , totalPages , currentPage:page};
     }catch(err){
         const {errors , statusCode , message} = errorReport(err);
         if(statusCode === 500)

@@ -14,18 +14,18 @@ const { updateOne } = require('../../../models/Faculty');
 //All roles aside from student
 
 router.get('/:courseTitle/faculty' , async (req , res)=>{
-    const {fields , records , message} = await parseGrades(['studentFullName' , 'gradeStatus' , 'evaluationScore' , 'midTermScore'] , req.params.courseTitle , res , 'faculty');
-    res.json({fields , records , message});
+    const {fields , records , message , totalPages , currentPage} = await parseGrades(['studentFullName' , 'gradeStatus' , 'evaluationScore' , 'midTermScore'] , req.params.courseTitle , res , 'faculty' , req.query.page , req.query.filter);
+    res.json({fields , records , message , totalPages , currentPage});
 })
 
 router.get('/:courseTitle/branchHead' , async (req , res)=>{
-    const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'preFinalScore'] , req.params.courseTitle , res , 'branchHead')
-    res.json({fields , records , message});
+    const {fields , records , message , totalPages , currentPage} = await parseGrades(['studentFullName' , 'gradeStatus' , 'preFinalScore'] , req.params.courseTitle , res , 'branchHead' , req.query.page , req.query.filter)
+    res.json({fields , records  , message , totalPages , currentPage});
 })
 
 router.get('/:courseTitle/examCommittee' , async (req , res)=>{
-    const {fields , records} = await parseGrades(['studentFullName' , 'gradeStatus' , 'finalExamScore'  , 'totalScore'] , req.params.courseTitle , res , 'examCommittee')
-    res.json({fields , records , message});
+    const {fields , records , message , totalPages , currentPage} = await parseGrades(['studentFullName' , 'gradeStatus' , 'finalExamScore'  , 'totalScore'] , req.params.courseTitle , res , 'examCommittee' , req.query.page , req.query.filter)
+    res.json({fields , records , message , totalPages , currentPage});
 })
 
 router.get('/student' , async (req , res)=>{
@@ -91,9 +91,7 @@ router.post('/:courseTitle/save' , async (req , res)=>{
             res.status(200).json({results});
 
     }catch(err){
-        console.log(err) //Debug
         const {statusCode , message , errors} = errorReport(err)
-        console.log({ message , errors , student:err.student}); //Debug
         res.status(statusCode).json({ message , errors });
     }
 })

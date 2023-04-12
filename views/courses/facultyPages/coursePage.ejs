@@ -74,6 +74,29 @@
 	</div>
 	<div class="container margin-on-nav container-e">
 		<div class="row">
+			<div class="filter filter-hidden">
+				<div class="table-controls">
+					<i class="fa fa-solid fa-filter" id="filter-btn" aria-hidden="true"></i>
+				</div>
+				<input type="text" id="student-name">
+				<select id="grade-status">
+					<option value="">Grade status</option>
+					<option value="notGraded">Not Graded</option>
+					<option value="pendingApproval">Pending Approval</option>
+					<option value="pendingFinalExam">Pending Final Exam</option>
+					<option value="finalized">Finalized</option>
+					<option value="published">Published</option>
+				</select>
+				<div class="check-box-container">
+					<input type="checkbox" id="IE" value="1" checked>
+					<label for="IE">Information Engineering</label>
+				</div>
+				<div class="check-box-container">
+					<input type="checkbox" id="NE" value="1" checked>
+					<label for="NE">Network Engineering</label>
+				</div>
+				<button id="filter-apply-btn">Apply</button>
+			</div>
 			<div class="col-md-12" id="table-container">
 				<div class="no-grades-message">No Grades are available</div>
 				<div class="loader" id="table-loader">
@@ -84,10 +107,15 @@
 				<table id="grades-table" class="table table-hover" course="<%- courseTitle %>" role="faculty">
 
 				</table>
-				<button type="button" class="btn btn-success exel" onclick="exportToExcel()">Import Excel</button>
-				<button type="button" class="btn btn-success exel" onclick="exportToExcel()">Upload</button>
-				<button class="btn  btn-primary-course btn-sm me-2" id="faculty-save-button">Save</button>
-				<button class="btn  btn-primary-course btn-sm exel" id="faculty-submit-button">Submit</button>
+				<div class="buttons-container">
+					<button type="button" class="btn btn-success exel" onclick="exportToExcel()">Import Excel</button>
+					<button type="button" class="btn btn-success exel" onclick="exportToExcel()">Upload</button>
+					<button class="btn  btn-primary-course btn-sm me-2" id="faculty-save-button">Save</button>
+					<button class="btn  btn-primary-course btn-sm exel" id="faculty-submit-button">Submit</button>
+				</div>
+				<div class="table-pagination-buttons-container">
+					
+				</div>
 			</div>
 		</div>
 	</div>

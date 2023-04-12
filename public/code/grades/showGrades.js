@@ -30,9 +30,7 @@ if(table)
 
     if(filterApplyBtn){
         filterApplyBtn.addEventListener('click' , () => {
-            const filter = getFilter();
-            refreshTable(table , filter , table.currentPage , tablePaginationButtonsContainer);
-
+            refreshTable(table , 1 , tablePaginationButtonsContainer);
         })
     }
 }
@@ -157,9 +155,10 @@ function showGradesInTable(table , fields , records , message , tableContainer ,
     table.appendChild(tableBody);
 }
 
-async function refreshTable(table , filter , page , paginationContainer){
+async function refreshTable(table , page , paginationContainer){
     table.innerHTML = '';
     loader.style.display = 'block';
+    const filter = getFilter();
     const {fields , records , message , totalPages} = await getGrades(table.attributes.role.value , table.attributes.course.value , filter , page);
     if(totalPages){
         table.totalPages = totalPages;
@@ -179,7 +178,7 @@ function createPaginationButtons(table , filter , container) {
         button.innerHTML = i + 1;
         button.disabled  = Boolean(table.currentPage == i + 1);
         button.addEventListener('click' , ()=>{
-            refreshTable(table , filter , i+1 , container);
+            refreshTable(table  , i+1 , container);
         });
         container.appendChild(button);
     }

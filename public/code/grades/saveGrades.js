@@ -91,6 +91,6 @@ function parseStudentRecordsFromTable(){
 if(saveButton)
 {
     saveButton.addEventListener('click' , ()=>{
-        saveGrades(table.getAttribute('course'))
+        saveGrades(table.getAttribute('course'));
     })    
 }

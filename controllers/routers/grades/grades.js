@@ -108,20 +108,32 @@ router.post('/:courseTitle/submit' , async (req , res)=>{
         const courseId = course._id;
         const submitedRecords = req.body;
         let bulkOperations = [];
-        submitedRecords.forEach(record =>{
+        let invalidGradesCount = 0;
+        for( i in submitedRecords ) {
+            const record = submitedRecords[i];
+            const grade = await Grade.findOne({course:courseId , student:record.studentId , evaluationScore:{$exists:true} , midTermScore:{$exists:true}});
+            if(!grade){
+                invalidGradesCount++;
+                continue;
+            }
             bulkOperations.push({
                 updateOne:{
                     filter:{course:courseId , student:record.studentId , gradeStatus:'notGraded'},
                     update:{gradeStatus:'pendingApproval'}
                 }
             })
-        })
-        await Grade.bulkWrite(bulkOperations);
-        res.sendStatus(200);
+        }
+        const {result} = await Grade.bulkWrite(bulkOperations);
+            if(!result.ok)
+                res.status(500).json({message:"Something went wrong while submitting grades"});
+            else if(invalidGradesCount > 0)
+                res.status(200).json({message:`${invalidGradesCount} of the grades you are trying to submit ${invalidGradesCount === 1 ? "is" : "are" } invalid` , messageType: 2});
+            else{
+                res.status(200).json({message:"Grades submitted successfully" , messageType: 1});
+            }
     }catch(err){
         const {statusCode , message , errors} = errorReport(err)
         res.status(statusCode).json({ message , errors});
-
     }
 })
 

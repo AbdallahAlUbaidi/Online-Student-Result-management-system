@@ -25,6 +25,8 @@ async function saveGrades(courseTitle){
                 inputDiv.classList.remove('inputField-container-error');
             });
             submitButton.disabled = false;
+            table.modified = false;
+
             return;
         }
         showFlashMessage("Grades saved successfully" , 1  , 5000 , messagesPool);
@@ -32,6 +34,7 @@ async function saveGrades(courseTitle){
             inputDiv.classList.remove('inputField-container-error');
         });
         submitButton.disabled = false;
+        table.modified = false;
     }catch(err){
         if(!err.response || !err.response.data.errors){
             console.log(err);

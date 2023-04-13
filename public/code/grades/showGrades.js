@@ -111,8 +111,17 @@ function makeTableCell(value , isWritable  , field , tableCellClasses = '' , inp
             <span class="top span-course"></span>
             <span class="left span-course"></span>
         </div>`;
-        tableCell.firstElementChild.firstElementChild.addEventListener('change' , ()=>{
+        const cellField = tableCell.firstElementChild.firstElementChild
+        cellField.addEventListener('change' , ()=>{
+            table.modified = true;
+        });
+        cellField.addEventListener('focusin' , ()=>{
             submitButton.disabled = true;
+        })
+        cellField.addEventListener('focusout' , ()=>{
+            if(!table.modified){
+                submitButton.disabled = false;
+            }
         })
     }else{
         tableCell.innerHTML = `
@@ -124,8 +133,17 @@ function makeTableCell(value , isWritable  , field , tableCellClasses = '' , inp
             <span class="left span-course"></span>
         </div>
         `;
-        tableCell.firstElementChild.firstElementChild.addEventListener('change' , ()=>{
+        const cellField = tableCell.firstElementChild.firstElementChild
+        cellField.addEventListener('change' , ()=>{
+            table.modified = true;
+        });
+        cellField.addEventListener('focusin' , ()=>{
             submitButton.disabled = true;
+        })
+        cellField.addEventListener('focusout' , ()=>{
+            if(!table.modified){
+                submitButton.disabled = false;
+            }
         })
 
     }
@@ -156,8 +174,11 @@ function showGradesInTable(table , fields , records , message , tableContainer ,
 }
 
 async function refreshTable(table , page , paginationContainer){
+    if(table.modified)
+        saveGrades(table.getAttribute('course'));
     table.innerHTML = '';
     loader.style.display = 'block';
+    table.modified = false;
     const filter = getFilter();
     const {fields , records , message , totalPages} = await getGrades(table.attributes.role.value , table.attributes.course.value , filter , page);
     if(totalPages){
@@ -178,8 +199,7 @@ function createPaginationButtons(table , filter , container) {
         button.innerHTML = i + 1;
         button.disabled  = Boolean(table.currentPage == i + 1);
         button.addEventListener('click' , ()=>{
-            saveGrades(table.getAttribute('course'));
-            refreshTable(table  , i+1 , container);
+        refreshTable(table  , i+1 , container);
         });
         container.appendChild(button);
     }

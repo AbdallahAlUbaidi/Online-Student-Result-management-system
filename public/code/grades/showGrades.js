@@ -7,6 +7,7 @@ const noGradesMessage = Array.from(document.getElementsByClassName('no-grades-me
 const tablePaginationButtonsContainer = Array.from(document.getElementsByClassName('table-pagination-buttons-container'))[0];
 const filterApplyBtn = document.getElementById('filter-apply-btn');
 const filterBtn = document.getElementById('filter-btn');
+const refreshTableBtn = document.getElementById('refresh-table-btn');
 
 if(table)
 {
@@ -21,13 +22,17 @@ if(table)
     if(filterBtn){
         filterBtn.addEventListener('click' , () => {
             const filter = document.getElementsByClassName('filter')[0];
-            const filterIcon = document.querySelector('.table-controls i');
+            const filterIcon = document.querySelector('.table-controls i#filter-btn');
             filter.classList.toggle("filter-hidden");
             filterIcon.classList.toggle("fa-filter");
             filterIcon.classList.toggle("fa-close");
         })
     }
-
+    if(refreshTableBtn){
+        refreshTableBtn.addEventListener('click' , () => {
+            refreshTable(table , table.currentPage , tablePaginationButtonsContainer);
+        })
+    } 
     if(filterApplyBtn){
         filterApplyBtn.addEventListener('click' , () => {
             refreshTable(table , 1 , tablePaginationButtonsContainer);
@@ -175,7 +180,7 @@ function showGradesInTable(table , fields , records , message , tableContainer ,
 
 async function refreshTable(table , page , paginationContainer){
     if(table.modified)
-        saveGrades(table.getAttribute('course'));
+        await saveGrades(table.getAttribute('course'));
     table.innerHTML = '';
     loader.style.display = 'block';
     table.modified = false;

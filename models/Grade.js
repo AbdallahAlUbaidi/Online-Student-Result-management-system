@@ -102,54 +102,45 @@ gradeSchema.virtual('finalGrade')
 })
 
 gradeSchema.path('evaluationScore').validate({
-    validator:async function(score){
-    const course = await mongoose.model('Course').findOne({course:this.course})
+    validator:async function(score , validatorObj){
+    const courseId = this._conditions.course;
+    const course = await mongoose.model('Course').findById(courseId);
     const maxScore = course.courseType === 'theoretical'? 10 : 20;
+    validatorObj.message = `Evaluation score can't be higher than ${maxScore}`
     return score <= maxScore
     },
-    message:"Evaluation score can't be higher than {MAX_SCORE}",
-    MAX_SCORE: function() {
-        const course = mongoose.model('Course').findOne({course: this.course});
-        const maxScore = course.courseType === 'theoretical' ? 10 : 20;
-        return maxScore;
-    }
-
-})
+    propsParameter:true
+});
 
 gradeSchema.path('midTermScore').validate({
-    validator: async function(score) {
+    validator: async function(score , validatorObj) {
         score = Number(score) ? Number(score)  : 0;
-        const course = await mongoose.model('Course').findOne({course: this.course});
-        const maxScore = course.courseType === 'theoretical' ? 20 : 30; 
+        const courseId = this._conditions.course;
+        const course = await mongoose.model('Course').findById(courseId);
+        const maxScore = course.courseType === 'theoretical' ? 20 : 30;
+        validatorObj.message = `Mid term Score can't be higher than ${maxScore}`;
         return score <= maxScore;
     },
-    message: "Mid term Score can't be higher than {MAX_SCORE}",
-    MAX_SCORE: function() {
-        const course = mongoose.model('Course').findOne({course: this.course});
-        const maxScore = course.courseType === 'theoretical' ? 20 : 30;
-        return maxScore;
-    }
+    propsParameter:true
   });
+
   gradeSchema.path("midTermScore").validate({
     validator:function(score){
         return score != null;
     },
     message:'You have entered an invalid mid term score, Must be either a number or "ABSENT"'
-  })
+  });
 
 gradeSchema.path('finalExamScore').validate({
-    validator:async function(score){
-        const course = await mongoose.model('Course').findOne({course:this.course})
+    validator:async function(score , validatorObj){
+        const courseId = this._conditions.course;
+        const course = await mongoose.model('Course').findById(courseId);
         const maxScore = course.courseType === 'theoretical'? 70 : 50;
-        return score <= maxScore
+        validatorObj.message = `Final exam score can't be higher than ${maxScore}`;
+        return score <= maxScore;
     }, 
-    message:`Final exam score can't be higher than {MAX_SCORE}`,
-    MAX_SCORE: function() {
-        const course = mongoose.model('Course').findOne({course: this.course});
-        const maxScore = course.courseType === 'theoretical' ? 70 : 50;
-        return maxScore;
-    }
-})
+    propsParameter:true
+});
 
 
 module.exports = mongoose.model('Grade' , gradeSchema)

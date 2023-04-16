@@ -1,6 +1,8 @@
 const roles = {
     student : {model:require('../models/Student'), registerLink: '/register/student'},
-    faculty: {model:require('../models/Faculty'), registerLink: '/register/faculty'}
+    faculty: {model:require('../models/Faculty'), registerLink: '/register/faculty'},
+    branchHead:{model:require('../models/Faculty') , registerLink: '/register/faculty'},
+    examCommittee:{model:require('../models/Faculty') , registerLink: '/register/faculty'}
 }
 const user = require('../models/User')
 const {errorReport, renderErrorPage} = require('./errorReport');
@@ -12,7 +14,7 @@ async function getRoleInfo(userId , userInfo = undefined)
     try
     {
         if(!userInfo){userInfo = await user.findById(userId)};
-        const role = roles[userInfo.role]
+        const role = roles[userInfo.role[0]];
         const roleInfo = await role.model.findOne({userInfo:userInfo._id}).populate("courses")
         return {roleInfo , userInfo , role}
     }

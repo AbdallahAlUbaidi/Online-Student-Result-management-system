@@ -54,10 +54,19 @@ const userSchema = mongoose.Schema({
 
     },
     role:{
-        type:String,
-        enum:['student' , 'faculty'],
+        type:[{
+            type:String,
+            enum:['student' , 'faculty' , 'branchHead' , "examCommittee" , "admin"]
+        }],
         lowerCase:true,
-        required:[true,"Please specify your role"]
+        validate:{
+            validator:rolesArray=>{
+                console.log({rolesArray}); //Debug
+                return rolesArray.length > 0 && rolesArray.length < 3; 
+            },
+            message:"Please specify a valid role"
+        }
+        // required:[true,"Please specify your role"]
     },
     roleInformation:{
         type:mongoose.SchemaTypes.ObjectId,
@@ -115,7 +124,13 @@ userSchema.statics.updatePassword = async function(filter , password , confirmPa
 
 userSchema.statics.createNewUser = async function(username , emailAddress , password , confirmPassword , role){
     const hashedPassword = await hashPassword(password)
-    const newUser = this({username , emailAddress , password:hashedPassword , role})
+    let roles = [];
+    console.log(typeof role);
+    roles.push(role);
+    if(role !== 'faculty' && role !== "student")
+        roles.push('faculty');
+    console.log(Array.isArray(roles)) //Debug
+    const newUser = this({username , emailAddress , password:hashedPassword , role:roles})
     newUser.confirmPassword = confirmPassword
     newUser.unhashedPassoword = password
     await newUser.save()

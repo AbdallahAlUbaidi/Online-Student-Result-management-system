@@ -49,7 +49,7 @@ if(statisticContainer){
 
 async function getStatisticsData(role , courseTitle) {
     try{
-        const response = await axios.get(`/courses/statistics/${courseTitle}/faculty`);
+        const response = await axios.get(`/courses/statistics/${courseTitle}/${role}`);
         return response.data;
         
     }catch(err){

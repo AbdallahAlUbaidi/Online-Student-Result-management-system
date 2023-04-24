@@ -56,7 +56,7 @@
 </div>
 </nav>
 <div class="container container-e  margin-on-nav-courses margin-on-nav p-3 ">
-  <div class="row row-cols-1 row-cols-md-3 g-4" id="empty-div"><% //const firstStageCourses = locals.courses.filter(course => course.stage === '1st') %><% //const secondStageCourses = locals.courses.filter(course => course.stage === '2nd') %><% //const thirdStageCourses = locals.courses.filter(course => course.stage === '3rd') %><% //const forthStageCourses = locals.courses.filter(course => course.stage === '4th') %><% locals.courses.forEach(course => { %><%- include('../../partials/course-card.ejs' , {course}) %><% }) %> </div>
+  <div class="row row-cols-1 row-cols-md-3 g-4" id="empty-div"><% locals.courses.forEach(course => { %><%- include('../../partials/course-card.ejs' , {course , link:`/courses/${course.courseTitle.replace(/\s/gm , '-')}`}) %><% }) %> </div>
 </div>
 </div>
 <button id="scroll-to-top" ><i class="fas fa-chevron-up"></i></button>

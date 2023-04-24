@@ -1,0 +1,9 @@
+.faculty-link {
+    text-decoration: none;
+    color: #161616;
+    transition: all 0.3s ease;
+  }
+.faculty-link:hover {
+    text-decoration: underline;
+    color: #3d52d5 !important;
+}

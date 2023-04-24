@@ -166,7 +166,6 @@ function showGradesInTable(table , fields , records , message , tableContainer ,
         noGradesMessage.style.display = 'block';
         return;
     }
-    noGradesMessage.style.display = 'none';
     paginationContainer.style.display = 'flex';
     buttonsContainer.style.display = 'block';
     makeTableHeadings(fields , table , "" ,'bg-secondary text-white col');
@@ -185,12 +184,12 @@ async function refreshTable(table , page , paginationContainer){
     loader.style.display = 'block';
     table.modified = false;
     const filter = getFilter();
-    const {fields , records , message , totalPages} = await getGrades(table.attributes.role.value , table.attributes.course.value , filter , page);
+    const {fields , records , message , totalPages} = await getGrades(table.attributes.role.value , table.attributes.course.value , filter , page? page : 1);
     if(totalPages){
         table.totalPages = totalPages;
     }
     table.currentPage = page;
-
+    noGradesMessage.style.display = 'none';
     // await sleep(2000) //For Debug
     showGradesInTable(table , fields , records , message , tableContainer , noGradesMessage , loader , filter , paginationContainer);
 

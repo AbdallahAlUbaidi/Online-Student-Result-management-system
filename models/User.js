@@ -53,7 +53,7 @@ const userSchema = mongoose.Schema({
         }
 
     },
-    role:{
+    roles:{
         type:[{
             type:String,
             enum:['student' , 'faculty' , 'branchHead' , "examCommittee" , "admin"]
@@ -61,7 +61,6 @@ const userSchema = mongoose.Schema({
         lowerCase:true,
         validate:{
             validator:rolesArray=>{
-                console.log({rolesArray}); //Debug
                 return rolesArray.length > 0 && rolesArray.length < 3; 
             },
             message:"Please specify a valid role"
@@ -126,11 +125,10 @@ userSchema.statics.createNewUser = async function(username , emailAddress , pass
     const hashedPassword = await hashPassword(password)
     let roles = [];
     console.log(typeof role);
-    roles.push(role);
+    roles.push(role); 
     if(role !== 'faculty' && role !== "student")
         roles.push('faculty');
-    console.log(Array.isArray(roles)) //Debug
-    const newUser = this({username , emailAddress , password:hashedPassword , role:roles})
+    const newUser = this({username , emailAddress , password:hashedPassword , roles})
     newUser.confirmPassword = confirmPassword
     newUser.unhashedPassoword = password
     await newUser.save()

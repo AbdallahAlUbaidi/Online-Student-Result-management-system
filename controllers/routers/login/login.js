@@ -10,7 +10,13 @@ const flashMessage = require('../../flashMessage')
 const confirmationEmail = require('../../email/sendConfirmationEmail')
 const roleInfo = require('../../roleInfo')
 const { renderErrorPage } = require('../../errorReport')
-const secure = Boolean(parseInt(process.env.HTTPS))
+const secure = Boolean(parseInt(process.env.HTTPS));;
+const mainPage = {
+    faculty:"/courses",
+    branchHead:"/facultyMembers",
+    examCommittee:"/courses", //Temp
+    student:"/myGrades" //Temp  
+}
 
 router.get('/'  , (req , res)=>
 {
@@ -33,15 +39,14 @@ router.post('/'  ,async (req , res)=>
     }
     else
     {
-        
         await generateTokensCookies(userInfo , res)
         const role_info = await roleInfo.getRoleInfo(userInfo._id , userInfo)
         if(role_info.error)
             renderErrorPage(500)
         if(!role_info.roleInfo)
-            res.redirect(role_info.role.registerLink)
+            res.redirect(role_info.mainRole.registerLink)
         else
-            res.redirect('/courses')
+            res.redirect(mainPage[role_info.roles[0]]);
     }
 })
 

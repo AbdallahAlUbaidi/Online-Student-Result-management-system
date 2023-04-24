@@ -10,7 +10,7 @@ async function generateToken(refreashToken , expiration = '30m')
     try
     {
         const tokenInfo = await jwt.verify(refreashToken , process.env.REFREASH_TOKEN_SECRET)
-        return await jwt.sign({userId:tokenInfo.userId , role:tokenInfo.role} , process.env.ACCESS_TOKEN_SECRET , {expiresIn:expiration})
+        return await jwt.sign({userId:tokenInfo.userId , roles:tokenInfo.roles} , process.env.ACCESS_TOKEN_SECRET , {expiresIn:expiration})
     }
     catch(err)
     { 

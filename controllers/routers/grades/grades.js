@@ -34,8 +34,8 @@ router.get('/student' , async (req , res)=>{
 
 //Only faculty and exam committee
 router.post('/:courseTitle/save' , async (req , res)=>{
-    const {role} = req.info.userInfo;
-    const gradeStageRequirement = role === 'faculty' ? 'notGraded' : 'pendingFinalExam' //Temprary
+    const {roles} = req.info.userInfo;
+    const gradeStageRequirement = roles[0] === 'faculty' ? 'notGraded' : 'pendingFinalExam' //Temprary
     let {courseTitle} = req.params;
     courseTitle = courseTitle.split('-').join(' ');
     const course = await Course.findOne({courseTitle})

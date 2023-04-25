@@ -4,11 +4,17 @@ const Grade = require('../../../models/Grade')
 const Course = require('../../../models/Course')
 const mongoose = require('mongoose')
 const {errorReport} = require('../../errorReport');
+const statisticsPage = {
+  faculty:"courses/facultyPages/statisticsPage",
+  branchHead:"courses/branchHeadPages/statisticsPage",
+  examComittee:"courses/statisticsPage" //Temp
+}
 
 router.get('/:courseTitle' , (req , res) => {
   const {courseTitle} = req.params;
-  const role = req.info.roles[0];
-  res.render('courses/statisticsPage' , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , courseTitle , role});
+  const role = req.query.role;
+  const mainRole = req.info.roles[0];
+  res.render(statisticsPage[mainRole] , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , courseTitle , role});
 })
 
 router.get('/:courseTitle/faculty', async (req, res) => {

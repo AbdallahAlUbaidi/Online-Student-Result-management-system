@@ -124,7 +124,6 @@ userSchema.statics.updatePassword = async function(filter , password , confirmPa
 userSchema.statics.createNewUser = async function(username , emailAddress , password , confirmPassword , role){
     const hashedPassword = await hashPassword(password)
     let roles = [];
-    console.log(typeof role);
     roles.push(role); 
     if(role !== 'faculty' && role !== "student")
         roles.push('faculty');

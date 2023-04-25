@@ -35,7 +35,6 @@ router.get("/:facultyId/:courseTitle" , async (req , res) => {
         const facultyMember = await Faculty.findOne({id_num:req.params.facultyId}).populate("courses");
         const courseTitle =  req.params.courseTitle.replace(/-/gi , " ");
         const course = facultyMember.courses.filter(course => course.courseTitle === courseTitle)[0];
-        console.log({course})
         res.render('courses/branchHeadPages/facultyCourse' , {message:req.flash("message")[0] , messageType:req.flash("messageType")[0] , course , facultyMember});
     }catch(err){
         const {errors , statusCode , message} = errorReport(err);

@@ -1,0 +1,51 @@
+<%- include('../../partials/flash-message-box.ejs') %>
+<div class="content fade-in">
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light   ">
+    <div class="container-fluid position-relative">
+      <img src="/images/logo.png" alt="" class=" h-100  navbar-brand">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="27" fill="currentColor" class="bi bi-list" viewBox="0 0 14 16">
+          <path fill-rule="evenodd" d="M1.5 4.5A.5.5 0 0 1 2 4h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1zm0 4A.5.5 0 0 1 2 8h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1zm0 4A.5.5 0 0 1 2 12h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1z" />
+        </svg>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link a1" href="/courses">
+            <i class="fa fa-home icon-course" aria-hidden="true"></i>&nbsp; Courses </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link a2" href="#">
+            <i class="bi bi-pencil-fill icon-course"></i>&nbsp; Review </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link a3" href="/logout">
+            <i class="fas fa-sign-out-alt icon-course"></i>&nbsp; Logout </a>
+        </li>
+      </ul>
+    </div>
+</div>
+</nav>
+</div>
+<div class="no-grades-message" id="no-grades-message-statistics-page">No Grades are available</div>
+<div class="loader" id="statistics-loader">
+  <div class="outer"></div>
+  <div class="middle"></div>
+  <div class="inner"></div>
+</div>
+<div class="content fade-in">
+  <div class="margin-on-nav statistics-main-container" role="<%- locals.role %>" courseTitle="<%- locals.courseTitle %>" id="statistics-container" class = 'statistics-container'>
+  </div>
+  <button id="scroll-to-top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+</div>
+<div class="container">
+  <div class="main"></div>
+  <div class="sub"></div>
+  <div class="sub"></div>
+  <div class="sub"></div>
+  <div class="chart-sub"></div>
+  <div class="chart-sub"></div>
+</div>

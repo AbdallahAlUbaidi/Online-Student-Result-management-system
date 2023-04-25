@@ -14,6 +14,7 @@ const { updateOne } = require('../../../models/Faculty');
 //All roles aside from student
 
 router.get('/:courseTitle/faculty' , async (req , res)=>{
+    console.log({courseTitle:req.params.courseTitle , page : req.query.page , filter:req.query.filter})
     const {fields , records , message , totalPages , currentPage} = await parseGrades(['studentFullName' , 'gradeStatus' , 'evaluationScore' , 'midTermScore'] , req.params.courseTitle , res , 'faculty' , req.query.page , req.query.filter);
     res.json({fields , records , message , totalPages , currentPage});
 })
@@ -34,8 +35,8 @@ router.get('/student' , async (req , res)=>{
 
 //Only faculty and exam committee
 router.post('/:courseTitle/save' , async (req , res)=>{
-    const {roles} = req.info.userInfo;
-    const gradeStageRequirement = roles[0] === 'faculty' ? 'notGraded' : 'pendingFinalExam' //Temprary
+    const {role} = req.query;
+    const gradeStageRequirement = role === 'faculty'  ? 'notGraded' : 'pendingFinalExam' //Temprary
     let {courseTitle} = req.params;
     courseTitle = courseTitle.split('-').join(' ');
     const course = await Course.findOne({courseTitle})
@@ -148,7 +149,7 @@ router.post('/:courseTitle/reject' , (req , res)=>{
 })
 
 //Only exam committee
-router.post(':course/publish' , (req , res)=>{
+router.post('/:course/publish' , (req , res)=>{
     
 })
 

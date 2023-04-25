@@ -24,7 +24,6 @@ router.post('/' , async(req , res)=>
     }
     catch(error)
     {   
-        console.log(error);
         const errorInfo = errorReport(error)
         if(errorInfo.statusCode === 500)
             renderErrorPage(res , 500)

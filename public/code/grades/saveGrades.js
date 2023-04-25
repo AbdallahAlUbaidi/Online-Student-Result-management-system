@@ -4,8 +4,9 @@ const messagesPool = document.getElementById('messages-container');
 
 
 async function saveGrades(courseTitle){
-    const url = `/grades/${courseTitle}/save`;
     const data = parseStudentRecordsFromTable();
+    const role = table.getAttribute('role');
+    const url = `/grades/${courseTitle}/save?role=${role}`;
     try{
         const response = await axios({
             method:'post',
@@ -37,7 +38,6 @@ async function saveGrades(courseTitle){
         table.modified = false;
     }catch(err){
         if(!err.response || !err.response.data.errors){
-            console.log(err);
             showFlashMessage("Network Error, No response from the server" , 0  , 5000 , messagesPool);
             return;
         }

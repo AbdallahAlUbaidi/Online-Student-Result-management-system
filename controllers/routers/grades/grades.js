@@ -14,7 +14,6 @@ const { updateOne } = require('../../../models/Faculty');
 //All roles aside from student
 
 router.get('/:courseTitle/faculty' , async (req , res)=>{
-    console.log({courseTitle:req.params.courseTitle , page : req.query.page , filter:req.query.filter})
     const {fields , records , message , totalPages , currentPage} = await parseGrades(['studentFullName' , 'gradeStatus' , 'evaluationScore' , 'midTermScore'] , req.params.courseTitle , res , 'faculty' , req.query.page , req.query.filter);
     res.json({fields , records , message , totalPages , currentPage});
 })

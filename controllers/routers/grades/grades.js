@@ -9,6 +9,7 @@ const Course = require('../../../models/Course')
 const Student = require('../../../models/Student')
 const Faculty = require('../../../models/Faculty');
 const { updateOne } = require('../../../models/Faculty');
+const mongoose = require("mongoose");
 
 
 //All roles aside from student
@@ -80,15 +81,15 @@ router.post('/:courseTitle/save' , async (req , res)=>{
                     }
                     return error;
                 }
-            }).filter(err => err);
-            results = results.map((r,index)=>{
-                if(r.status === 'fulfilled')
-                    return r.value;
-            }).filter(r => r);
-            if(errors.length > 0)
-                res.status(400).json({errors});
-            else
-                res.status(200).json({results});
+                }).filter(err => err);
+                results = results.map((r,index)=>{
+                    if(r.status === 'fulfilled')
+                        return r.value;
+                }).filter(r => r);
+                if(errors.length > 0)
+                    res.status(400).json({errors});
+                else
+                    res.status(200).json({results});
             }else{
                 res.status(200).json({message:"There are no grades to save or cannot be saved"});
             }
@@ -138,13 +139,67 @@ router.post('/:courseTitle/submit' , async (req , res)=>{
 })
 
 //Only branch head
-router.post('/:courseTitle/approve' , (req , res)=>{
-
+router.post('/:courseTitle/approve' , async (req , res)=>{
+    try{
+        const courseTitle = req.params.courseTitle.trim().replace(/-/i , " ");
+        const course = await Course.findOne({courseTitle});
+        const {students} = req.body;
+        let queries = [];
+        students.forEach(student => {
+            student = mongoose.Types.ObjectId(student)
+            const query = Grade.updateOne(
+                    {course:course._id , student , gradeStatus:"pendingApproval"} ,
+                    {gradeStatus:"pendingFinalExam"}
+                 );
+            queries.push(query);
+        });
+        let results = await Promise.allSettled(queries);
+        let errors = results.map(r => r.status === "rejected"? r.reason: null).filter( r => r);
+        results = results.map(r => {
+            return r.status === "fulfilled" ? r.value : null;
+        }).filter(result => result && result.modifiedCount !== 0);
+        if(errors.length > 0)
+            res.status(400).json({errors});
+        else if(results.length == 0)
+            res.status(200).json({message:"There are no grades to approve" , messageType:2});
+        else
+            res.status(200).json({results});
+    }catch(err){
+        const {statusCode , message , errors} = errorReport(err)
+        res.status(statusCode).json({ message , messageType:0 , errors});
+    }
 })
 
 //Only branch head
-router.post('/:courseTitle/reject' , (req , res)=>{
-
+router.post('/:courseTitle/reject' , async (req , res)=>{
+    try{
+        const courseTitle = req.params.courseTitle.trim().replace(/-/i , " ");
+        const course = await Course.findOne({courseTitle});
+        const {students} = req.body;
+        let queries = [];
+        students.forEach(student => {
+            student = mongoose.Types.ObjectId(student)
+            const query = Grade.updateOne(
+                    {course:course._id , student , gradeStatus:"pendingApproval"} ,
+                    {gradeStatus:"notGraded"}
+                 );
+            queries.push(query);
+        });
+        let results = await Promise.allSettled(queries);
+        let errors = results.map(r => r.status === "rejected"? r.reason: null).filter( r => r);
+        results = results.map(r => {
+            return r.status === "fulfilled" ? r.value : null;
+        }).filter(result => result && result.modifiedCount !== 0);
+        if(errors.length > 0)
+            res.status(400).json({errors});
+        else if(results.length == 0)
+            res.status(200).json({message:"There are no grades to reject" , messageType:2});
+        else
+            res.status(200).json({results});
+    }catch(err){
+        const {statusCode , message , errors} = errorReport(err)
+        res.status(statusCode).json({ message , messageType:0 , errors});
+    }
 })
 
 //Only exam committee

@@ -1,5 +1,4 @@
 const saveButton = document.getElementById('faculty-save-button');
-const messagesPool = document.getElementById('messages-container');
 
 
 

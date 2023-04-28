@@ -8,6 +8,9 @@ const tablePaginationButtonsContainer = Array.from(document.getElementsByClassNa
 const filterApplyBtn = document.getElementById('filter-apply-btn');
 const filterBtn = document.getElementById('filter-btn');
 const refreshTableBtn = document.getElementById('refresh-table-btn');
+const messagesPool = document.getElementById('messages-container');
+const approveAllBtn = document.getElementById('branchHead-approve-all-button');
+const rejectAllBtn = document.getElementById('branchHead-reject-all-button');
 
 if(table)
 {
@@ -38,6 +41,16 @@ if(table)
             refreshTable(table , 1 , tablePaginationButtonsContainer);
         })
     }
+
+    if(approveAllBtn){
+        const courseTitle = table.getAttribute("course");
+        approveBtnHandler(approveAllBtn , courseTitle , null , messagesPool)
+    }
+
+    if(rejectAllBtn){
+        const courseTitle = table.getAttribute("course");
+        rejectBtnHandler(rejectAllBtn , courseTitle , null , messagesPool);
+    }
 }
 
 
@@ -63,10 +76,12 @@ function makeTableHeadings(fields , table  , tableHeadingCellClasses = "" , tabl
     const thClasses = tableHeadingCellClasses.trim().split(' ');
     const tHeadClasses = tableHeadingClasses.trim().split(' ');
     const tHead = document.createElement('thead')
+    const role = table.getAttribute('role');
     tHeadClasses.forEach(className =>{
         tHead.classList.add(className)
     })
     const thRow = document.createElement('tr')
+
     fields.forEach(field =>{
         const tableHeading = document.createElement('th');
         tableHeading.innerHTML = field.displayName;
@@ -76,14 +91,42 @@ function makeTableHeadings(fields , table  , tableHeadingCellClasses = "" , tabl
             })
             tableHeading.scope = 'col'
         thRow.appendChild(tableHeading);
-        tHead.appendChild(thRow)
     })
+    if(role === "branchHead"){
+        const tableHeading = document.createElement('th');
+        tableHeading.innerHTML = "Control Buttons";
+        if(tableHeadingCellClasses)
+        thClasses.forEach(className =>{
+                tableHeading.classList.add(className)
+            })
+            tableHeading.scope = 'col'
+        thRow.appendChild(tableHeading); 
+    }
+    tHead.appendChild(thRow);
     table.appendChild(tHead)
 }
 
 
 function makeTableRecord(recordValues , fields , tableRecordClasses = '' , tableCellClasses = '' , inputFieldClasses = ''){
     const tableRecord = document.createElement('tr');
+    const role = table.getAttribute('role');
+    let rejectBtn , approveBtn , buttonsCell = undefined;
+    if(role === "branchHead"){
+        buttonsCell = document.createElement('td');
+        buttonsCell.classList.add('branchHead-btns-cell');
+        if(tableCellClasses){
+            const tdClasses = tableCellClasses.trim().split(' ');
+            tdClasses.forEach(className =>{
+                buttonsCell.classList.add(className)
+            })
+        }
+        approveBtn = document.createElement('button');
+        approveBtn.innerHTML = '<i class="fa fa-solid fa-check" aria-hidden="true"></i>';
+        approveBtn.classList.add('approve-btn');
+        rejectBtn = document.createElement('button');
+        rejectBtn.innerHTML = '<i class="fa fa-solid fa-close" aria-hidden="true"></i>';
+        rejectBtn.classList.add('reject-btn');
+    }
     tableRecord.setAttribute('student-id' , recordValues.studentId);
     if(tableRecordClasses)
         tableRecord.classList.add(tableRecordClasses);
@@ -91,7 +134,23 @@ function makeTableRecord(recordValues , fields , tableRecordClasses = '' , table
         const {value , isWritable} = recordValues[field.name];
         const tableCell = makeTableCell(value , isWritable ,  field.name , tableCellClasses , inputFieldClasses);
         tableRecord.appendChild(tableCell);
-    })
+    });
+    if(rejectBtn){
+        buttonsCell.appendChild(rejectBtn);
+        if(recordValues.gradeStatus.value !== "pendingApproval")
+            rejectBtn.disabled = true;
+        const courseTitle = table.getAttribute('course');
+        rejectBtnHandler(rejectBtn , courseTitle , [recordValues.studentId] , messagesPool);
+    }
+    if(approveBtn){
+        buttonsCell.appendChild(approveBtn);
+        if(recordValues.gradeStatus.value !== "pendingApproval")
+            approveBtn.disabled = true;
+        const courseTitle = table.getAttribute('course');
+        approveBtnHandler(approveBtn , courseTitle , [recordValues.studentId] , messagesPool);
+    }
+    if(buttonsCell)
+        tableRecord.appendChild(buttonsCell);
     return tableRecord;
 }
 
@@ -230,3 +289,55 @@ function getFilter() {
     };
 
 }
+
+function approveBtnHandler(approveBtn , courseTitle , students , messagePool){
+    approveBtn.addEventListener('click' , async ()=> {
+        if(!students)
+            students = getStudentsIds(table);
+        const url = `/grades/${courseTitle}/approve`;
+        const response = await axios.post(
+                url,
+                {students}
+            );
+        let {results , message , messageType , errors} = response.data;
+        if(message)
+            showFlashMessage(message , messageType , 4000 , messagesPool);
+        else if(errors)
+            for(i in errors){
+                showFlashMessage(errors[i].reason , 0 , 2000 + (Math.max(0 , i-2) * 1000) , messagesPool);
+            }
+        else{
+            showFlashMessage(`${results.length} Grade${results.length > 1 ? "s" : ""} was approved and sent to exam committee` , 1 , 3000 , messagesPool);
+            refreshTable(table , table.currentPage , tablePaginationButtonsContainer);
+        }
+    })
+}
+
+function rejectBtnHandler(rejectBtn , courseTitle , students , messagePool){
+    rejectBtn.addEventListener('click' , async ()=> {
+        if(!students)
+            students = getStudentsIds(table);
+        const url = `/grades/${courseTitle}/reject`;
+        const response = await axios.post(
+                url,
+                {students}
+            );
+        let {results , message , messageType , errors} = response.data;
+        if(message)
+            showFlashMessage(message , messageType , 4000 , messagesPool);
+        else if(errors)
+            for(i in errors){
+                showFlashMessage(errors[i].reason , 0 , 2000 + (Math.max(0 , i-2) * 1000) , messagesPool);
+            }
+        else{
+            showFlashMessage(`${results.length} Grade${results.length > 1 ? "s" : ""} was rejected and sent back for re evaluation` , 1 , 3000 , messagesPool);
+            refreshTable(table , table.currentPage , tablePaginationButtonsContainer);
+        }
+    })
+}
+
+function getStudentsIds(table){
+    const records = Array.from(table.querySelectorAll("tbody tr"));
+    return records.map(r => r.getAttribute('student-id'));
+}
+

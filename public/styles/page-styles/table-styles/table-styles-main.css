@@ -27,6 +27,37 @@ th{
     text-align: center !important;
     white-space: nowrap;
   }
+
+  tbody td.score-low{
+    font-weight: bold;
+    color: #c92432;
+    border-bottom:1px solid #c92432;
+    background-color: #c9243240;
+  }
+
+
+  tbody td.score-high{
+    font-weight: bold;
+    color: #22BB33;
+    border-bottom: 1px solid #22BB33;
+    background-color: #22BB3340;
+  }
+
+  tbody td.score-excellent{
+    font-weight: bold;
+    color: white;
+    background-color: #22BB33;
+  }
+
+  tbody td.score-critical{
+    font-weight: bold;
+    color: white;
+    background-color: #c92432;
+  }
+
+  tbody td.score-fail{
+    color: #c92432;
+  }
   .form-control {
     border-radius: 10px;
   }

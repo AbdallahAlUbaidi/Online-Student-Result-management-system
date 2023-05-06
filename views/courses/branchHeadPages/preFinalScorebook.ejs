@@ -1,38 +1,8 @@
-<%- include('../../partials/flash-message-box.ejs') %>
-<% const courseTitle = locals.course.courseTitle.replace(/\s/gm , '-') %> 
+<%- include('../../partials/flash-message-box.ejs') %> 
 <div class="content fade-in ">
 	<div class="page-container">
 		<nav class="navbar navbar-expand-lg navbar-light fixed-top">
 			<div class="container-fluid position-relative">
-				<aside class="sidebar">
-					<button class="sidebar-toggle">
-						<i class="fa fa-chevron-circle-right yes" aria-hidden="true"></i>
-					</button>
-					<ul>
-						<li>
-							<label for="file-input" class="circular-button">
-								<img src="">
-							</label>
-							</a>
-						</li>
-						<li>
-							<a href="/courses/statistics/<%- courseTitle %>?role=branchHead" class="aside-link" id="show-statistics">
-								<i class="fas fa-chart-bar"></i> &nbsp;&nbsp; Statistics </a>
-						</li>
-						<!-- <li>
-							<a href="/courses/<%- //courseTitle %>/delete" class="aside-link" id="delete-course">
-								<i class="fa fa-trash" aria-hidden="true"></i> &nbsp;&nbsp; Delete course </a>
-						</li>
-						<li>
-							<a href="#" class="aside-link">
-								<i class="fas fa-user-plus icon"></i> &nbsp;&nbsp; Invite faculty </a>
-						</li>
-						<li>
-							<a href="<%- //courseTitle %>/edit" class="aside-link" id="edit-course">
-								<i class="fas fa-edit icon"></i>&nbsp;&nbsp; Edit course </a>
-						</li> -->
-					</ul>
-				</aside>
 				<img src="/images/logo.png" alt="" class=" h-100  navbar-brand">
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<svg xmlns="http://www.w3.org/2000/svg" width="36" height="27" fill="currentColor" class="bi bi-list" viewBox="0 0 14 16">
@@ -71,22 +41,16 @@
 					<i class="fa fa-solid fa-filter" id="filter-btn" aria-hidden="true"></i>
 				</div>
 				<input type="text" id="student-name">
-				<select id="grade-status">
-					<option value="">Grade status</option>
-					<option value="notGraded">Not Graded</option>
-					<option value="pendingApproval">Pending Approval</option>
-					<option value="pendingFinalExam">Pending Final Exam</option>
-					<option value="finalized">Finalized</option>
-					<option value="published">Published</option>
+                <select id="stage-select">
+					<option value="1st">1st</option>
+					<option value="2nd">2nd</option>
+					<option value="3rd">3rd</option>
+					<option value="4th">4th</option>
 				</select>
-				<div class="check-box-container">
-					<input type="checkbox" id="IE" value="1" checked>
-					<label for="IE">Information Engineering</label>
-				</div>
-				<div class="check-box-container">
-					<input type="checkbox" id="NE" value="1" checked>
-					<label for="NE">Network Engineering</label>
-				</div>
+                <select id="branch-select">
+					<option value="information engineering">Information Engineering</option>
+					<option value="network engineering">Network Engineering</option>
+				</select>
 				<button id="filter-apply-btn">Apply</button>
 			</div>
 			<div class="col-md-12" id="table-container">
@@ -96,15 +60,9 @@
 					<div class="middle"></div>
 					<div class="inner"></div>
 				</div>
-				<table id="grades-table" class="table table-hover" course="<%- courseTitle %>" role="branchHead">
+				<table id="grades-table" class="table table-hover" role="scorebook" allGrades="true">
 
 				</table>
-				<div class="buttons-container">
-					<button type="button" class="btn btn-success exel" onclick="exportToExcel()">Import Excel</button>
-					<button type="button" class="btn btn-success exel" onclick="exportToExcel()">Upload</button>
-					<button class="btn btn-primary-course btn-sm me-2" id="branchHead-approve-all-button">Approve All</button>
-					<button class="btn btn-primary-course btn-sm exel" id="branchHead-reject-all-button">Reject All</button>
-				</div>
 				<div class="table-pagination-buttons-container">
 					
 				</div>

@@ -15,7 +15,7 @@ const rejectAllBtn = document.getElementById('branchHead-reject-all-button');
 if(table)
 {
     window.addEventListener('load' , async () => {
-        const {fields , records , message , totalPages , currentPage} = await getGrades(table.attributes.role.value , table.attributes.course.value , getFilter() , 1);
+        const {fields , records , message , totalPages , currentPage} = await getGrades(table.attributes.role.value , table.getAttribute("course") , getFilter() , 1);
         table.totalPages = totalPages;
         table.currentPage = currentPage;
         // await sleep(2000) //For Debug
@@ -56,8 +56,9 @@ if(table)
 
 async function getGrades(role , courseTitle , filter , page){
     try{
-
-        const response = await axios.get(`/grades/${courseTitle}/${role}` , {
+        const all = table.getAttribute("allGrades");
+        const url = all? `/grades/preFinalScorebook/scores` : `/grades/${courseTitle}/${role}`;
+        const response = await axios.get(url , {
             params:{
                 page,
                 filter
@@ -131,8 +132,9 @@ function makeTableRecord(recordValues , fields , tableRecordClasses = '' , table
     if(tableRecordClasses)
         tableRecord.classList.add(tableRecordClasses);
     fields.forEach(field =>{
-        const {value , isWritable} = recordValues[field.name];
-        const tableCell = makeTableCell(value , isWritable ,  field.name , tableCellClasses , inputFieldClasses);
+        const {value , isWritable , scoreStatus} = recordValues[field.name];
+        console.log({recordValues , field}) //Debug
+        const tableCell = makeTableCell(value , isWritable ,  field.name , scoreStatus , tableCellClasses , inputFieldClasses);
         tableRecord.appendChild(tableCell);
     });
     if(rejectBtn){
@@ -154,13 +156,17 @@ function makeTableRecord(recordValues , fields , tableRecordClasses = '' , table
     return tableRecord;
 }
 
-function makeTableCell(value , isWritable  , field , tableCellClasses = '' , inputFieldClasses = ''){
+function makeTableCell(value , isWritable  , field , scoreStatus ,  tableCellClasses = '' , inputFieldClasses = ''){
     const tableCell = document.createElement('td');
     const tdClasses = tableCellClasses.trim().split(' ')
     if(tableCellClasses){
         tdClasses.forEach(className =>{
             tableCell.classList.add(className)
         })
+    }
+    if(scoreStatus !== undefined){
+        const scoreStatusClasses = [ "score-low" , "score-high"  , "score-critical" , "score-excellent" , "score-fail"];
+        tableCell.classList.add(scoreStatusClasses[scoreStatus]);
     }
     if(!isWritable)
     {
@@ -220,13 +226,15 @@ function showGradesInTable(table , fields , records , message , tableContainer ,
     if(message){
         table.display = 'none';
         paginationContainer.style.display = 'none';
-        buttonsContainer.style.display = 'none';
+        if(buttonsContainer)
+            buttonsContainer.style.display = 'none';
         tableContainer.appendChild(noGradesMessage);
         noGradesMessage.style.display = 'block';
         return;
     }
     paginationContainer.style.display = 'flex';
-    buttonsContainer.style.display = 'block';
+    if(buttonsContainer)
+        buttonsContainer.style.display = 'block';
     makeTableHeadings(fields , table , "" ,'bg-secondary text-white col');
     const tableBody = document.createElement("tbody")
     records.forEach(record =>{
@@ -243,7 +251,7 @@ async function refreshTable(table , page , paginationContainer){
     loader.style.display = 'block';
     table.modified = false;
     const filter = getFilter();
-    const {fields , records , message , totalPages} = await getGrades(table.attributes.role.value , table.attributes.course.value , filter , page? page : 1);
+    const {fields , records , message , totalPages} = await getGrades(table.attributes.role.value , table.getAttribute('course') , filter , page? page : 1);
     if(totalPages){
         table.totalPages = totalPages;
     }
@@ -262,7 +270,7 @@ function createPaginationButtons(table , filter , container) {
         button.innerHTML = i + 1;
         button.disabled  = Boolean(table.currentPage == i + 1);
         button.addEventListener('click' , ()=>{
-        refreshTable(table  , i+1 , container);
+            refreshTable(table  , i+1 , container);
         });
         container.appendChild(button);
     }
@@ -271,19 +279,34 @@ function createPaginationButtons(table , filter , container) {
 
 function getFilter() {
     const studentName = document.getElementById("student-name").value.trim();
-    const gradeStatus = document.getElementById('grade-status').value.trim();
-    const IE = document.getElementById('IE').checked;
-    const NE = document.getElementById('NE').checked;
+    const gradeStatusSelect = document.getElementById('grade-status');
+    const stageSelect = document.getElementById('stage-select');
+    const branchSelect = document.getElementById('branch-select');
     let branch = undefined;
-    if(!IE || !NE)
-        if(IE)
-            branch = "information engineering";
-        else
-            branch = "network engineering";
+    let stage = undefined;
+    let gradeStatus = undefined;
+    if(!branchSelect){
+        const IE = document.getElementById('IE').checked;
+        const NE = document.getElementById('NE').checked;
+        if(!IE || !NE)
+            if(IE)
+                branch = "information engineering";
+            else
+                branch = "network engineering";
+    }
+    else{
+        branch = branchSelect.value.trim();
+    }
+    if(stageSelect)
+        stage = stageSelect.value.trim();
+    if(gradeStatusSelect){
+        gradeStatus = gradeStatusSelect.value.trim()
+    }
     return {
         student:{
             studentFullName:studentName,
-            branch
+            branch,
+            stage
         },
         gradeStatus
     };

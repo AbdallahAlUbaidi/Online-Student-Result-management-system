@@ -23,6 +23,9 @@ const gradeWritableField = {
     },
     student:(gradeStatus , field) =>{
         return false;
+    },
+    scorebook:(gradeStatus , field) => {
+      return false;
     }
 
 
@@ -74,7 +77,7 @@ function getGradesFields(fieldNames){
     fieldNames.forEach(field =>{
         let newField = {};
         newField.name = field;
-        newField.displayName = displayNameMap[field];
+        newField.displayName = displayNameMap[field] || field;
         fields.push(newField)
     })
     return fields;

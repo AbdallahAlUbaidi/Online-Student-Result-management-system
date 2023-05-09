@@ -202,8 +202,66 @@ router.post('/:courseTitle/reject' , async (req , res)=>{
 })
 
 //Only exam committee
-router.post('/:course/publish' , (req , res)=>{
-    
+router.post('/:courseTitle/finilize' , async (req , res)=>{
+    try{
+        const courseTitle = req.params.courseTitle.trim().replace(/-/i , " ");
+        const course = await Course.findOne({courseTitle});
+        const {students} = req.body;
+        let queries = [];
+        students.forEach(student => {
+            student = mongoose.Types.ObjectId(student)
+            const query = Grade.updateOne(
+                    {course:course._id , student , gradeStatus:"pendingFinalExam" , finalExamScore:{$exists:true}} ,
+                    {gradeStatus:"finalized"}
+                 );
+            queries.push(query);
+        });
+        let results = await Promise.allSettled(queries);
+        let errors = results.map(r => r.status === "rejected"? r.reason: null).filter( r => r);
+        results = results.map(r => {
+            return r.status === "fulfilled" ? r.value : null;
+        }).filter(result => result && result.modifiedCount !== 0);
+        if(errors.length > 0)
+            res.status(400).json({errors});
+        else if(results.length == 0)
+            res.status(200).json({message:"There are no grades to finalize" , messageType:2});
+        else
+            res.status(200).json({results});
+    }catch(err){
+        const {statusCode , message , errors} = errorReport(err)
+        res.status(statusCode).json({ message , messageType:0 , errors});
+    }
+})
+
+router.post("/:courseTitle/publish" , async (req , res) => {
+    try{
+        const courseTitle = req.params.courseTitle.trim().replace(/-/i , " ");
+        const course = await Course.findOne({courseTitle});
+        const {students} = req.body;
+        let queries = [];
+        students.forEach(student => {
+            student = mongoose.Types.ObjectId(student)
+            const query = Grade.updateOne(
+                    {course:course._id , student , gradeStatus:"finalized"} ,
+                    {gradeStatus:"published"}
+                 );
+            queries.push(query);
+        });
+        let results = await Promise.allSettled(queries);
+        let errors = results.map(r => r.status === "rejected"? r.reason: null).filter( r => r);
+        results = results.map(r => {
+            return r.status === "fulfilled" ? r.value : null;
+        }).filter(result => result && result.modifiedCount !== 0);
+        if(errors.length > 0)
+            res.status(400).json({errors});
+        else if(results.length == 0)
+            res.status(200).json({message:"There are no grades to finalize" , messageType:2});
+        else
+            res.status(200).json({results});
+    }catch(err){
+        const {statusCode , message , errors} = errorReport(err)
+        res.status(statusCode).json({ message , messageType:0 , errors});
+    }
 })
 
 //Branch Head only
@@ -286,7 +344,6 @@ function parseStudentsPreFinalScorebook(studentsScorebook){
     let records = [];
     let fields = [];
     fields.push("studentFullName");
-    // console.log({studentsScorebook}); //Debug
     studentsScorebook.forEach(scorebook => {
         const grades = scorebook.grades;
         let record = {};
@@ -375,7 +432,6 @@ function calculateMedian(numArray){
     const median = numArray.length % 2 === 1?
     numArray[midPoint] :
     (numArray[midPoint - 1] + numArray[midPoint + 1]) / 2;
-    console.log()
     return median;
 }
 

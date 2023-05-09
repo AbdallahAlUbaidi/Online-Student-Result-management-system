@@ -19,8 +19,8 @@ const rolesMap = {
         coursePageView:'courses/branchHeadPages/myCoursePage'
     },
     examCommittee:{
-        coursesPageView:'courses/examCommiteePages/coursesPage',
-        coursePageView:'courses/examCommiteePages/coursePage'
+        coursesPageView:'courses/examCommitteePages/myCoursesPage',
+        coursePageView:'courses/examCommitteePages/myCoursePage'
     }
 }
 

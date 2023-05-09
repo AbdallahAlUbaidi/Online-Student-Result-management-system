@@ -14,7 +14,7 @@ const secure = Boolean(parseInt(process.env.HTTPS));;
 const mainPage = {
     faculty:"/courses",
     branchHead:"/facultyMembers",
-    examCommittee:"/courses", //Temp
+    examCommittee:"/finalExams",
     student:"/myGrades" //Temp  
 }
 

@@ -3,7 +3,7 @@ router = express.Router()
 const mainPage = {
     faculty:"/courses",
     branchHead:"/facultyMembers",
-    examCommittee:"/courses", //Temp
+    examCommittee:"/finalExams", //Temp
     student:"/myGrades" //Temp  
 }
 

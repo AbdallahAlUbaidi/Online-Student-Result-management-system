@@ -11,7 +11,8 @@ const refreshTableBtn = document.getElementById('refresh-table-btn');
 const messagesPool = document.getElementById('messages-container');
 const approveAllBtn = document.getElementById('branchHead-approve-all-button');
 const rejectAllBtn = document.getElementById('branchHead-reject-all-button');
-
+const finilizeBtn = document.getElementById('examCommittee-finalize-button');
+const publishBtn = document.getElementById("examCommittee-publish-button");
 if(table)
 {
     window.addEventListener('load' , async () => {
@@ -50,6 +51,16 @@ if(table)
     if(rejectAllBtn){
         const courseTitle = table.getAttribute("course");
         rejectBtnHandler(rejectAllBtn , courseTitle , null , messagesPool);
+    }
+
+    if(finilizeBtn){
+        const courseTitle = table.getAttribute("course");
+        finilizeBtnHandler(finilizeBtn , courseTitle , null , messagesPool);
+    }
+
+    if(publishBtn){
+        const courseTitle = table.getAttribute("course");
+        publishBtnHandler(publishBtn , courseTitle , null , messagesPool);
     }
 }
 
@@ -133,7 +144,6 @@ function makeTableRecord(recordValues , fields , tableRecordClasses = '' , table
         tableRecord.classList.add(tableRecordClasses);
     fields.forEach(field =>{
         const {value , isWritable , scoreStatus} = recordValues[field.name];
-        console.log({recordValues , field}) //Debug
         const tableCell = makeTableCell(value , isWritable ,  field.name , scoreStatus , tableCellClasses , inputFieldClasses);
         tableRecord.appendChild(tableCell);
     });
@@ -354,6 +364,52 @@ function rejectBtnHandler(rejectBtn , courseTitle , students , messagePool){
             }
         else{
             showFlashMessage(`${results.length} Grade${results.length > 1 ? "s" : ""} was rejected and sent back for re evaluation` , 1 , 3000 , messagesPool);
+            refreshTable(table , table.currentPage , tablePaginationButtonsContainer);
+        }
+    })
+}
+
+function finilizeBtnHandler(finlizeBtn , courseTitle , students , messagePool){
+    finlizeBtn.addEventListener('click' , async ()=> {
+        if(!students)
+            students = getStudentsIds(table);
+        const url = `/grades/${courseTitle}/finilize`;
+        const response = await axios.post(
+                url,
+                {students}
+            );
+        let {results , message , messageType , errors} = response.data;
+        if(message)
+            showFlashMessage(message , messageType , 4000 , messagesPool);
+        else if(errors)
+            for(i in errors){
+                showFlashMessage(errors[i].reason , 0 , 2000 + (Math.max(0 , i-2) * 1000) , messagesPool);
+            }
+        else{
+            showFlashMessage(`${results.length} Grade${results.length > 1 ? "s" : ""} was finilized` , 1 , 3000 , messagesPool);
+            refreshTable(table , table.currentPage , tablePaginationButtonsContainer);
+        }
+    })
+}
+
+function publishBtnHandler(publishBtn , courseTitle , students , messagePool) {
+    publishBtn.addEventListener('click' , async ()=> {
+        if(!students)
+            students = getStudentsIds(table);
+        const url = `/grades/${courseTitle}/publish`;
+        const response = await axios.post(
+                url,
+                {students}
+            );
+        let {results , message , messageType , errors} = response.data;
+        if(message)
+            showFlashMessage(message , messageType , 4000 , messagesPool);
+        else if(errors)
+            for(i in errors){
+                showFlashMessage(errors[i].reason , 0 , 2000 + (Math.max(0 , i-2) * 1000) , messagesPool);
+            }
+        else{
+            showFlashMessage(`${results.length} Grade${results.length > 1 ? "s" : ""} was published` , 1 , 3000 , messagesPool);
             refreshTable(table , table.currentPage , tablePaginationButtonsContainer);
         }
     })

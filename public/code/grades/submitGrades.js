@@ -20,7 +20,6 @@ if(submitButton){
         }
 
     }catch(err){
-      console.log(err);
       if(err.response.data.message)
         showFlashMessage(err.response.data.message , 0  , 5000 , messagesPool);
       else

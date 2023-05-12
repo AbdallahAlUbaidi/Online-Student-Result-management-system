@@ -7,7 +7,7 @@ const {errorReport} = require('../../errorReport');
 const statisticsPage = {
   faculty:"courses/facultyPages/statisticsPage",
   branchHead:"courses/branchHeadPages/statisticsPage",
-  examComittee:"courses/statisticsPage" //Temp
+  examCommittee:"courses/examCommitteePages/statisticsPage" //Temp
 }
 
 router.get('/:courseTitle' , (req , res) => {
@@ -85,10 +85,10 @@ router.get('/:courseTitle/faculty', async (req, res) => {
 
         midPercentageOfAbsence = (midPercentageOfAbsence / midTermScores.length) * 100;
 
-        let midTermFailPercentage = [];
-        let midTermCriticalFailPercentage = []; 
-        let preFinalFailPercentage = []; 
-        let preFinalCriticalFailPercentage = []; 
+        let midTermFailPercentage = 0;
+        let midTermCriticalFailPercentage = 0; 
+        let preFinalFailPercentage = 0; 
+        let preFinalCriticalFailPercentage = 0; 
         
         midTermScores.forEach( score => {
           if(score < 0.5 * midExamMaxScore)
@@ -185,8 +185,8 @@ router.get('/:courseTitle/branchHead' , async (req , res) => {
       const { preFinalScoreMean , preFinalScoreStdDev , preFinalScores} = result[0];
       const preFinalMaxScore = course.courseType === 'theoretical' ? 30 : 50;
 
-      let preFinalFailPercentage = []; 
-      let preFinalCriticalFailPercentage = []; 
+      let preFinalFailPercentage = 0; 
+      let preFinalCriticalFailPercentage = 0; 
       
       preFinalScores.forEach( score => {
         if(score < 0.5 * preFinalMaxScore)
@@ -213,8 +213,132 @@ router.get('/:courseTitle/branchHead' , async (req , res) => {
   }
 })
 
-router.get('/:courseTitle/examCommittee' , (req , res) => {
+router.get('/:courseTitle/examCommittee' , async (req , res) => {
+  const { courseTitle } = req.params;
+  const courseTitleFormatted = courseTitle.split('-').join(' ');
 
-})
+  const course = await Course.findOne({ courseTitle: courseTitleFormatted });
+
+  const courseIdFromDB = course._id;
+
+  const pipeline = [
+    {
+      $match: {
+        course: mongoose.Types.ObjectId(courseIdFromDB),
+        midTermScore:{$nin:[undefined , NaN , null]},
+        evaluationScore:{$nin:[undefined , NaN , null]},
+        finalExamScore:{$nin:[undefined , NaN , null]}
+      },
+    },
+    {
+      $addFields: {
+        preFinalScore: {
+          $cond: {
+            if: { $eq: ["$midTermScore", "ABSENT"] },
+            then: "$evaluationScore",
+            else: { $sum: ["$evaluationScore", "$midTermScore"] },
+          },
+        }
+      },
+    },
+    {
+      $addFields: {
+        totalScore: {
+          $cond: {
+            if: { $eq: ["$finalExamScore", "ABSENT"] },
+            then: "$preFinalScore",
+            else: { $sum: ["$preFinalScore", "$finalExamScore"] },
+          },
+        },
+      }
+    },
+    {
+      $group: {
+        _id: "$course",
+        finalExamScoreMean: { $avg: "$finalExamScore" },
+        totalScoreMean: { $avg: "$totalScore" },
+        finalExamScoreStdDev: { $stdDevPop: "$finalExamScore" },
+        totalScoreStdDev: { $stdDevPop: "$preFinalScore" },
+        finalExamScores: { $push: "$finalExamScore" },
+        totalScores: { $push: "$totalScore" },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        finalExamScoreMean: 1,
+        totalScoreMean: 1,
+        finalExamScoreStdDev: 1,
+        totalScoreStdDev: 1,
+        finalExamScores: 1,
+        totalScores: 1,
+      },
+    },
+  ];
+
+  try {
+    const result = await Grade.aggregate(pipeline);
+    if(result.length === 0)
+      res.status(200).json({message:"No valid grades was found"});
+    else{
+      const {finalExamScores  , finalExamScoreMean , finalExamScoreStdDev , totalScoreMean , totalScoreStdDev , totalScores} = result[0];
+      const finalExamMaxScore = course.courseType === 'theoretical' ? 70 : 50;
+      const totalMaxScore = 100;
+      let finalPercentageOfAbsence = 0;
+      for(scoreIndex in finalExamScores){
+        if(finalExamScores[scoreIndex] === "ABSENT")
+          finalPercentageOfAbsence++;
+      }
+      finalPercentageOfAbsence = (finalPercentageOfAbsence / finalExamScores.length) * 100;
+
+      let finalFailPercentage = 0;
+      let finalCriticalFailPercentage = 0; 
+      let totalFailPercentage = 0; 
+      let totalCriticalFailPercentage = 0; 
+      
+      finalExamScores.forEach( score => {
+        if(score < 0.5 * finalExamMaxScore)
+          finalFailPercentage++;
+        if(score < 0.33 * finalExamMaxScore)
+          finalCriticalFailPercentage++;
+      })
+      finalFailPercentage = (finalFailPercentage / finalExamScores.length) * 100;
+      finalCriticalFailPercentage = (finalCriticalFailPercentage / finalExamScores.length) * 100;
+      totalScores.forEach( score => {
+        if(score < 0.5 * totalMaxScore)
+          totalFailPercentage++;
+        if(score < 0.33 * totalMaxScore)
+          totalCriticalFailPercentage++;
+      })
+      totalFailPercentage = (totalFailPercentage / totalScores.length) * 100;
+      totalCriticalFailPercentage = (totalCriticalFailPercentage / totalScores.length) * 100;
+      res.status(200).json({
+        finalExam:{
+          scores:finalExamScores , 
+          maxScore:finalExamMaxScore , 
+          percentageOfAbsence:finalPercentageOfAbsence ,
+          failPercentage:finalFailPercentage ,
+          criticalFailPercentage:finalCriticalFailPercentage ,
+          meanValue:finalExamScoreMean , 
+          standardDeviation:finalExamScoreStdDev , 
+        },
+        totalScore:{
+          scores:totalScores , 
+          maxScore:totalMaxScore , 
+          failPercentage:totalFailPercentage ,
+          criticalFailPercentage:totalCriticalFailPercentage ,
+          meanValue:totalScoreMean , 
+          standardDeviation:totalScoreStdDev
+        }
+      });
+    }
+    } catch (err) {
+      const { statusCode, message, errors } = errorReport(err);
+      res.status(statusCode).json({ message, errors });
+    }
+  });
+
+
+    
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const saveButton = document.getElementById('faculty-save-button');
+const saveButton = document.querySelector(".save-btn");
 
 
 
@@ -24,7 +24,8 @@ async function saveGrades(courseTitle){
             Array.from(document.getElementsByClassName("input-animation")).forEach(inputDiv => {
                 inputDiv.classList.remove('inputField-container-error');
             });
-            submitButton.disabled = false;
+            if(submitButton)
+                submitButton.disabled = false;
             table.modified = false;
 
             return;
@@ -33,7 +34,8 @@ async function saveGrades(courseTitle){
         Array.from(document.getElementsByClassName("input-animation")).forEach(inputDiv => {
             inputDiv.classList.remove('inputField-container-error');
         });
-        submitButton.disabled = false;
+        if(submitButton)
+            submitButton.disabled = false;
         table.modified = false;
     }catch(err){
         if(!err.response || !err.response.data.errors){

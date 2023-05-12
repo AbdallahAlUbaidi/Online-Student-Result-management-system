@@ -1,8 +1,10 @@
-<div class="card h-100 ">
-    <div class="card-img-top w-100 mx-auto d-block img-container"></div>
+<div class="col">
+  <div class="card h-100 ">
+    <div class="card-img-top w-100 mx-auto d-block img-container" courseTitle="<%- course.courseTitle %>"></div>
     <div class="card-body mt-3">
       <a href="/courses/<%- course.courseTitle.replace(/\s/gm , '-') %>" class="course-title">
         <h5 class="card-title"><%-course.courseTitle%> </h5>
       </a>
     </div>
   </div>
+</div>

@@ -1,7 +1,8 @@
 <%- include('../partials/flash-message-box.ejs') %>
 <div class="form-container">
+  <div class="mm">
     <div class="content fade-in">
-      <div class="container shadow-lg p-3 bg-body">
+      <div class="container container-login   shadow-lg  p-3 bg-body">
         <div class="image-container">
           <img src="/images/formImage.png" alt="" class="rounded mx-auto d-block ">
         </div>
@@ -10,12 +11,14 @@
         </div>
         <form action="/register/student" method="post">
             <% const errors = !locals.errors ? {} : locals.errors %>
-            <%- include('../partials/text-input-field.ejs' , {error:errors.student_id , fieldName:'student_id' , fieldId:'student-id-field' , placeholder:'ID' , boostrapIconName:'bi-person-vcard-fill' , isEmail:false}) %>
-            <%- include('../partials/select-input-field.ejs' , {error:errors.stage , fieldName:'stage' , fieldId:'student-stage-field' , selectedOptionText:"Stage" , options:['1st' , '2nd' , '3rd' , '4th' , 'Graduate']}) %>
-            <%- include('../partials/select-input-field.ejs' , {error:errors.branch , fieldName:'branch' , fieldId:'student-branch-field' , selectedOptionText:"Branch" , options:['information engineering' , 'network engineering']}) %>
-            <%- include('../partials/select-input-field.ejs' , {error:errors.study , fieldName:'study' , fieldId:'student-study-field' , selectedOptionText:'Study' , options:['morning' , 'evening']}) %>
+            <%- include('../partials/text-input-field.ejs' , {error:errors.student_id , fieldName:'student_id' , fieldId:'student-id-field' , placeholder:'ID' , boostrapIconName:'bi-person-vcard-fill' , isEmail:false , value:undefined}) %>
+            <%- include('../partials/text-input-field.ejs' , {error:errors.studentFullName , fieldName:'studentFullName' , fieldId:'student-fullname-field' , placeholder:'Full Name in Arabic' , boostrapIconName:"bi-person-fill" , isEmail:false , value:undefined}) %>
+            <%- include('../partials/select-input-field.ejs' , {error:errors.stage , fieldName:'stage' , fieldId:'student-stage-field' , selectedOptionText:"Stage" , options:['1st' , '2nd' , '3rd' , '4th' , 'Graduate'] , selectedOption:undefined}) %>
+            <%- include('../partials/select-input-field.ejs' , {error:errors.branch , fieldName:'branch' , fieldId:'student-branch-field' , selectedOptionText:"Branch" , options:['information engineering' , 'network engineering'] , selectedOption:undefined}) %>
+            <%- include('../partials/select-input-field.ejs' , {error:errors.study , fieldName:'study' , fieldId:'student-study-field' , selectedOptionText:'Study' , options:['morning' , 'evening'] , selectedOption:undefined}) %>
             <%- include('../partials/form-submit-button.ejs' , {buttonText:'Save'}) %>
         </form>
       </div>
     </div>
+  </div>
   </div>

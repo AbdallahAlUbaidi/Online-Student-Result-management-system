@@ -31,7 +31,6 @@ const errorObjects = {
 }
 
 const renderErrorPage = (res , statusCode)=>{
-    console.log(statusCode)
     const {errorName , errorMsg , errorDescription} = errorObjects[statusCode]
     res.render('errorPage' , {errorName, statusCode , errorMsg , errorDescription})
 }

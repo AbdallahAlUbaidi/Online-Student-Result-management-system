@@ -1,16 +1,15 @@
 if(process.env.NODE_ENV !== 'production')
 {
-    require('dotenv').config()
+    require('dotenv').config();
 }
-const express = require("express")
-const epxress_layouts = require("express-ejs-layouts")
-const mongoose = require("mongoose")
-const bodyParser = require("body-parser")
-const cookieParser = require('cookie-parser')
-const flash = require('connect-flash')
-const session = require('express-session')
-const helmet =  require('helmet')
-
+const express = require("express");
+const epxress_layouts = require("express-ejs-layouts");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
+const session = require('express-session');
+const helmet =  require('helmet');
 
 
 
@@ -37,6 +36,8 @@ const studentRegisterRouter = require('./controllers/routers/register/studentReg
 const facultyRegisterRouter = require('./controllers/routers/register/facultyRegister')
 const emailConfirmationRouter = require('./controllers/routers/email/emailConfirmation')
 const coursesRouter = require('./controllers/routers/courses/courses')
+const gradesRouter = require('./controllers/routers/grades/grades')
+const statisticsRouter = require('./controllers/routers/grades/statistics')
 const accessToken = require('./controllers/AuthenticationTokens/accessToken')
 const {hasEnteredRoleInfo , rolesRegisterLinks} = require('./controllers/roleInfo')
 const {errorReport} = require('./controllers/errorReport')
@@ -75,6 +76,8 @@ app.use('/login/retrievePassword' , retrievePasswordRouter)
 app.use('/logout' , logoutRouter)
 app.use('/emailConfirmation' , emailConfirmationRouter)
 app.use('/courses' , coursesRouter)
+app.use('/grades' , gradesRouter)
+app.use('/courses/statistics' , statisticsRouter)
 
 
 

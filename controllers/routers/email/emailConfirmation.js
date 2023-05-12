@@ -83,7 +83,7 @@ router.get('/:emailToken' , async (req , res)=>
     {
         let userId = await tokenInfo.userId
         await user.updateOne({_id:userId} , {conformed:true})
-        res.status(200).json({message:'Your Email was verified successfully'})  //placeholder will have a seperate html page instead
+        res.status(200).render('email/Email-confirmed')
     }
 })
 

@@ -1,0 +1,736 @@
+.container-login{
+  
+    margin-top: 90px !important;
+    font-size: medium;
+   
+    border-radius: 25px !important;
+    font-family: sans-serif ;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    position: relative;
+    /* height: 80vh;           
+    display: flex;           
+    flex-direction: column;  
+    justify-content:center;  */
+
+}
+#b{
+padding-left: 32px;
+
+}
+.o{
+  display: flex;
+  justify-content:space-between;
+ 
+}
+
+.mm{
+  display: flex;
+  justify-content: center;
+  align-items:center ;
+}
+.container-login{
+  width: 50vw !important;
+  margin-top: 9vh !important;
+  margin-bottom: 80vh !important;
+
+ 
+}
+
+
+.body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  
+ }
+ h2{
+
+ 
+  color: #4157e3fe;
+  font-weight: bold !important;
+  font-weight: 500 !important;
+
+  -webkit-text-stroke: 3.5px #445ae9;
+  text-transform:uppercase;
+  text-align: center;
+
+font-size:40px !important;  
+position: relative;
+}
+
+
+
+h2::before{
+  content:attr(data-text);
+ position: absolute;
+  /* top: 0; */
+  /* left: 0; */
+  width: 0;
+  height: 100%;
+  color:  #3646b0;
+  -webkit-text-stroke: 4px #3344ad;
+  border-right: 4px solid  #3d51d5fb;
+  overflow: hidden;
+  animation: animate 5s ease ;
+
+}
+@keyframes animate{
+  0%,10%,100%{
+    width: 0;
+  }
+  70%,90%{
+  
+    width: 100%;
+
+  }
+}
+
+.textField::placeholder{                                 /*This is used to style the error when it appears in the text field placeholder*/
+  color: red !important;
+  font-size: large;
+}
+
+.btn-primary-login{
+   
+    background-image: linear-gradient(to right,rgb(23.9%,32.2%,83.5%),rgb(118, 130, 202)) !important;
+    box-shadow: 0px 0px 0px rgba(255,255, 255, 1),
+    inset 0px 0px 0px rgba(0,0, 0, 0.05),
+    inset 0px 0px 0px rgba(255,255, 255, 1),
+    0px 0px 0px rgba(0,0, 0, 0.05) !important;
+    border: #3d52d5 !important;
+    font-weight: bold!important;
+    font-size: 16px !important;
+   cursor:pointer !important;
+   transition: all 0.4s ease-in-out !important;
+}
+.btn-primary-login:active {
+  box-shadow: 0px 0px 10px #3d51d592 !important;
+}
+ 
+.form-check-input:hover{
+
+background-color: #3d52d5 !important;
+border: #3d52d5 !important;
+}
+.mu{
+
+    padding-left: 15px !important;
+}
+
+
+@media (min-width:801px) and (max-width:950px) {
+  .container{
+    width: 60vw !important;
+  margin-top: 8vh !important;
+  margin-bottom: 80vh !important;
+  
+   
+  }
+
+
+
+  h2{
+
+
+    color: #4157e3fe;
+    font-weight: bold !important;
+    font-weight: 500 !important;
+  
+    -webkit-text-stroke: 3px #445ae9;
+    text-transform:uppercase;
+    text-align: center;
+  
+  font-size:35px !important;  
+  position: relative;
+  }
+  
+  
+  
+  h2::before{
+    content:attr(data-text);
+   position: absolute;
+     top: 0; 
+     left: 0; 
+    width: 0;
+    height: 100%;
+    color:  #3646b0;
+    -webkit-text-stroke: 3.2px #3344ad;
+    border-right: 3px solid  #3d51d5fb;
+    overflow: hidden;
+    animation: animate 5s ease ;
+  
+  }
+  @keyframes animate{
+    0%,10%,100%{
+      width: 0;
+    }
+    70%,90%{
+
+      width: 100%;
+  
+    }
+  
+  }
+}
+
+ 
+   @media (min-width: 651px) and (max-width: 800px) {
+    .container-login{
+      width: 70vw !important;
+    margin-top: 8vh !important;
+    margin-bottom: 80vh !important;
+    
+     
+    }
+  
+  .forgot{
+    font-size: 17px !important;
+  }
+  .remember{
+    font-size: 17px !important;
+    padding-right: 20px;
+  }
+  .form-check-input{
+    font-size: 17px;
+  }
+  .Notmember{
+    font-size:17px ;
+  }
+  .now{
+    font-size: 17px;
+  }
+
+
+
+    h2{
+
+ 
+      color: #4157e3fe;
+      font-weight: bold !important;
+      font-weight: 500 !important;
+    
+      -webkit-text-stroke: 3px #445ae9;
+      text-transform:uppercase;
+      text-align: center;
+    
+    font-size:33px !important;  
+    position: relative;
+    }
+    
+    
+    
+    h2::before{
+      content:attr(data-text);
+     position: absolute;
+   
+      width: 0;
+      height: 100%;
+      color:  #3646b0;
+      -webkit-text-stroke: 3.2px #3344ad;
+      border-right: 3px solid  #3d51d5fb;
+      overflow: hidden;
+      animation: animate 5s ease ;
+    
+    }
+    @keyframes animate{
+      0%,10%,100%{
+        width: 0;
+      }
+      70%,90%{
+      
+        width: 100%;
+    
+      }
+    
+    }
+
+  } 
+  @media (min-width: 501px) and (max-width: 650px) {
+    .container-login{
+      width: 70vw !important;
+    margin-top: 8vh !important;
+    margin-bottom: 80vh !important;
+    
+     
+    }
+  
+  .forgot{
+    font-size: 13.5px !important;
+  }
+  .remember{
+    font-size: 13.5px !important;
+    padding-right: 20px;
+  }
+  .form-check-input{
+    font-size: 13.5px;
+  }
+  .Notmember{
+    font-size:13.5px ;
+  }
+  .now{
+    font-size: 13.5px;
+  }
+  .e{
+    font-size: 17.5px;
+  }
+  .p{
+    font-size: 17.5px;
+  }
+  .eye{
+    font-size: 17.5px;
+  }
+  input::-webkit-input-placeholder {
+    font-size: 13.9px;
+  padding-left: -19px;
+  
+  }
+
+
+
+
+    h2{
+
+ 
+      color: #4157e3fe;
+      font-weight: bold !important;
+      font-weight: 500 !important;
+    
+      -webkit-text-stroke: 3px #445ae9;
+      text-transform:uppercase;
+      text-align: center;
+    
+    font-size:31px !important;  
+    position: relative;
+    }
+    
+    
+    
+    h2::before{
+      content:attr(data-text);
+     position: absolute;
+    
+      width: 0;
+      height: 100%;
+      color:  #3646b0;
+      -webkit-text-stroke: 3.2px #3344ad;
+      border-right: 3px solid  #3d51d5fb;
+      overflow: hidden;
+      animation: animate 5s ease ;
+    
+    }
+    @keyframes animate{
+      0%,10%,100%{
+        width: 0;
+      }
+      70%,90%{
+  
+        width: 100%;
+    
+      }
+    
+    }
+  }
+    
+
+  
+   
+  
+  @media (min-width: 351px) and (max-width: 500px) {
+    
+ 
+    .container-login{
+      width: 70vw !important;
+    margin-top: 8vh !important;
+    margin-bottom: 80vh !important;
+    
+     
+    }
+    .forgot{
+      font-size: 12.5px !important;
+    }
+    .remember{
+      font-size: 12.5px !important;
+      padding-right: 20px;
+    }
+    .form-check-input{
+      font-size: 12.5px;
+    }
+    .Notmember{
+      font-size:12.5px ;
+    }
+    .now{
+      font-size: 12.5px;
+    }
+    .e{
+      font-size: 16.5px;
+    }
+    .p{
+      font-size: 16.5px;
+    }
+    .eye{
+      font-size: 16.5px;
+    }
+    input::-webkit-input-placeholder {
+      font-size: 13.4px;
+    padding-left: -19px;
+    
+    }
+
+    h2{
+
+ 
+      color: #4157e3fe;
+      font-weight: bold !important;
+      font-weight: 500 !important;
+    
+      -webkit-text-stroke: 3px #445ae9;
+      text-transform:uppercase;
+      text-align: center;
+    
+    font-size:28px !important;  
+    position: relative;
+    }
+    
+    
+    
+    h2::before{
+      content:attr(data-text);
+     position: absolute;
+      top: 0; 
+       left: 0;
+      width: 0;
+      height: 100%;
+      color:  #3646b0;
+      -webkit-text-stroke: 3.2px #3344ad;
+      border-right: 3px solid  #3d51d5fb;
+      overflow: hidden;
+      animation: animate 5s ease ;
+    
+    }
+    @keyframes animate{
+      0%,10%,100%{
+        width: 0;
+      }
+      70%,90%{
+      
+        width: 100%;
+    
+      }
+    }
+    
+ 
+
+ 
+
+
+  }
+
+ 
+  @media (min-width: 250px) and (max-width: 350px) {
+    .container-login{
+      width: 80vw !important;
+    margin-top: 8vh !important;
+    margin-bottom: 80vh !important;
+    
+     
+    }
+    
+    .forgot{
+  font-size: 11px !important;
+}
+.remember{
+  font-size: 11px !important;
+  padding-right: 20px;
+}
+.form-check-input{
+  font-size: 11px;
+}
+.Notmember{
+  font-size:11px ;
+}
+.now{
+  font-size: 11px;
+}
+.e{
+  font-size: 16px;
+}
+.p{
+  font-size: 16px;
+}
+.eye{
+  font-size: 16px;
+}
+input::-webkit-input-placeholder {
+  font-size: 13px;
+padding-left: -19px;
+
+}
+
+    h2{
+
+ 
+      color: #4157e3fe;
+      font-weight: bold !important;
+      font-weight: 500 !important;
+    
+      -webkit-text-stroke: 2px #445ae9;
+      text-transform:uppercase;
+      text-align: center;
+    
+    font-size:18px !important;  
+    position: relative;
+    }
+    
+    
+    
+    h2::before{
+      content:attr(data-text);
+     position: absolute;
+
+      width: 0;
+      height: 100%;
+      color:  #3646b0;
+      -webkit-text-stroke: 2.5px #3344ad;
+      border-right: 3px solid  #3d51d5fb !important;
+      overflow: hidden;
+      animation: animate 5s ease ;
+    
+    }
+    @keyframes animate{
+      0%,10%,100%{
+        width: 0;
+      }
+      70%,90%{
+    
+        width: 100%;
+    
+      }
+    }
+  
+  }
+ 
+ 
+
+
+@keyframes rise-and-vibrate {
+  0% {
+    transform: translateY(100%) rotate(-45deg);
+    color: #3d52d5;
+    opacity: 0;
+  }
+  40% {
+    transform: translateY(-20%) rotate(-5deg);
+    color: #3d52d5;
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(-10%) rotate(5deg);
+    color: #3d52d5;
+  }
+  80% {
+    transform: translateY(0%) rotate(-5deg);
+    color: #3d52d5;
+  }
+  100% {
+    transform: translateY(0%) rotate(0deg);
+  }
+}
+
+
+
+
+.login-link{
+    color: #3d52d5 !important;
+    transition: all 0.4s ease-in-out !important;
+
+}
+p{
+    margin-right: 8px;
+}
+
+.forgot:hover{
+  transform: translate(2px,-3px);
+
+}
+.forgot{
+  transition: 0.5s all ease;
+}
+.now:hover{
+  transform: translate(2px,-3px);
+
+   font-weight: 400;
+
+}
+.now{
+  transition: 0.5s all ease;
+}
+
+.btn-primary-login:hover{
+    transform: translate(0.1px,-2.2px);
+    transition: 0.4s all ease;
+    font-weight: bold;
+    font-size: 16px;
+   
+
+}
+
+
+.form-control{
+    border: none !important;
+    border-bottom:2px solid #b3b3b3 !important;
+    box-shadow: 0px 0px 0px rgba(255,255, 255, 1),
+                inset 0px 0px 0px rgba(0,0, 0, 0.05),
+                inset 0px 0px 0px rgba(255,255, 255, 1),
+                0px 0px 0px rgba(0,0, 0, 0.05) !important;
+
+     transition: 0.5 ease !important;      
+     padding-left: 31px !important;   
+
+              
+
+}
+
+#show-password{
+    transition: transform 0.2s ease-in-out;
+}
+#show-password:hover{
+    transform: translateY(-3px);
+    color: #3d52d5;
+}
+
+  
+.fade-in {
+    animation: fadeIn 1.8s ease-in; /* Define the animation */
+  }
+  
+  /* Keyframes for the animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0; /* Start at 0% opacity */
+    }
+    to {
+      opacity: 1; /* End at 100% opacity */
+    }
+  }
+
+div {
+  position: relative;
+}
+
+.input-login {
+  width: 6.5em;
+  color: white;
+  font-size: inherit;
+  font-family: inherit;
+  background-color: transparent;
+  border: 2px solid transparent;
+
+}
+
+.input-login:focus {
+  outline: none;
+}
+
+.input-login::placeholder {
+  color: hsla(0, 0%, 100%, 0.6);
+}
+
+.span-login {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1.7px !important;
+  background-color:#3d52d5 !important;
+  transform-origin: bottom right;
+  transform: scaleX(0);
+  transition: transform 0.5s ease;
+}
+
+.input-login:focus ~ .span-login {
+  transform-origin: bottom left;
+  transform: scaleX(1);
+
+}
+
+.btn-primary-login {
+  z-index: 1;
+  position: relative;
+  font-size: inherit;
+  font-family: inherit;
+  color: white;
+  padding: 0.5em 1em;
+  outline: none;
+  border: none;
+  background-color: #3d52d5;
+  overflow: hidden;
+  transition: color 0.4s ease-in-out;
+}
+
+.btn-primary-login::before {
+  content: '';
+  z-index: -1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background-color: #1f27658f;
+  transform-origin: center;
+  transform: translate3d(-50%, -50%, 0) scale3d(0, 0, 0);
+  transition: transform 0.45s ease-in-out;
+}
+
+.btn-primary-login:hover {
+  cursor: pointer;
+  color: #192256;
+ 
+}
+
+.btn-primary-login:hover::before {
+  transform: translate3d(-50%, -50%, 0) scale3d(75, 35, 35);
+}
+
+.form-control:focus ~.p{
+    color: #3d52d5 !important;
+    transform: scale(1.1);
+}
+.form-control:focus ~.eye{
+    color: #3d52d5 !important;
+    transform: translateY(-3px);
+}
+.form-control:focus ~.e{
+    color: #3d52d5 !important;
+  
+    transform: scale(1.1);
+}
+.p{
+    padding-left: 4px !important;
+    color: rgb(124, 124, 124) !important; 
+    transition: all 0.1s ease;  
+}
+
+.e{
+    padding-left: 5px !important;
+
+    color: gray;
+    transition: all 0.4s ease;
+}
+.eye{
+    color: gray;
+}
+.form-control:focus ~.eye2{
+    color: #3d52d5 !important;
+}
+
+
+body{
+  background-image: linear-gradient(to right, #b1b4c914, #9ba1c71e, #7b87d22d);
+}
+
+
+
+/* Default styles */

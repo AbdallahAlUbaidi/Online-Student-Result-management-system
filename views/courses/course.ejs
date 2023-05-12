@@ -1,6 +1,7 @@
-<%- include('../partials/flash-message-box.ejs') %>
+<%- include('../../partials/flash-message-box.ejs') %>
+<div class="content fade-in ">
 <div class="page-container">
-    <nav class="navbar navbar-expand-lg navbar-light  ">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top  ">
         <div class="container-fluid position-relative">
           <img src="/images/logo.png" alt="" class=" h-100  navbar-brand">
           <!-- <div class="btn"> -->
@@ -15,14 +16,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <% if(role === 'faculty') {%>
-                <%- include('../partials/nav-bar-link.ejs' , {link:'#' , linkText:'Delete Course' , customIconClass:'fa fa-minus-square'}) %>
-                <%- include('../partials/nav-bar-link.ejs' , {link:'#' , linkText:'Edit Course' , customIconClass:'bi bi-pencil-fill'}) %>
+                <%- include('../../partials/nav-bar-link.ejs' , {link:'#' , linkText:'Delete Course' , customIconClass:'fa fa-minus-square'}) %>
+                <%- include('../../partials/nav-bar-link.ejs' , {link:'#' , linkText:'Edit Course' , customIconClass:'bi bi-pencil-fill'}) %>
             <% } %>
-            <%- include('../partials/nav-bar-link.ejs' , {link:'/logout' , linkText:'Logout' , customIconClass:'bi bi-x-circle-fill'}) %>
+            <%- include('../../partials/nav-bar-link.ejs' , {link:'/logout' , linkText:'Logout' , customIconClass:'bi bi-x-circle-fill'}) %>
           </ul>
         </div>
       </nav>
-      <br>
-      <p>Placeholder</p>
-      <br>
+</div>
+<button id="scroll-to-top" ><i class="fas fa-chevron-up"></i></button>
 </div>

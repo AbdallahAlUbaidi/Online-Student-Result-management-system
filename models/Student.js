@@ -1,12 +1,18 @@
 const mongoose = require('mongoose')
-const { renderErrorPage } = require('../controllers/errorReport')
 const Course = require('./Course')
+const Grade = require('./Grade')
 const studentSchema = mongoose.Schema(
     {
         userInfo:{
             type:mongoose.SchemaTypes.ObjectId,
             required:[true , 'Please enter your credentials'],
             ref:"User"
+        },
+        studentFullName:{
+            type:String,
+            required:[true , 'You must enter your full name'],
+            minLength:[6 , 'Must be at least 6 characters long'],
+            maxLength:[50 , 'Must be at most 50 characters long']
         },
         student_id:{
             type:String,
@@ -52,6 +58,9 @@ studentSchema.pre('save' , async function(next){
         if(!this.courses)
             this.courses = []
         const coursesArray = await Course.find({stage:this.stage, $or:[{branch:this.branch} , {branch:'both branches'}]} , {_id:1})
+        coursesArray.forEach(async course =>{
+            await Grade.create({student:this , course})
+        })
         const updatedCourses = this.courses.concat(coursesArray)
         this.set('courses' , updatedCourses)
         next()

@@ -1,21 +1,24 @@
 <%- include('../partials/flash-message-box.ejs') %>
-<div class="form-container">
+<div class="content fade-in ">
+<div class="form-container ">
     <div class="content fade-in">
-      <div class="container shadow-lg p-3 bg-body">
+      <div class="container container-login shadow-lg p-3 bg-body">
         <div class="image-container">
-          <img src="/images/formImage.png" alt="" class="rounded mx-auto d-block ">
+          <img src="/images/formImage.png" alt="" class="rounded w-25 mx-auto d-block ">
         </div>
         <div class="title-container">
-          <h2 data-text="Sign&nbsp;up" class="mt-3 mb-0 title" id="register-title">Sign up</h2>
+          <h2 data-text="Create&nbsp;Course" class="mt-3 mb-0 title" id="register-title">Create Course</h2>
         </div>
-        <form action="/courses/createCourse" method="post">
+        <form action="/courses/create" method="post" enctype="multipart/form-data">
           <% const errors = !locals.errors ? {} : locals.errors %>
-          <%- include('../partials/text-input-field.ejs' , {error:errors.courseTitle , fieldName:'courseTitle' , fieldId:'course-courseTitle-field' , placeholder:'Course Title' , boostrapIconName:'bi-book-half' , isEmail:false}) %>
-          <%- include('../partials/select-input-field.ejs' , {error:errors.stage , fieldName:'stage' , fieldId:'course-stage-field' , selectedOptionText:'Stage' , options:['1st' , '2nd' , '3rd' , '4th']}) %>
-          <%- include('../partials/select-input-field.ejs' , {error:errors.branch , fieldName:'branch' , fieldId:'course-branch-field' , selectedOptionText:'Branch' , options:['information engineering' , 'network engineering' , 'both branches']}) %>
-          <%- include('../partials/select-input-field.ejs' , {error:errors.courseType , fieldName:'courseType' , fieldId:'course-courseType-field' , selectedOptionText:'Course Type' , options:['practical' , 'theoretical']}) %>
+          <%- include('../partials/text-input-field.ejs' , {error:errors.courseTitle , fieldName:'courseTitle' , fieldId:'course-courseTitle-field' , placeholder:'Course Title' , boostrapIconName:'bi-book-half' , isEmail:false , value:undefined}) %>
+          <%- include('../partials/select-input-field.ejs' , {error:errors.stage , fieldName:'stage' , fieldId:'course-stage-field' , selectedOptionText:'Stage' , options:['1st' , '2nd' , '3rd' , '4th'] , selectedOption:undefined}) %>
+          <%- include('../partials/select-input-field.ejs' , {error:errors.courseType , fieldName:'courseType' , fieldId:'course-courseType-field' , selectedOptionText:'Course Type' , options:['practical' , 'theoretical'] , selectedOption:undefined}) %>
+          <%- include('../partials/upload-image-field.ejs') %>
+          <%- include('../partials/form-checkbox.ejs' , {fieldId:'create-courses-checkbox' , fieldName:'bothBranches' , labelText:'Both Branches' , value : undefined}) %>
           <%- include('../partials/form-submit-button.ejs' , {buttonText:'Create'}) %>
         </form>
       </div>
     </div>
   </div>
+ 

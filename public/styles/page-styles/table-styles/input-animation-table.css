@@ -1,0 +1,113 @@
+.input-course {
+    width: 6.5em;
+    color: rgb(0, 0, 0);
+    font-size: inherit;
+    font-family: inherit;
+    background-color:rgba(237, 237, 237, 0.124) ;
+    padding: 0.35em 0.45em;
+    border: 1.5px solid rgb(217, 211, 211);
+    transition: background-color 0.3s ease-in-out;
+    text-align: center !important;
+   
+   
+  }
+  
+  .input-course:focus {
+    outline: none;
+  }
+  
+  .input-course::placeholder {
+    color: hsla(0, 4%, 5%, 0.6);
+  }
+  
+  .span-course {
+    position: absolute;
+    background-color: #3d52d5;
+    transition: transform 0.5s ease;
+   
+  }
+
+.inputField-container-error input{
+  color:#c92432;
+}
+  
+.inputField-container-error .span-course{
+  transition:all 0.3s ease;
+  background-color: #c92432;
+  transform: scale(1) !important;
+}
+
+  .bottom,
+  .top {
+    height: 2px !important;
+    left: 0;
+    right: 0;
+    transform: scaleX(0) !important;
+   
+  }
+  
+  .left,
+  .right {
+    width: 2px !important;
+    top: 0;
+    bottom: 0;
+    transform: scaleY(0) !important;
+   
+  }
+  
+  .bottom {
+    bottom: 0;
+    transform-origin: bottom right !important;
+  
+  }
+  
+  input:focus ~ .bottom {
+    transform-origin: bottom left !important;
+    transform: scaleX(1) !important;
+  }
+  
+  .right {
+    right: 0 !important;
+    transform-origin: top right !important;
+  }
+  
+  input:focus ~ .right {
+    transform-origin: bottom right !important;
+    transform: scaleY(1) !important;
+  }
+  
+  .top {
+    top: 0;
+    transform-origin: top left !important;
+  }
+  
+  input:focus ~ .top {
+    transform-origin: top right !important;
+    transform: scaleX(1) !important;
+  }
+  
+  .left {
+    left: 0;
+    transform-origin: bottom left !important;
+  }
+  
+  input:focus ~ .left {
+    transform-origin: top left !important;
+    transform: scaleY(1) !important;
+  }
+
+  .inputField-container-error > input:focus{
+    color: #96131e;
+  }
+
+  .inputField-container-error > input:focus ~.span-course{
+    background-color: #96131e;
+  }
+
+  .input-animation {
+    position: relative;
+    width: 6.5em;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+  

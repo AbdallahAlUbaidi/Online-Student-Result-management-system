@@ -1,23 +1,24 @@
 <%- include('../partials/flash-message-box.ejs') %>
 <div class="form-container">
     <div class="content fade-in">
-      <div class="container shadow-lg p-3 bg-body">
+      <div class="container container-login shadow-lg p-3 bg-body">
         <div class="image-container">
-          <img src="/images/formImage.png" alt="" class="rounded mx-auto d-block">
+          <img src="/images/formImage.png" alt="" class="rounded w-25 mx-auto d-block">
         </div>
         <div class="title-container">
           <h2 data-text="Faculty&nbsp;Information" class="mt-3 mb-0 title" id="faculty-form-title">Faculty</h2>
         </div>
         <form action="/register/faculty" method="post">
             <% const errors = !locals.errors ? {} : locals.errors %>
-            <%- include('../partials/text-input-field.ejs' , {error:errors.id_num , fieldName:'id_num' , fieldId:'faculty-id-field' , placeholder:'ID' , boostrapIconName:'bi-person-vcard-fill' , isEmail:false})%>
-            <%- include('../partials/text-input-field.ejs' , {error:errors.specialty , fieldName:'specialty' , fieldId:'faculty-specialty-field' , placeholder:'Specialty' , boostrapIconName:'bi-mortarboard-fill' , isEmail:false}) %>
+            <%- include('../partials/text-input-field.ejs' , {error:errors.id_num , fieldName:'id_num' , fieldId:'faculty-id-field' , placeholder:'ID' , boostrapIconName:'bi-person-vcard-fill' , isEmail:false , value:undefined})%>
+            <%- include('../partials/text-input-field.ejs' , {error:errors.specialty , fieldName:'specialty' , fieldId:'faculty-specialty-field' , placeholder:'Specialty' , boostrapIconName:'bi-mortarboard-fill' , isEmail:false , value:undefined}) %>
             <%- include('../partials/select-input-field.ejs' , {error:errors.department , fieldName:'department' , fieldId:'faculty-department-field' , selectedOptionText:"Department" , options:[
             'computer engineering' , 'electrical engineering' , 'mechanical engineering' , 'elctromechanical engineering' , 'chemical engineering' , 'civil engineering',
             'production engineering and metallurgy' , 'material engineering' , 'architectural engineering' , 'laser and optoelectronics engineering' , 'comunication engineering',
             'petrolum technology engineering' , 'biomedical engineering' , 'applied sciences' , 'computer sciences' , 'english language center' , 'continous learning center', 
             'training and workshop center' , 'envoirmental research center' , 'information technology center' , 'nanotechnology and advanced materials research center' ,
-            'energy and renewable energies research center']}) %>
+            'energy and renewable energies research center'] , selectedOption:undefined}) %>
+            <%- include('../partials/select-input-field.ejs' , {error:errors.branch , fieldName:'branch' , fieldId:'faculty-branch-field' , selectedOptionText:"Branch" , options:['information engineering' , 'network engineering'] , selectedOption:undefined}) %>
             <%- include('../partials/form-submit-button.ejs' , {buttonText:'Save'}) %>
         </form>
       </div>

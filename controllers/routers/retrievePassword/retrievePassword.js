@@ -61,7 +61,7 @@ router.post('/:token'  , async (req , res)=>{
     const {userId} = await verifyEmailConfirmationToken(req.params.token)
     try{
         await User.updatePassword({_id:userId} , password , confirmPassword)
-        res.status(200).json({message:'Your password was updated successfully'})  //Placeholder will have a seprate page
+        res.status(200).render('passwordRecovery/passwordChangedSuccessfully' , {message:req.flash('message') , messageType:req.flash('messageType')});
     }catch(err){
         const {statusCode , errors , message} = errorReport(err)
         if(statusCode === 500)

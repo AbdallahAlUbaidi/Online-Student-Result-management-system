@@ -1,0 +1,74 @@
+<%- include('../partials/flash-message-box.ejs') %> 
+<div class="content fade-in ">
+	<div class="page-container">
+		<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+			<div class="container-fluid position-relative">
+				<!-- <aside class="sidebar">
+					<button class="sidebar-toggle">
+						<i class="fa fa-chevron-circle-right yes" aria-hidden="true"></i>
+					</button>
+					<ul>
+						<li>
+							<label for="file-input" class="circular-button">
+								<img src="">
+							</label>
+							</a>
+						</li>
+						<li>
+							<a href="/courses/statistics/<%- //courseTitle %>?role=faculty" class="aside-link" id="show-statistics">
+								<i class="fas fa-chart-bar"></i> &nbsp;&nbsp; Statistics </a>
+						</li>
+						<li>
+							<a href="/courses/<%- //courseTitle %>/delete" class="aside-link" id="delete-course">
+								<i class="fa fa-trash" aria-hidden="true"></i> &nbsp;&nbsp; Delete course </a>
+						</li>						<li>
+							<a href="#" class="aside-link">
+								<i class="fas fa-user-plus icon"></i> &nbsp;&nbsp; Invite faculty </a>
+						</li>
+						<li>
+							<a href="<%- //courseTitle %>/edit" class="aside-link" id="edit-course">
+								<i class="fas fa-edit icon"></i>&nbsp;&nbsp; Edit course </a>
+						</li>
+					</ul>
+				</aside> -->
+				<img src="/images/logo.png" alt="" class=" h-100  navbar-brand">
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<svg xmlns="http://www.w3.org/2000/svg" width="36" height="27" fill="currentColor" class="bi bi-list" viewBox="0 0 14 16">
+						<path fill-rule="evenodd" d="M1.5 4.5A.5.5 0 0 1 2 4h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1zm0 4A.5.5 0 0 1 2 8h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1zm0 4A.5.5 0 0 1 2 12h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1z" />
+					</svg>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item">
+						<a class="nav-link a1" href="/myGrades">
+							<i class="fa fa-home icon-course" aria-hidden="true"></i>&nbsp; My Grades </a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link a3" href="/logout">
+							<i class="fas fa-sign-out-alt icon-course"></i>&nbsp; Logout </a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<div class="messages-pool" id="messages-container"></div>
+	</div>
+	<div class="container margin-on-nav container-e">
+		<div class="row">
+			<div class="col-md-12" id="table-container">
+				<div class="no-grades-message">No Grades are available</div>
+				<div class="loader" id="table-loader">
+					<div class="outer"></div>
+					<div class="middle"></div>
+					<div class="inner"></div>
+				</div>
+				<table id="courses-table" class="table table-hover" role="student">
+
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<button id="scroll-to-top">
+	<i class="fas fa-chevron-up"></i>
+</button>

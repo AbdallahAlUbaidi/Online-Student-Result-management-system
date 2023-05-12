@@ -1,4 +1,4 @@
-const courseImageContainers = Array.from(document.querySelectorAll('.img-container'));
+const courseImageContainers = Array.from(document.querySelectorAll('.course-card .img-container'));
 
 function loadCoursesImage(courseImageContainers){
     courseImageContainers.forEach(imgContainer =>{

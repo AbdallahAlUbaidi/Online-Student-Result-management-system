@@ -1,0 +1,75 @@
+<%- include('../../partials/flash-message-box.ejs') %> 
+<div class="content fade-in ">
+	<div class="page-container">
+		<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+			<div class="container-fluid position-relative">
+				<img src="/images/logo.png" alt="" class=" h-100  navbar-brand">
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<svg xmlns="http://www.w3.org/2000/svg" width="36" height="27" fill="currentColor" class="bi bi-list" viewBox="0 0 14 16">
+						<path fill-rule="evenodd" d="M1.5 4.5A.5.5 0 0 1 2 4h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1zm0 4A.5.5 0 0 1 2 8h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1zm0 4A.5.5 0 0 1 2 12h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1z" />
+					</svg>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item">
+						<a class="nav-link " href="/facultyMembers">
+						<i class="fa fa-home   icon-course" aria-hidden="true"></i>&nbsp;Faculty Members </a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link a2" href="/courses">
+						<i class="bi bi-pencil-fill icon-course"></i>&nbsp; My Courses </a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link courses a2" href="/grades/preFinalScorebook">
+						<i class="fa fa-table courses-icon  icon-course"></i>&nbsp;Students Scorebook </a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link a3" href="/logout">
+						<i class="fas  fa-sign-out-alt icon-course"></i>&nbsp; Logout </a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<div class="messages-pool" id="messages-container"></div>
+	</div>
+	<div class="container margin-on-nav container-e">
+		<div class="row ">
+			<div class="filter filter-hidden">
+				<div class="table-controls">
+					<i class="fa fa-refresh" id="refresh-table-btn" aria-hidden="true"></i>
+					<i class="fa fa-solid fa-filter" id="filter-btn" aria-hidden="true"></i>
+				</div>
+				<input type="text" id="student-name">
+                <select id="stage-select" class="grade-status">
+					<option value="1st">1st</option>
+					<option value="2nd">2nd</option>
+					<option value="3rd">3rd</option>
+					<option value="4th">4th</option>
+				</select>
+                <select id="branch-select" class="grade-status">
+					<option value="information engineering">Information Engineering</option>
+					<option value="network engineering">Network Engineering</option>
+				</select>
+				<button id="filter-apply-btn">Apply</button>
+			</div>
+			<div class="col-md-12" id="table-container">
+				<div class="no-grades-message">No Grades are available</div>
+				<div class="loader" id="table-loader">
+					<div class="outer"></div>
+					<div class="middle"></div>
+					<div class="inner"></div>
+				</div>
+				<table id="grades-table" class="table table-hover" role="scorebook" allGrades="true">
+
+				</table>
+				<div class="table-pagination-buttons-container">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<button id="scroll-to-top">
+	<i class="fas fa-chevron-up"></i>
+</button>

@@ -23,7 +23,7 @@ router.post('/' , async(req , res)=>
         res.status(201).redirect('/emailConfirmation')
     }
     catch(error)
-    {       
+    {   
         const errorInfo = errorReport(error)
         if(errorInfo.statusCode === 500)
             renderErrorPage(res , 500)

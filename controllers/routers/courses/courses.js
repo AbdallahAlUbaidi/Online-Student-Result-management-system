@@ -15,8 +15,8 @@ const rolesMap = {
         coursePageView:'courses/facultyPages/coursePage'
     },
     branchHead:{
-        coursesPageView:'courses/branchHeadPages/coursesPage',
-        coursePageView:'courses/branchHeadPages/coursePage'
+        coursesPageView:'courses/branchHeadPages/myCoursesPage',
+        coursePageView:'courses/branchHeadPages/myCoursePage'
     },
     examCommittee:{
         coursesPageView:'courses/examCommiteePages/coursesPage',
@@ -25,11 +25,11 @@ const rolesMap = {
 }
 
 router.get('/' , async(req , res)=>
-{
+{   //Need Recoding
     const {userInfo , roleInfo} = req.info
-    const {role} = userInfo;
+    const {roles} = userInfo;
     const {courses} = roleInfo
-    res.render( rolesMap[role].coursesPageView , {courses , role , message:req.flash('message')[0] , messageType:req.flash('messageType')[0]});
+    res.render( rolesMap[roles[0]].coursesPageView , {courses , role , message:req.flash('message')[0] , messageType:req.flash('messageType')[0]});
 })
 
 router.get('/create' , (req , res)=>{
@@ -52,14 +52,14 @@ router.post('/create' , uploadImage , async(req , res )=>{
 })
 
 router.get('/:courseTitle' , (req , res)=>{
-    const {roleInfo , userInfo} = req.info;
+    const {roleInfo , userInfo , roles} = req.info;
     const {role} = userInfo;
-    const {courses} = roleInfo
+    const {courses} = roleInfo;
     const courseIndex = courses.findIndex(courseObject => courseObject.courseTitle.replace(/\s/gm , '-') == req.params.courseTitle)
     if( courseIndex < 0)
         renderErrorPage(res , 404)
     else
-        res.render( rolesMap[role].coursePageView , {course:courses[courseIndex] , role , message:req.flash('message')[0] , messageType:req.flash('messageType')[0]});  //Placeholder
+        res.render( rolesMap[roles[0]].coursePageView , {course:courses[courseIndex] , role:roles[0] , message:req.flash('message')[0] , messageType:req.flash('messageType')[0]});  //Placeholder
 })
 
 

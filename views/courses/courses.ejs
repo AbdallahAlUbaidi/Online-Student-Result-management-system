@@ -30,7 +30,7 @@
             <% //const thirdStageCourses = locals.courses.filter(course => course.stage === '3rd') %>
             <% //const forthStageCourses = locals.courses.filter(course => course.stage === '4th') %>
             <% locals.courses.forEach(course => { %>
-              <%- include('../../partials/course-card.ejs' , {course}) %>
+              <%- include('../../partials/course-card.ejs' , {course , link:`/course/${course.courseTitle.replace(/\s/gm , '-')}`}) %>
             <% }) %>
           </div>
       </div>

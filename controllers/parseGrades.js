@@ -23,9 +23,19 @@ const gradeWritableField = {
     },
     student:(gradeStatus , field) =>{
         return false;
+    },
+    scorebook:(gradeStatus , field) => {
+      return false;
     }
 
 
+}
+
+const displayedRecordsBasedOnStatus = {
+  faculty:gradeStatus => true,
+  branchHead:gradeStatus => gradeStatus != "notGraded",
+  examCommittee:gradeStatus => !(gradeStatus in ['notGraded' , "pendingApproval"]),
+  student:gradeStatus => false
 }
 
 const displayNameMap = {
@@ -55,7 +65,8 @@ async function getGradesRecords(grades , fields , role){
                 newRecord[field].value =  await grade[field];
             newRecord[field].isWritable = gradeWritableField[role](grade.gradeStatus , field);
         }
-        records.push(newRecord);
+        if(displayedRecordsBasedOnStatus[role](grade.gradeStatus))
+          records.push(newRecord);
 
     }
     return records;
@@ -66,7 +77,7 @@ function getGradesFields(fieldNames){
     fieldNames.forEach(field =>{
         let newField = {};
         newField.name = field;
-        newField.displayName = displayNameMap[field];
+        newField.displayName = displayNameMap[field] || field;
         fields.push(newField)
     })
     return fields;
@@ -74,7 +85,7 @@ function getGradesFields(fieldNames){
 
 async function parseGrades(fieldsNames , courseTitle , res , role , page , filter){
     try{
-        const gradePerPage = 5;
+        const gradesPerPage = 5;
         courseTitle = courseTitle.split('-').join(' ');
         const course = await Course.findOne({courseTitle}) //Temprary way to get course
         const courseId = course._id;
@@ -87,6 +98,12 @@ async function parseGrades(fieldsNames , courseTitle , res , role , page , filte
         const result = await Grade.aggregate([
           {
             $match: filter
+          },
+          {
+            $addFields: {
+              preFinalScore: { $add: ["$evaluationScore", "$midTermScore"] },
+              totalScore: { $add: ["$evaluationScore", "$midTermScore", "$finalExamScore"] }
+            }
           },
           {
             $lookup: {
@@ -122,8 +139,8 @@ async function parseGrades(fieldsNames , courseTitle , res , role , page , filte
           {
             $facet: {
               grades: [
-                { $skip: gradePerPage * (page - 1) },
-                { $limit: gradePerPage }
+                { $skip: gradesPerPage * (page - 1) },
+                { $limit: gradesPerPage }
               ],
               count: [
                 { $count: "total" }
@@ -133,7 +150,7 @@ async function parseGrades(fieldsNames , courseTitle , res , role , page , filte
         ]).exec();
         grades = result[0].grades;
         const totalGrades = result[0].count[0];
-        totalPages = Math.ceil((totalGrades? totalGrades.total : 0) / gradePerPage);
+        totalPages = Math.ceil((totalGrades? totalGrades.total : 0) / gradesPerPage);
 
         if(grades.length === 0){
             return {message:"No valid grades was found"};

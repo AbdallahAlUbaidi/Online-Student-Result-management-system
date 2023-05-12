@@ -1,6 +1,8 @@
 const roles = {
     student : {model:require('../models/Student'), registerLink: '/register/student'},
-    faculty: {model:require('../models/Faculty'), registerLink: '/register/faculty'}
+    faculty: {model:require('../models/Faculty'), registerLink: '/register/faculty'},
+    branchHead:{model:require('../models/Faculty') , registerLink: '/register/faculty'},
+    examCommittee:{model:require('../models/Faculty') , registerLink: '/register/faculty'}
 }
 const user = require('../models/User')
 const {errorReport, renderErrorPage} = require('./errorReport');
@@ -12,9 +14,9 @@ async function getRoleInfo(userId , userInfo = undefined)
     try
     {
         if(!userInfo){userInfo = await user.findById(userId)};
-        const role = roles[userInfo.role]
-        const roleInfo = await role.model.findOne({userInfo:userInfo._id}).populate("courses")
-        return {roleInfo , userInfo , role}
+        const mainRole = roles[userInfo.roles[0]];
+        const roleInfo = await mainRole.model.findOne({userInfo:userInfo._id}).populate("courses")
+        return {roleInfo , userInfo , mainRole , roles:userInfo.roles}
     }
     catch(err)
     {
@@ -24,11 +26,11 @@ async function getRoleInfo(userId , userInfo = undefined)
 async function hasEnteredRoleInfo(req , res , next)
 {
     const userId = req.auth.userId
-    const roleInfo = await getRoleInfo(userId)
+    const roleInfo = await getRoleInfo(userId);
     if(roleInfo.error)
         renderErrorPage(res , 500)
     else if(!roleInfo.roleInfo)
-        flashMessage.showFlashMessage(302 , `You need to enter your ${roleInfo.userInfo.role} information` , req , res , roleInfo.role.registerLink)
+        flashMessage.showFlashMessage(302 , `You need to enter your ${roleInfo.userInfo.roles} information` , req , res , roleInfo.mainRole.registerLink)
     else
     {   
         req.info = roleInfo

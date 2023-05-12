@@ -16,7 +16,7 @@ router.post('/' , async(req , res)=>
         userId = req.auth.userId
         const {student_id , studentFullName , stage , branch , study} = req.body
         await Student.create({userInfo:userId,studentFullName,student_id,stage,branch,study})
-        res.redirect('/courses') 
+        res.redirect('/') 
     }catch(err){
         const errorInfo = errorReport(err)
         if(errorInfo.statusCode === 500)

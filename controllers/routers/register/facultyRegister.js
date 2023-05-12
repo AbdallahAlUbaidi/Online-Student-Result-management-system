@@ -4,7 +4,11 @@ const Faculty = require('../../../models/Faculty')
 const flashMessage = require('../../flashMessage')
 const {errorReport, renderErrorPage} = require('../../errorReport')
 const router = express.Router()
-
+// const mainPage = {
+//     faculty:"/courses",
+//     branchHead:"/facultyMembers",
+//     examCommittee:"/courses" //Temp
+// }
 router.get('/' , flashMessage.setCachingToOff , (req , res)=>
 {
     res.render('register/facultyRegister' , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0]})
@@ -16,7 +20,7 @@ router.post('/' ,flashMessage.setCachingToOff, async(req , res)=>
         const userId = req.auth.userId
         const {id_num , department , specialty , branch} = req.body
         await Faculty.create({userInfo:userId,id_num,department,specialty , branch})
-        res.redirect('/courses')
+        res.redirect('/')
     }catch(err){
         const errorInfo = errorReport(err)
         if(errorInfo.statusCode === 500)

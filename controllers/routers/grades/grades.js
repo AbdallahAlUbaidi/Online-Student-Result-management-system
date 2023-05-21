@@ -29,6 +29,55 @@ router.get('/:courseTitle/examCommittee' , async (req , res)=>{
 })
 
 router.get('/student' , async (req , res)=>{
+    try{
+        const studentId = req.info.roleInfo._id;
+        const grades = await Grade.find({student:mongoose.Types.ObjectId(studentId) , gradeStatus:{$in:["published" , "pendingFinalExam"]}}).populate("course");
+        let fields = ["courseTitle" , "preFinalScore" , "finalGrade"];
+        let records = [];
+        let labsTotalScoreArray = [];
+        let labsPreFinalArray = [];
+        let gradesByCourse = [];
+        grades.forEach(grade => {
+            const preFinalScore = grade.evaluationScore + grade.midTermScore;
+            const totalScore = grade.finalExamScore + preFinalScore;
+            const finalGrade = calculateFinalGrade(totalScore);
+            const {courseType , courseTitle} = grade.course;
+             let record = {}
+             if(courseType === "practical"){
+                 labsTotalScoreArray.push(totalScore);
+                 labsPreFinalArray.push(preFinalScore);
+                 return;
+             }
+             record.courseTitle = {value:courseTitle , isWritable:false};
+             record.preFinalScore = {value:preFinalScore , isWritable:false};
+             record.finalGrade = {value:finalGrade , isWritable:false};
+             records.push(record);
+        });
+        if(labsTotalScoreArray.length !== 0){
+            const labsTotalScore = Math.round(calculateAverage(labsTotalScoreArray));
+            const labsPreFinalScore = Math.round(calculateAverage(labsPreFinalArray));
+            const labsFinalGrade = calculateFinalGrade(labsTotalScore);
+            records.push({
+                 courseTitle:{value:"Labs" , isWritable:false},
+                 preFinalScore:{value:labsPreFinalScore , isWritable:false},
+                 finalGrade:{value:labsFinalGrade , isWritable:false}
+            });
+        }
+        fields = getGradesFields(fields);
+        res.status(200).json({
+            fields,
+            records,
+            currentPage:1,
+            totalPages:1
+        });
+    }catch(err){
+        const {statusCode , errors , message } = errorReport(err);
+        if(statusCode === 500)
+            res.status(statusCode).json({message:"Server Error"});
+        else
+            res.status(statusCode).json({errors});
+    }
+
 
 })
 
@@ -140,7 +189,7 @@ router.post('/:courseTitle/submit' , async (req , res)=>{
 //Only branch head
 router.post('/:courseTitle/approve' , async (req , res)=>{
     try{
-        const courseTitle = req.params.courseTitle.trim().replace(/-/i , " ");
+        const courseTitle = req.params.courseTitle.trim().replace(/-/gi , " ");
         const course = await Course.findOne({courseTitle});
         const {students} = req.body;
         let queries = [];
@@ -172,7 +221,7 @@ router.post('/:courseTitle/approve' , async (req , res)=>{
 //Only branch head
 router.post('/:courseTitle/reject' , async (req , res)=>{
     try{
-        const courseTitle = req.params.courseTitle.trim().replace(/-/i , " ");
+        const courseTitle = req.params.courseTitle.trim().replace(/-/gi , " ");
         const course = await Course.findOne({courseTitle});
         const {students} = req.body;
         let queries = [];
@@ -204,7 +253,7 @@ router.post('/:courseTitle/reject' , async (req , res)=>{
 //Only exam committee
 router.post('/:courseTitle/finilize' , async (req , res)=>{
     try{
-        const courseTitle = req.params.courseTitle.trim().replace(/-/i , " ");
+        const courseTitle = req.params.courseTitle.trim().replace(/-/gi , " ");
         const course = await Course.findOne({courseTitle});
         const {students} = req.body;
         let queries = [];
@@ -235,7 +284,7 @@ router.post('/:courseTitle/finilize' , async (req , res)=>{
 
 router.post("/:courseTitle/publish" , async (req , res) => {
     try{
-        const courseTitle = req.params.courseTitle.trim().replace(/-/i , " ");
+        const courseTitle = req.params.courseTitle.trim().replace(/-/gi , " ");
         const course = await Course.findOne({courseTitle});
         const {students} = req.body;
         let queries = [];
@@ -440,5 +489,17 @@ function calculateIQR(numArray) {
     let q1_pos = Math.floor(numArray.length / 4);
     let q3_pos = Math.ceil(numArray.length * (3 / 4));
     return {Q1:numArray[q1_pos] , Q3:numArray[q3_pos] , IQR:numArray[q3_pos] - numArray[q1_pos]};
+}
+
+function calculateFinalGrade(totalScore) {
+    const grades = ['Fail' , 'Pass' , 'Average' , 'Good' , 'Very Good' , 'Excellent'];
+    const gradesIndex = totalScore === 100 ? 5 : Math.floor(totalScore / 10) - 4;
+    return grades[gradesIndex];
+}
+
+function calculateAverage(arr){
+    let avg = 0;
+    arr.forEach(e => avg += e)
+    return avg / arr.length;
 }
 module.exports = router;

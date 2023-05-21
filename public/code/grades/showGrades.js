@@ -119,7 +119,7 @@ function makeTableHeadings(fields , table  , tableHeadingCellClasses = "" , tabl
 }
 
 
-function makeTableRecord(recordValues , fields , tableRecordClasses = '' , tableCellClasses = '' , inputFieldClasses = ''){
+function makeTableRecord(table , recordValues , fields , tableRecordClasses = '' , tableCellClasses = '' , inputFieldClasses = ''){
     const tableRecord = document.createElement('tr');
     const role = table.getAttribute('role');
     let rejectBtn , approveBtn , buttonsCell = undefined;
@@ -139,7 +139,8 @@ function makeTableRecord(recordValues , fields , tableRecordClasses = '' , table
         rejectBtn.innerHTML = '<i class="fa fa-solid fa-close" aria-hidden="true"></i>';
         rejectBtn.classList.add('reject-btn');
     }
-    tableRecord.setAttribute('student-id' , recordValues.studentId);
+    if(recordValues.studentId)
+        tableRecord.setAttribute('student-id' , recordValues.studentId);
     if(tableRecordClasses)
         tableRecord.classList.add(tableRecordClasses);
     fields.forEach(field =>{
@@ -232,7 +233,8 @@ function makeTableCell(value , isWritable  , field , scoreStatus ,  tableCellCla
 
 function showGradesInTable(table , fields , records , message , tableContainer , noGradesMessage , loader , filter , paginationContainer){
     loader.style.display = 'none';
-    createPaginationButtons(table , filter , paginationContainer);
+    if(table.totalPages !== 1)
+        createPaginationButtons(table , filter , paginationContainer);
     if(message){
         table.display = 'none';
         paginationContainer.style.display = 'none';
@@ -248,7 +250,7 @@ function showGradesInTable(table , fields , records , message , tableContainer ,
     makeTableHeadings(fields , table , "" ,'bg-secondary text-white col');
     const tableBody = document.createElement("tbody")
     records.forEach(record =>{
-        const newTableRecord = makeTableRecord(record , fields , "" , "" ,  'input-course');
+        const newTableRecord = makeTableRecord(table , record , fields , "" , "" ,  'input-course');
         tableBody.appendChild(newTableRecord);
     })
     table.appendChild(tableBody);
@@ -323,8 +325,9 @@ function getFilter() {
 
 }
 
-function approveBtnHandler(approveBtn , courseTitle , students , messagePool){
+function approveBtnHandler(approveBtn , courseTitle , studentsInit , messagePool){
     approveBtn.addEventListener('click' , async ()=> {
+        let students = studentsInit;
         if(!students)
             students = getStudentsIds(table);
         const url = `/grades/${courseTitle}/approve`;
@@ -346,8 +349,9 @@ function approveBtnHandler(approveBtn , courseTitle , students , messagePool){
     })
 }
 
-function rejectBtnHandler(rejectBtn , courseTitle , students , messagePool){
+function rejectBtnHandler(rejectBtn , courseTitle , studentsInit , messagePool){
     rejectBtn.addEventListener('click' , async ()=> {
+        let students = studentsInit
         if(!students)
             students = getStudentsIds(table);
         const url = `/grades/${courseTitle}/reject`;
@@ -369,8 +373,9 @@ function rejectBtnHandler(rejectBtn , courseTitle , students , messagePool){
     })
 }
 
-function finilizeBtnHandler(finlizeBtn , courseTitle , students , messagePool){
+function finilizeBtnHandler(finlizeBtn , courseTitle , studentsInit , messagePool){
     finlizeBtn.addEventListener('click' , async ()=> {
+        let students = studentsInit;
         if(!students)
             students = getStudentsIds(table);
         const url = `/grades/${courseTitle}/finilize`;
@@ -392,8 +397,9 @@ function finilizeBtnHandler(finlizeBtn , courseTitle , students , messagePool){
     })
 }
 
-function publishBtnHandler(publishBtn , courseTitle , students , messagePool) {
+function publishBtnHandler(publishBtn , courseTitle , studentsInit , messagePool) {
     publishBtn.addEventListener('click' , async ()=> {
+        let students = studentsInit;
         if(!students)
             students = getStudentsIds(table);
         const url = `/grades/${courseTitle}/publish`;

@@ -8,7 +8,6 @@ const tablePaginationButtonsContainer = Array.from(document.getElementsByClassNa
 const filterApplyBtn = document.getElementById('filter-apply-btn');
 const filterBtn = document.getElementById('filter-btn');
 const refreshTableBtn = document.getElementById('refresh-table-btn');
-const messagesPool = document.getElementById('messages-container');
 const approveAllBtn = document.getElementById('branchHead-approve-all-button');
 const rejectAllBtn = document.getElementById('branchHead-reject-all-button');
 const finilizeBtn = document.getElementById('examCommittee-finalize-button');

@@ -83,11 +83,11 @@ function getGradesFields(fieldNames){
     return fields;
 }
 
-async function parseGrades(fieldsNames , courseTitle , res , role , page , filter){
+async function parseGrades(fieldsNames , courseTitle , res , req , role , page , filter){
     try{
         const gradesPerPage = 5;
         courseTitle = courseTitle.split('-').join(' ');
-        const course = await Course.findOne({courseTitle}) //Temprary way to get course
+        const course = req.course;
         const courseId = course._id;
         let totalPages;
         let grades;

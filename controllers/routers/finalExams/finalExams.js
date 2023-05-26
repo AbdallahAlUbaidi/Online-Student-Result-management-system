@@ -3,10 +3,10 @@ const Course = require('../../../models/Course');
 const router = express.Router();
 
 const {errorReport, renderErrorPage} = require('../../errorReport');
-
+const {validateAccess} = require("../../accessControl");
 
 //Exam committee only
-router.get('/' , async (req , res ) => {
+router.get('/' , validateAccess(["examCommittee"] , false , "page") , async (req , res ) => {
     try{
         const finalExams = await Course.find();
         res.render('courses/examCommitteePages/finalExamsPage' , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , finalExams});
@@ -17,10 +17,10 @@ router.get('/' , async (req , res ) => {
     }
 });
 
-router.get('/:courseTitle' , async (req , res) => {
+router.get('/:courseTitle' , validateAccess(["examCommittee"] , false , "page") , async (req , res) => {
     try{
         const courseTitle = req.params.courseTitle.replace(/-/gi , " ");
-        const finalExam = await Course.findOne({courseTitle});
+        const finalExam = req.course;
         if(!finalExam)
             renderErrorPage(res , 404);
         else

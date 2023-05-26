@@ -26,8 +26,9 @@ const errorReport = err=>
 
 const errorObjects = {
     500:{errorName:"Internal Server Error" , errorMsg:'The server encountered an error' , errorDescription:'The Server encountered an error while processing your request'},
-    404:{errorName:'Not Found', errorMsg: 'The requested page can\'t be found' , statusCode:404 , errorDescription:'We could not find what you are looking for, it might have been deleted or modifyed'},
-    401:{errorName:'UnAutherized' , errorMsg: 'Access to this page was restricted' ,  errorDescription:'Sorry, you are not autherized to view this page'}
+    404:{errorName:'Not Found', errorMsg: 'The requested page can\'t be found' , statusCode:404 , errorDescription:'We could not find what you are looking for, it might have been deleted or modified'},
+    401:{errorName:'UnAutherized' , errorMsg: 'Authentication Required. Please log in to access this page' ,  errorDescription:' You must be logged in to view this page. Please sign in with valid credentials'},
+    403:{errorName:"Forbidden" , errorMsg:"You don't have permission to access this page" , errorDescription:"This page is restricted and cannot be accessed. You may not have the necessary permissions to view this content."}
 }
 
 const renderErrorPage = (res , statusCode)=>{

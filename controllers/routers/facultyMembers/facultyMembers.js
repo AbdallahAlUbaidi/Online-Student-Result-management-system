@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Faculty = require('../../../models/Faculty');
 const {errorReport , renderErrorPage} = require('../../errorReport');
+const {validateAccess} = require("../../accessControl");
 
-router.get('/' , async (req , res) => {
+router.get('/'  , validateAccess(["branchHead"] , false , "page") , async (req , res) => {
     try{
         const {roleInfo , userInfo} = req.info;
         const {branch} = req.info.roleInfo;
@@ -18,7 +19,7 @@ router.get('/' , async (req , res) => {
     }
 });
 
-router.get('/:facultyId' , async (req , res) => {
+router.get('/:facultyId' , validateAccess(["branchHead"] , false , "page") , async (req , res) => {
     try{
         const facultyMember = await Faculty.findOne({id_num:req.params.facultyId}).populate("courses");
         res.render('courses/branchHeadPages/facultyCourses' , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , courses:facultyMember.courses , facultyMember});
@@ -30,7 +31,7 @@ router.get('/:facultyId' , async (req , res) => {
 
 });
 
-router.get("/:facultyId/:courseTitle" , async (req , res) => {
+router.get("/:facultyId/:courseTitle" , validateAccess(["branchHead"] , false , "page") , async (req , res) => {
     try{
         const facultyMember = await Faculty.findOne({id_num:req.params.facultyId}).populate("courses");
         const courseTitle =  req.params.courseTitle.replace(/-/gi , " ");

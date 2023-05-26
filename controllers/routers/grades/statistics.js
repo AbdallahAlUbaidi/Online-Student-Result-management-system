@@ -4,6 +4,7 @@ const Grade = require('../../../models/Grade')
 const Course = require('../../../models/Course')
 const mongoose = require('mongoose')
 const {errorReport} = require('../../errorReport');
+const {validateAccess} = require("../../accessControl");
 const statisticsPage = {
   faculty:"courses/facultyPages/statisticsPage",
   branchHead:"courses/branchHeadPages/statisticsPage",
@@ -17,7 +18,7 @@ router.get('/:courseTitle' , (req , res) => {
   res.render(statisticsPage[mainRole] , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , courseTitle , role});
 })
 
-router.get('/:courseTitle/faculty', async (req, res) => {
+router.get('/:courseTitle/faculty', validateAccess(["faculty"] , true , "json") ,async (req, res) => {
     const { courseTitle } = req.params;
     const courseTitleFormatted = courseTitle.split('-').join(' ');
   
@@ -132,7 +133,7 @@ router.get('/:courseTitle/faculty', async (req, res) => {
     }
   });
   
-router.get('/:courseTitle/branchHead' , async (req , res) => {
+router.get('/:courseTitle/branchHead' , validateAccess(["branchHead"] , false , "json") , async (req , res) => {
   const { courseTitle } = req.params;
   const courseTitleFormatted = courseTitle.split('-').join(' ');
 
@@ -213,7 +214,7 @@ router.get('/:courseTitle/branchHead' , async (req , res) => {
   }
 })
 
-router.get('/:courseTitle/examCommittee' , async (req , res) => {
+router.get('/:courseTitle/examCommittee' , validateAccess(["examCommittee"] , false , "json") , async (req , res) => {
   const { courseTitle } = req.params;
   const courseTitleFormatted = courseTitle.split('-').join(' ');
 

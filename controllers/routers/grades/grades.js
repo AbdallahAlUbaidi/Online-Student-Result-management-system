@@ -10,25 +10,26 @@ const Student = require('../../../models/Student')
 const Faculty = require('../../../models/Faculty');
 const { updateOne } = require('../../../models/Faculty');
 const mongoose = require("mongoose");
+const { validateAccess } = require('../../accessControl');
 
 
 //All roles aside from student
-router.get('/:courseTitle/faculty' , async (req , res)=>{
-    const {fields , records , message , totalPages , currentPage} = await parseGrades(['studentFullName' , 'gradeStatus' , 'evaluationScore' , 'midTermScore'] , req.params.courseTitle , res , 'faculty' , req.query.page , req.query.filter);
+router.get('/:courseTitle/faculty' , validateAccess(['faculty'] , true , "json") , async (req , res)=>{
+    const {fields , records , message , totalPages , currentPage} = await parseGrades(['studentFullName' , 'gradeStatus' , 'evaluationScore' , 'midTermScore'] , req.params.courseTitle , res , req , 'faculty' , req.query.page , req.query.filter);
     res.json({fields , records , message , totalPages , currentPage});
 })
 
-router.get('/:courseTitle/branchHead' , async (req , res)=>{
-    const {fields , records , message , totalPages , currentPage} = await parseGrades(['studentFullName' , 'gradeStatus' , 'preFinalScore'] , req.params.courseTitle , res , 'branchHead' , req.query.page , req.query.filter)
+router.get('/:courseTitle/branchHead' , validateAccess(['branchHead'] , false , "json") , async (req , res)=>{
+    const {fields , records , message , totalPages , currentPage} = await parseGrades(['studentFullName' , 'gradeStatus' , 'preFinalScore'] , req.params.courseTitle , res , req , 'branchHead' , req.query.page , req.query.filter)
     res.json({fields , records  , message , totalPages , currentPage});
 })
 
-router.get('/:courseTitle/examCommittee' , async (req , res)=>{
-    const {fields , records , message , totalPages , currentPage} = await parseGrades(['studentFullName' , 'gradeStatus' , 'finalExamScore'  , 'totalScore'] , req.params.courseTitle , res , 'examCommittee' , req.query.page , req.query.filter)
+router.get('/:courseTitle/examCommittee', validateAccess(['examCommittee'] , false , "json") , async (req , res)=>{
+    const {fields , records , message , totalPages , currentPage} = await parseGrades(['studentFullName' , 'gradeStatus' , 'finalExamScore'  , 'totalScore'] , req.params.courseTitle , res , req , 'examCommittee' , req.query.page , req.query.filter)
     res.json({fields , records , message , totalPages , currentPage});
 })
 
-router.get('/student' , async (req , res)=>{
+router.get('/student', validateAccess(['student'] , false , "json") , async (req , res)=>{
     try{
         const studentId = req.info.roleInfo._id;
         const grades = await Grade.find({student:mongoose.Types.ObjectId(studentId) , gradeStatus:{$in:["published" , "pendingFinalExam"]}}).populate("course");
@@ -82,12 +83,16 @@ router.get('/student' , async (req , res)=>{
 })
 
 //Only faculty and exam committee
-router.post('/:courseTitle/save' , async (req , res)=>{
+router.post('/:courseTitle/save' , (req , res , next)=>{
+    const {role} = req.query;
+    if(role === "faculty") return validateAccess(['faculty'] , true , "json")(req , res , next);
+    if(role === "examCommittee") return validateAccess(['examCommittee'] , false , "json")(req , res , next);
+} , async (req , res)=>{
     const {role} = req.query;
     const gradeStageRequirement = role === 'faculty'  ? 'notGraded' : 'pendingFinalExam' //Temprary
     let {courseTitle} = req.params;
     courseTitle = courseTitle.split('-').join(' ');
-    const course = await Course.findOne({courseTitle})
+    const course =  req.course;
     const courseId = course._id;
     const updatedRecordsArray = req.body;
     let operations = [];
@@ -149,11 +154,11 @@ router.post('/:courseTitle/save' , async (req , res)=>{
 })
 
 //Only faculty
-router.post('/:courseTitle/submit' , async (req , res)=>{
+router.post('/:courseTitle/submit' , validateAccess(['faculty'] , true , "json") , async (req , res)=>{
     try{
         let {courseTitle} = req.params;
         courseTitle = courseTitle.split('-').join(' ');
-        const course = await Course.findOne({courseTitle})
+        const course = req.course;
         const courseId = course._id;
         const submitedRecords = req.body;
         let bulkOperations = [];
@@ -187,10 +192,10 @@ router.post('/:courseTitle/submit' , async (req , res)=>{
 })
 
 //Only branch head
-router.post('/:courseTitle/approve' , async (req , res)=>{
+router.post('/:courseTitle/approve' , validateAccess(["branchHead"] , false , "json") , async (req , res)=>{
     try{
         const courseTitle = req.params.courseTitle.trim().replace(/-/gi , " ");
-        const course = await Course.findOne({courseTitle});
+        const course = req.course;
         const {students} = req.body;
         let queries = [];
         students.forEach(student => {
@@ -219,10 +224,10 @@ router.post('/:courseTitle/approve' , async (req , res)=>{
 })
 
 //Only branch head
-router.post('/:courseTitle/reject' , async (req , res)=>{
+router.post('/:courseTitle/reject' , validateAccess(["branchHead"] , false , "json") , async (req , res)=>{
     try{
         const courseTitle = req.params.courseTitle.trim().replace(/-/gi , " ");
-        const course = await Course.findOne({courseTitle});
+        const course = req.course;
         const {students} = req.body;
         let queries = [];
         students.forEach(student => {
@@ -251,10 +256,10 @@ router.post('/:courseTitle/reject' , async (req , res)=>{
 })
 
 //Only exam committee
-router.post('/:courseTitle/finilize' , async (req , res)=>{
+router.post('/:courseTitle/finilize' , validateAccess(['examCommittee'] , false , "json") , async (req , res)=>{
     try{
         const courseTitle = req.params.courseTitle.trim().replace(/-/gi , " ");
-        const course = await Course.findOne({courseTitle});
+        const course = req.course;
         const {students} = req.body;
         let queries = [];
         students.forEach(student => {
@@ -282,10 +287,10 @@ router.post('/:courseTitle/finilize' , async (req , res)=>{
     }
 })
 
-router.post("/:courseTitle/publish" , async (req , res) => {
+router.post("/:courseTitle/publish" , validateAccess(["examCommittee"] , false , "json") , async (req , res) => {
     try{
         const courseTitle = req.params.courseTitle.trim().replace(/-/gi , " ");
-        const course = await Course.findOne({courseTitle});
+        const course = req.course;
         const {students} = req.body;
         let queries = [];
         students.forEach(student => {
@@ -314,12 +319,12 @@ router.post("/:courseTitle/publish" , async (req , res) => {
 })
 
 //Branch Head only
-router.get('/preFinalScorebook' , (req , res) => {
+router.get('/preFinalScorebook' , validateAccess(["branchHead"] , false , "page") , (req , res) => {
     res.render("courses/branchHeadPages/preFinalScorebook" , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0]});
 });
 
 //Branch Head Only
-router.get('/preFinalScorebook/scores' , async (req , res) => {
+router.get('/preFinalScorebook/scores' , validateAccess(["branchHead"] , false , "json") , async (req , res) => {
     try{
         let filter = req.query.filter.student;
         filter = Object.fromEntries(

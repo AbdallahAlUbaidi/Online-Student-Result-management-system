@@ -8,6 +8,7 @@ const {imageResize , renameImageDirectory , deleteImageDirectory} = require('../
 const {showFlashMessage , setCachingOff} = require('../../flashMessage');
 const Course = require('../../../models/Course');
 const Faculty = require('../../../models/Faculty');
+const { validateAccess } = require('../../accessControl');
 
 const rolesMap = {
     faculty:{
@@ -24,19 +25,18 @@ const rolesMap = {
     }
 }
 
-router.get('/' , async(req , res)=>
-{   //Need Recoding
+router.get('/' , validateAccess(["faculty"] , false , "page") , async(req , res)=> {   
     const {userInfo , roleInfo} = req.info
     const {roles} = userInfo;
-    const {courses} = roleInfo
+    const {courses} = roleInfo;
     res.render( rolesMap[roles[0]].coursesPageView , {courses , role , message:req.flash('message')[0] , messageType:req.flash('messageType')[0]});
 })
 
-router.get('/create' , (req , res)=>{
+router.get('/create' , validateAccess(["faculty"] , false , "page") , (req , res)=>{
     res.render('courses/createCourse' , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0]})
 })
 
-router.post('/create' , uploadImage , async(req , res )=>{
+router.post('/create' , validateAccess(["faculty"] , false , "page") , uploadImage , async(req , res )=>{
     const {roleInfo , role} = req.info;
     try{
         const {courseTitle , stage , courseType , bothBranches} = req.body;
@@ -51,7 +51,7 @@ router.post('/create' , uploadImage , async(req , res )=>{
     }
 })
 
-router.get('/:courseTitle' , (req , res)=>{
+router.get('/:courseTitle' , validateAccess(["faculty"] , true , "page") , (req , res)=>{
     const {roleInfo , userInfo , roles} = req.info;
     const {role} = userInfo;
     const {courses} = roleInfo;
@@ -59,19 +59,19 @@ router.get('/:courseTitle' , (req , res)=>{
     if( courseIndex < 0)
         renderErrorPage(res , 404)
     else
-        res.render( rolesMap[roles[0]].coursePageView , {course:courses[courseIndex] , role:roles[0] , message:req.flash('message')[0] , messageType:req.flash('messageType')[0]});  //Placeholder
+        res.render( rolesMap[roles[0]].coursePageView , {course:courses[courseIndex] , role:roles[0] , message:req.flash('message')[0] , messageType:req.flash('messageType')[0]});
 })
 
 
 
-router.get('/:courseTitle/edit' , async (req , res) => {
+router.get('/:courseTitle/edit' , validateAccess(["faculty"] , true , "page") , async (req , res) => {
     const courseTitle = req.params.courseTitle.replace(/-/gm, ' ');;
     const courseURL = req.params.courseTitle;
-    const {stage , branch , courseType} = await Course.findOne({courseTitle});
+    const {stage , branch , courseType} = req.course;
     res.render('courses/editCourse' , {courseTitle , stage , courseType ,  bothBranches: branch === 'both branches' , courseURL});
 })
 
-router.post('/:courseTitle/edit' , uploadImage , async (req , res) => {
+router.post('/:courseTitle/edit' , validateAccess(["faculty"] , true , "page") , uploadImage , async (req , res) => {
     try{
         const newCourse = req.body;
         const {roleInfo , role} = req.info;
@@ -124,11 +124,11 @@ router.post('/:courseTitle/edit' , uploadImage , async (req , res) => {
     }
 })
 
-router.get('/:courseTitle/delete' , async ( req , res ) => {
+router.get('/:courseTitle/delete' , validateAccess(["faculty"] , true , "page") , async ( req , res ) => {
     const {roleInfo} = req.info;
     try{
         const courseTitle = req.params.courseTitle.replace(/-/gm, ' ');
-        const course = await Course.findOne({courseTitle});
+        const course = req.course;
         const queryResult = await Course.deleteOne({courseTitle});
 
         if(!queryResult.acknowledged){

@@ -36,10 +36,14 @@ const courseSchema =  mongoose.Schema({
 
 
 courseSchema.statics.createCourse = async function(courseTitle , stage , branch , courseType , courseCreator , courseImage){
-    const newCourse = this({courseTitle , stage , branch , courseType })
-    newCourse.lecturers.push(courseCreator._id)
-    newCourse.save()
-    await Faculty.updateOne({_id:courseCreator._id} , {$push:{courses:newCourse._id}} , {runValidators:true})
+    try{
+        const newCourse = this({courseTitle , stage , branch , courseType })
+        newCourse.lecturers.push(courseCreator._id);
+        await newCourse.save()
+        await Faculty.updateOne({_id:courseCreator._id} , {$push:{courses:newCourse._id}} , {runValidators:true})
+    }catch(err){
+        throw err;
+    }
 };
 
 courseSchema.statics.deleteRelatedData = async function (course , courseCreator) {

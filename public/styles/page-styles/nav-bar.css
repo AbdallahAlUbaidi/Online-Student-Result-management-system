@@ -20,10 +20,11 @@
     margin: 0 3.8px !important;
     border-radius: 16px !important;
     font-size: 15.5px !important;
-    font-weight: 500 !important;
+ 
    
     color:rgb(74, 73, 73) !important;
-    font-weight: 470;
+    font-weight: 520 !important;
+    /* font-weight: 470 !important; */
     white-space: nowrap;
     display: inline-block !important;
     /* display: inline-block !important;

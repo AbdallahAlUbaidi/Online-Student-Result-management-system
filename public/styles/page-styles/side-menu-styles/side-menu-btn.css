@@ -1,21 +1,101 @@
 .sidebar li a {
-    display: block;
-    padding: 10px;
-    margin-top: 25px;
-   
-    text-decoration: none;
-    color: #333;
+  display: block;
+  padding: 14px;
+  margin-top: 15px;
+ 
+  text-decoration: none;
+  color: #333;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.aside-link{
+  padding: 0.5em 1em !important;
+  margin: 1.9px 3.8px ;
+  border-radius: 15px !important;
+  font-size: 15.5px !important;
+  font-weight: 500 !important;
+  font-weight: 470;
+  white-space: nowrap;
+  /* display: inline-block !important; */
+  transition: all 0.3s ease !important;
+ 
+}
+.logo{
+  padding: 0.5em 1em !important;
+  margin: 1.9px 1.8px ;
+  border-radius: 15px !important;
+  font-size: 15.5px !important;
+  font-weight: 500 !important;
+  font-weight: 470;
+  white-space: nowrap;
+  /* display: inline-block !important; */
+  transition: all 0.3s ease !important;
+ 
+}
+
+
+.sidebar li .aside-link:hover {
+  background-color: #3d52d5;
+  color: white !important;
+}
+.img-aside{
+  width: 38px;
+}
+.logo{
+  color: #3d52d5;
+  font-weight: bold;
+}
+.logo-p{
+  margin-top:-50px ;
+  margin-left: 75px !important;
+  color: #4e4e50 !important;
+  font-weight: bold;
+  font-size: 14px;
+  text-transform: uppercase;
+
+}
+/* #sidebar.active {
+  left: 0 !important ;
+} */
+@media (min-width:300px)and (max-width:800px) {
+  .circular-button{
+    margin-top: 40px !important;
   }
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .sidebar {
+    width: 70px !important;
+    transition: all 0.3s ease !important;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0 ;
+    background-color: white;
+    transition: all 0.3s ease;
+    z-index: 2000;
+  padding-top: 20px !important;
+  /* border-radius: 25px !important; */
+  /* box-shadow: 3px 7px 5px rgba(0, 0, 0, 0.1) !important; */
+  /* box-shadow: 0 20px 35px rgba(0, 0, 0, 0.011) !important; */
+  overflow: hidden;
+  
+  }
+  .logo-p{
+    font-size: 9px !important;
+    font-weight: 400;
+    
+  }
+  .sidebar:hover {
+  
+    width: 190px !important;
+  
   }
   .aside-link{
     padding: 0.5em 1em !important;
-    margin: 0 3.8px !important;
-    border-radius: 16px !important;
-    font-size: 15.5px !important;
+    margin: 1.9px 3.8px ;
+    border-radius: 15px !important;
+    font-size: 14.5px !important;
     font-weight: 500 !important;
     font-weight: 470;
     white-space: nowrap;
@@ -24,7 +104,62 @@
    
   }
   
-  .sidebar li .aside-link:hover {
-    background-color: #3d52d5;
-    color: white !important;
+}
+/* #sidebar-toggle {
+  display: none; 
+}
+#sidebar.active {
+  left: 0 ;
+} */
+.menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menu-button i {
+  font-size: 24px;
+  color: #333;
+}
+
+.menu-button:hover {
+  background-color: #f2f2f2;
+}
+
+
+
+#aside-menu {
+  display: block;
+ 
+  opacity: 1;
+}
+
+
+@media (max-width: 800px) {
+  #aside-menu {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease, display 0.3s ease;
   }
+  
+  /* زر العرض */
+  #show-menu-button {
+    display: block;
+    z-index: 3000;
+    margin-bottom: 10px;
+    transition: all 0.7s ease;
+  }
+}
+
+
+ @media (min-width: 801px) {
+  #show-menu-button {
+    display: none;
+  }
+} 

@@ -95,7 +95,7 @@ async function parseGrades(fieldsNames , courseTitle , res , req , role , page ,
         delete filter.student;
         filter = Object.fromEntries(Object.entries(filter).filter(([_ , v]) => v ));
         filter.course = courseId;
-        const result = await Grade.aggregate([
+        const pipeline = [
           {
             $match: filter
           },
@@ -138,16 +138,20 @@ async function parseGrades(fieldsNames , courseTitle , res , req , role , page ,
           },
           {
             $facet: {
-              grades: [
-                { $skip: gradesPerPage * (page - 1) },
-                { $limit: gradesPerPage }
-              ],
+              grades: [],
               count: [
                 { $count: "total" }
               ]
             }
           }
-        ]).exec();
+        ];
+        if(page > 0){
+          pipeline[pipeline.length - 1].$facet.grades = [
+            { $skip: gradesPerPage * (page - 1) },
+            { $limit: gradesPerPage }
+          ];
+        }
+        const result = await Grade.aggregate(pipeline).exec();
         grades = result[0].grades;
         const totalGrades = result[0].count[0];
         totalPages = Math.ceil((totalGrades? totalGrades.total : 0) / gradesPerPage);

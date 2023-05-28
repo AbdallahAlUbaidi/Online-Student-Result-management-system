@@ -19,7 +19,7 @@ document.getElementById("scroll-to-top").addEventListener("click", function() {
 //     document.getElementById('grades-table').style.display = 'table';
  
 
-//   }, 3000); // زمن التأخير بالميلي ثانية (هنا 3 ثواني)
+
  
 //   var table = document.getElementById("myTable");
 //   if (table.rows.length === 0) {
@@ -29,5 +29,25 @@ document.getElementById("scroll-to-top").addEventListener("click", function() {
   
 
 // });
+	
+function showMenu() {
+  var asideElement = document.getElementById('aside-menu');
+  var showMenuButton = document.getElementById('show-menu-button');
+
+  if (asideElement.style.display === 'none') {
+    asideElement.style.display = 'block';
+    setTimeout(function() {
+      asideElement.style.opacity = '1';
+    }, 4);
+   
+  } else {
+    asideElement.style.opacity = '0';
+    setTimeout(function() {
+      asideElement.style.display = 'none';
+    }, 100);
+    
+  }
+}
+
 
 

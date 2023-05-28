@@ -89,15 +89,20 @@ router.post('/:courseTitle/save' , (req , res , next)=>{
     if(role === "examCommittee") return validateAccess(['examCommittee'] , false , "json")(req , res , next);
 } , async (req , res)=>{
     const {role} = req.query;
-    const gradeStageRequirement = role === 'faculty'  ? 'notGraded' : 'pendingFinalExam' //Temprary
+    const authorizedFields = {
+        faculty:["evaluationScore" , "midTermScore"],
+        examCommittee:["finalExamScore"]
+    };
+    const gradeStageRequirement = role === 'faculty'  ? 'notGraded' : 'pendingFinalExam'
     let {courseTitle} = req.params;
     courseTitle = courseTitle.split('-').join(' ');
     const course =  req.course;
     const courseId = course._id;
-    const updatedRecordsArray = req.body;
+    let updatedRecordsArray = req.body;
     let operations = [];
     const getUpdatedFields = (record)=>{
-        const fields = Object.keys(record);
+        let fields = Object.keys(record);
+        fields = fields.filter(field => authorizedFields[role].includes(field));
         let updateObj = {};
         fields.forEach(field => {
             if(field !== 'studentId'){

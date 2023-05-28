@@ -4,20 +4,39 @@
 <div class="page-container">
   <nav class="navbar navbar-expand-lg fixed-top navbar-light  ">
     <div class="container-fluid position-relative">
-      <aside class="sidebar">
-        <button class="sidebar-toggle">
+      <button id="show-menu-button" class="menu-button" onclick="showMenu()">  <i data-feather="menu">menu</i></button>
+      <aside class="sidebar" id="aside-menu">
+        <!-- <button class="sidebar-toggle">
           <i class="fa fa-chevron-circle-right yes" aria-hidden="true"></i>
-        </button>
+        </button> -->
         <ul>
+         
           <li>
-            <label for="file-input" class="circular-button">
-            </label>
-            <input id="file-input" type="file" accept="image/*">
-               </a>
-          </li>
-          <li>
-            <a href="/facultyMembers/<%- branchHead.id_num %>" class="aside-link">Visit Branch head Courses</a>
-          </li>
+							
+						<!-- <a href="#" class="aside-link"> -->
+						<!-- <i class="fa fa-user icon" aria-hidden="true"></i> -->
+					
+								<!-- <label for="file-input" class="circular-button"> 
+							<img src="">
+							
+						  </label> -->
+						  <a href="" class="logo"> 
+							<label for="file-input" class="circular-button">
+								<img src=""></label>&nbsp;&nbsp;<p class="logo-p">Result management</p></a>
+								
+					
+						
+						 
+						
+						
+						
+						<!-- <input id="file-input" type="file" accept="image/*"> -->
+						</li>
+            <li>
+							<a href="/facultyMembers/<%- branchHead.id_num %>" class="aside-link" id="show-statistics">
+                <i class="fa icon fa-user" aria-hidden="true"></i> &nbsp;&nbsp;  Branch head Courses </a>
+						  </li>
+         
         </ul>
       </aside>
       <img src="/images/logo.png" alt="" class=" h-100  navbar-brand">

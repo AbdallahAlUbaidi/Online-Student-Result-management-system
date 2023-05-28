@@ -113,6 +113,8 @@ router.post('/:courseTitle/save' , (req , res , next)=>{
         return updateObj;
     }
     updatedRecordsArray.forEach(async record =>{
+        if(!record.studentId || mongoose.Types.ObjectId(record.studentId) !== record.studentId)
+            return;
         const updatedFields = getUpdatedFields(record);
         if(Object.keys(updatedFields).length !== 0)
             operations.push(Grade.updateOne(

@@ -10,14 +10,13 @@ async function saveGrades(courseTitle){
         const response = await axios({
             method:'post',
             url,
-            data
+            data,
         });
-        console.log({res})
-        if(response.data){
-            if(response.data.message === "There are no grades to save or cannot be saved"){
-                showFlashMessage(response.data.message , 2  , 4000 , messagesPool);
-                return;
-            }
+        if(response.name === "AxiosError")
+            throw(response);
+        if(response.data.message === "There are no grades to save or cannot be saved"){
+            showFlashMessage(response.data.message , 2  , 4000 , messagesPool);
+            return;
         }
         const {results} = response.data;
         const modified = results.filter(r => r.modifiedCount > 0);

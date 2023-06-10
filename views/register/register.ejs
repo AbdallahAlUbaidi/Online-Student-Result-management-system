@@ -38,7 +38,7 @@
               <input type="text" class="form-control input-register mt-3 pt-0 pt-0 form-text-field inputTextField <%- errors.username? "form-control-error" : ""  %>" name='username' id='register-username-field' placeholder="User Name">
               <p class="error1  position-absolute top-0 inputTextFieldError" id="username" style="display: none;"><%- errors.username ? errors.username : "" %> </p>
               <i class="bi bi-person-fill position-absolute top-0 form-field-icon person"></i>
-              <span class="span-register"></span>
+              <span class="form-input-line"></span>
             </div>
           </div>
           <div class="position-relative">
@@ -46,7 +46,7 @@
               <input type="email" class="form-control input-register mt-3 pt-0 form-text-field inputTextField <%- errors.emailAddress? "form-control-error" : ""  %>" name="emailAddress" id="register-email-field" aria-describedby="emailHelp" placeholder="Email address">
               <p class="error1  position-absolute top-0 inputTextFieldError" id="emailAddress" style="display: none;"><%-errors.emailAddress ? errors.emailAddress : "" %> </p>
               <i class="bi bi-envelope-fill position-absolute form-field-icon top-0 e"></i>
-              <span class="span-register"></span>
+              <span class="form-input-line"></span>
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@
               <p class="error1  position-absolute top-0 inputTextFieldError" id="password" style="display: none;"><%-errors.password ? errors.password : "" %> </p>
               <i class="bi bi-lock-fill position-absolute top-0 form-field-icon p"></i>
               <i class="bi bi-eye-fill position-absolute top-0 end-0 form-field-icon eye " id="show-password"></i>
-<span class="span-register"></span>
+<span class="form-input-line"></span>
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@
               <p class="error1  position-absolute top-0 inputTextFieldError" id="confirmPassword" style="display: none;"><%-errors.confirmPassword ? errors.confirmPassword : "" %> </p>
               <i class="bi bi-lock-fill position-absolute top-0 form-field-icon p"></i>
               <i class="bi bi-eye-fill position-absolute top-0 end-0 form-field-icon eye " id="show-pass"></i>
-              <span class="span-register"></span>
+              <span class="form-input-line"></span>
             </div>
           </div>
         </div>

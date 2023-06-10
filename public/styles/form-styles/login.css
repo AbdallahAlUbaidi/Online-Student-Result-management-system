@@ -828,7 +828,7 @@ body{
   margin: 0 5px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
+  background-color: #3d52d5 ;
   color: #fff;
   font-size: 16px;
   cursor: pointer;
@@ -836,12 +836,17 @@ body{
 }
 
 .table-pagination-buttons-container button:hover {
-  background-color: #0056b3;
+  background-color: #293bb2 ;
+}
+
+.table-pagination-buttons-container button:disabled{
+  background-color: #455bec99 ;
+  cursor: default;
 }
 
 .table-pagination-buttons-container button:focus {
   outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  box-shadow: 0 0 5px #3d52d5 ;
 }
 @media (min-width:300px) and (max-width:400px) {
   .filter{

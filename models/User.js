@@ -70,6 +70,9 @@ const userSchema = mongoose.Schema({
     roleInformation:{
         type:mongoose.SchemaTypes.ObjectId,
     },
+    profileImg:{
+        type:String
+    },
     createdAt:{
         type:Date,
         default: () => Date.now()

@@ -8,7 +8,8 @@ const {errorReport , renderErrorPage} = require('../../errorReport')
 router.get("/" , validateAccess(["student"] , false , "page") ,(req , res) => {
     try{
         const student_id = req.info.roleInfo._id;
-        res.render("student/myGrades") , {message:req.flash("message")[0] , messageType:req.flash("messageType")[0] , student_id}
+        const {username , profileImg} = req.info.userInfo;
+        res.render("student/myGrades") , {message:req.flash("message")[0] , messageType:req.flash("messageType")[0] , student_id , username , profileImg}
     }catch(err){
         const {statusCode , errors , message} = errorReport(err);
         if(statusCode === 500)

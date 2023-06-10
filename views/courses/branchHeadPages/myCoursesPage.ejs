@@ -16,26 +16,12 @@
         </button> -->
         <ul>
           <li>
-							
-						<!-- <a href="#" class="aside-link"> -->
-						<!-- <i class="fa fa-user icon" aria-hidden="true"></i> -->
-					
-								<!-- <label for="file-input" class="circular-button"> 
-							<img src="">
-							
-						  </label> -->
-						  <a href="" class="logo"> 
-							<label for="file-input" class="circular-button">
-								<img src=""></label>&nbsp;&nbsp;<p class="logo-p">Result management</p></a>
-								
-					
-						
-						 
-						
-						
-						
-						<!-- <input id="file-input" type="file" accept="image/*"> -->
-						</li>
+            <div href="" class="logo"> 
+              <div class="circular-button" profile-img="<%- locals.profileImg || "" %>">
+              </div>
+              &nbsp;&nbsp;<p class="logo-p"><%- locals.username %></p>
+            </div>
+					</li>
          
           <!-- <li><a href="#" class="aside-link"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Email</a></li> -->
           <li>
@@ -75,6 +61,7 @@
     </div>
 </div>
 </nav>
+<div class="messages-pool" id="messages-container"></div>
 <div class="container container-e  margin-on-nav-courses margin-on-nav p-3 ">
   <div class="row row-cols-1 row-cols-md-3 g-4" id="empty-div"><% locals.courses.forEach(course => { %><%- include('../../partials/course-card.ejs' , {course , link:`/courses/${course.courseTitle.replace(/\s/gm , '-')}`}) %><% }) %> </div>
 </div>

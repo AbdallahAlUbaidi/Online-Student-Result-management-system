@@ -8,10 +8,10 @@ router.get('/'  , validateAccess(["branchHead"] , false , "page") , async (req ,
     try{
         const {roleInfo , userInfo} = req.info;
         const {branch} = req.info.roleInfo;
-        let facultyMembers = await Faculty.find({branch}).populate("userInfo","_id username");
+        let facultyMembers = await Faculty.find({branch}).populate("userInfo","_id username profileImg");
         const branchHead = facultyMembers.filter(fm => fm.id_num == roleInfo.id_num)[0];
         facultyMembers = facultyMembers.filter(fm => fm.id_num !== roleInfo.id_num);
-        res.render('facultyMembers/facultyMembersPage' , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , facultyMembers , branchHead});
+        res.render('facultyMembers/facultyMembersPage' , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , facultyMembers , branchHead , username:userInfo.username , profileImg:userInfo.profileImg});
     }catch(err){
         const {errors , statusCode , message} = errorReport(err);
         if(statusCode === 500)
@@ -21,8 +21,9 @@ router.get('/'  , validateAccess(["branchHead"] , false , "page") , async (req ,
 
 router.get('/:facultyId' , validateAccess(["branchHead"] , false , "page") , async (req , res) => {
     try{
+        const {username} = req.info.userInfo;
         const facultyMember = await Faculty.findOne({id_num:req.params.facultyId}).populate("courses");
-        res.render('courses/branchHeadPages/facultyCourses' , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , courses:facultyMember.courses , facultyMember});
+        res.render('courses/branchHeadPages/facultyCourses' , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , courses:facultyMember.courses , facultyMember , username});
     }catch(err){
         const {errors , statusCode , message} = errorReport(err);
         if(statusCode === 500)
@@ -33,10 +34,11 @@ router.get('/:facultyId' , validateAccess(["branchHead"] , false , "page") , asy
 
 router.get("/:facultyId/:courseTitle" , validateAccess(["branchHead"] , false , "page") , async (req , res) => {
     try{
+        const {username , profileImg} = req.info.userInfo
         const facultyMember = await Faculty.findOne({id_num:req.params.facultyId}).populate("courses");
         const courseTitle =  req.params.courseTitle.replace(/-/gi , " ");
         const course = facultyMember.courses.filter(course => course.courseTitle === courseTitle)[0];
-        res.render('courses/branchHeadPages/facultyCourse' , {message:req.flash("message")[0] , messageType:req.flash("messageType")[0] , course , facultyMember});
+        res.render('courses/branchHeadPages/facultyCourse' , {message:req.flash("message")[0] , messageType:req.flash("messageType")[0] , course , facultyMember , username , profileImg});
     }catch(err){
         const {errors , statusCode , message} = errorReport(err);
         if(statusCode === 500)

@@ -327,7 +327,8 @@ router.post("/:courseTitle/publish" , validateAccess(["examCommittee"] , false ,
 
 //Branch Head only
 router.get('/preFinalScorebook' , validateAccess(["branchHead"] , false , "page") , (req , res) => {
-    res.render("courses/branchHeadPages/preFinalScorebook" , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0]});
+    const {username , profileImg} = req.info.userInfo;
+    res.render("courses/branchHeadPages/preFinalScorebook" , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , username , profileImg});
 });
 
 //Branch Head Only

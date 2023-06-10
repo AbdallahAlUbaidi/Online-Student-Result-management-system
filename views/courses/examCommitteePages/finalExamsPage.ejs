@@ -43,6 +43,7 @@
     </div>
 </div>
 </nav>
+<div class="messages-pool" id="messages-container"></div>
 <div class="container container-e  margin-on-nav-courses margin-on-nav p-3 ">
   <div class="row row-cols-1 row-cols-md-3 g-4" id="empty-div"><% locals.finalExams.forEach(exam => { %><%- include('../../partials/course-card.ejs' , {course:exam , link:`/finalExams/${exam.courseTitle.replace(/\s/gm , '-')}`}) %><% }) %> </div>
 </div>

@@ -5,7 +5,8 @@ function loadCoursesImage(courseImageContainers){
         const imageWidth = getImageWidth(imgContainer.clientWidth)
         const courseTitle = imgContainer.getAttribute('courseTitle');
         const url = `/images/courseImages/${courseTitle}/resized${imageWidth}px.png`;
-        imgContainer.style = `background: linear-gradient(rgba(85, 85, 85, 0.25), rgba(85, 85, 85, 0.25)), url("${url}") ;
+        const defaultUrl = "/images/PlaceholderImg.svg";
+        imgContainer.style = `background: linear-gradient(rgba(85, 85, 85, 0.25), rgba(85, 85, 85, 0.25)), url("${url}") , url("${defaultUrl}") ;
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;`;

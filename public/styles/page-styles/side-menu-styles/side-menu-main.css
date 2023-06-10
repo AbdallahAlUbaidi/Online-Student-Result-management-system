@@ -226,7 +226,10 @@
     height: 50px;
     margin: 10px;
     border-radius: 50%;
-    background-color: #fff;
+    background:url("/images/Default profile picture.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
     box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.3);
     overflow: hidden;
     transition: all 0.3s ease-in-out;
@@ -235,9 +238,46 @@
 
   .circular-button:hover {
     transform: scale(1.05);
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+  .circular-button:hover::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease;
   }
 
-  .circular-button:before {
+  .circular-button:hover::after{
+    content: "+";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    color: rgba(255, 255, 255, 0.9);
+    transition: color 0.3s ease;
+  }
+  /* .circular-button:hover::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    background-color: #000000;
+  } */
+
+  .profile-picture-dark-overlay{
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+    opacity: 0.8;
+  }
+  /* .circular-button:before {
     content: "Upload";
     position: absolute;
     top: 50%;
@@ -248,10 +288,10 @@
     color: #333;
     text-align: center;
     transition: all 0.3s ease-in-out;
-  }
+  } */
 
   .circular-button:hover:before {
-    transform: translate(-50%, -50%) scale(1.2);
+    /* transform: translate(-50%, -50%) scale(1.2); */
     text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
   }
 

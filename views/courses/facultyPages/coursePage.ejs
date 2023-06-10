@@ -2,37 +2,18 @@
 <% const courseTitle = locals.course.courseTitle.replace(/\s/gm , '-') %> 
 <div class="content fade-in ">
 	<div class="page-container">
-		<!-- <nav class="navbar navbar-expand-lg navbar-light  "><div class="container-fluid position-relative"><img src="/images/logo.png" alt="" class=" h-100  navbar-brand"><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><svg
-		xmlns="http://www.w3.org/2000/svg" width="36" height="27" fill="currentColor" class="bi bi-list" viewBox="0 0 14 16"><path fill-rule="evenodd" d="M1.5 4.5A.5.5 0 0 1 2 4h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1zm0 4A.5.5 0 0 1 2 8h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1zm0 4A.5.5 0 0 1 2 12h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1z" /></svg></button></div><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav ms-auto"><% //if(role === 'faculty') {%><%-// include('../../partials/nav-bar-link.ejs' , {link:'#' , linkText:'Delete Course' , customIconClass:'fa fa-minus-square'}) %><%- //include('../../partials/nav-bar-link.ejs' , {link:'#' , linkText:'Edit Course' , customIconClass:'bi bi-pencil-fill'}) %><% //} %><%- //include('../../partials/nav-bar-link.ejs' , {link:'/logout' , linkText:'Logout' , customIconClass:'bi bi-x-circle-fill'}) %></ul></div></nav> -->
 		<nav class="navbar navbar-expand-lg navbar-light fixed-top">
 			<div class="container-fluid position-relative">
 				<button id="show-menu-button" class="menu-button" onclick="showMenu()">  <i data-feather="menu">menu</i></button>
 				<aside class="sidebar" id="aside-menu">
-					<!-- <button class="sidebar-toggle"> -->
-						<!-- <span class="bi bi-list"></span> -->
-						<!-- <i class="fa fa-chevron-circle-right yes" aria-hidden="true"></i> -->
 					</button>
 					<ul>
 						<li>
-							
-						<!-- <a href="#" class="aside-link"> -->
-						<!-- <i class="fa fa-user icon" aria-hidden="true"></i> -->
-					
-								<!-- <label for="file-input" class="circular-button"> 
-							<img src="">
-							
-						  </label> -->
-						  <a href="" class="logo"> 
-							<label for="file-input" class="circular-button">
-								<img src=""></label>&nbsp;&nbsp;<p class="logo-p">Result management</p></a>
-								
-					
-						
-						 
-						
-						
-						
-						<!-- <input id="file-input" type="file" accept="image/*"> -->
+							<div href="" class="logo"> 
+								<div class="circular-button" profile-img="<%- locals.profileImg || "" %>">
+								</div>
+								&nbsp;&nbsp;<p class="logo-p"><%- locals.username %></p>
+							</div>
 						</li>
 						<li>
 							<a href="/courses/statistics/<%- courseTitle %>?role=faculty" class="aside-link" id="show-statistics">
@@ -42,28 +23,21 @@
 							<a href="/courses/<%- courseTitle %>/delete" class="aside-link" id="delete-course">
 							  <i class="fa icon fa-trash" aria-hidden="true"></i> &nbsp;&nbsp; Delete course </a>
 						  </li>
-						  <!-- <li><a href="#" class="aside-link">Edit course</a></li> -->
 						  <li>
 							<a href="#" class="aside-link">
 							  <i class="fas icon fa-user-plus icon"></i> &nbsp;&nbsp;Invite faculty </a>
 						  </li>
-						  <!-- <button id="edit-btn"  class="edit aside-link"><i class="fas fa-edit icon"></i> &nbsp;&nbsp;Edit course</button>
-						-->
 						  <li>
-							<!-- <button id="edit-btn"  class="edit aside-link"> &nbsp; Edit</button> -->
 							<a href="<%- courseTitle %>/edit" class="aside-link" id="edit-course">
 							  <i class="fas icon fa-edit icon"></i>&nbsp;&nbsp; Edit course </a>
 						  </li>
 					</ul>
 				</aside>
 				<img src="/images/logo.png" alt="" class=" h-100  navbar-brand">
-				<!-- <div class="btn"> -->
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-					<!-- <span class="navbar-toggler-icon"> -->
 					<svg xmlns="http://www.w3.org/2000/svg" width="36" height="27" fill="currentColor" class="bi bi-list" viewBox="0 0 14 16">
 						<path fill-rule="evenodd" d="M1.5 4.5A.5.5 0 0 1 2 4h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1zm0 4A.5.5 0 0 1 2 8h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1zm0 4A.5.5 0 0 1 2 12h12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-1z" />
 					</svg>
-					<!-- </span> -->
 				</button>
 			</div>
 			<div class="collapse navbar-collapse" id="navbarNav">
@@ -133,9 +107,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 
-
-<button id="faculty-save-button" class="btn btn-primary btn-primary-course btn-sm me-2">Save</button><button id="faculty-submit-button" class="btn  btn-primary-course btn-sm">Submit</button> -->
 </div>
 <button id="scroll-to-top">
 	<i class="fas fa-chevron-up"></i>

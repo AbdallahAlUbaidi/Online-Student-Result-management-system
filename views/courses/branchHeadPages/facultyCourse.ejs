@@ -6,48 +6,18 @@
 			<div class="container-fluid position-relative">
 				<button id="show-menu-button" class="menu-button" onclick="showMenu()">  <i data-feather="menu">menu</i></button>
 				<aside class="sidebar" id="aside-menu">
-					<!-- <button class="sidebar-toggle">
-						<i class="fa fa-chevron-circle-right yes" aria-hidden="true"></i>
-					</button> -->
 					<ul>
 						<li>
-							
-							<!-- <a href="#" class="aside-link"> -->
-							<!-- <i class="fa fa-user icon" aria-hidden="true"></i> -->
-						
-									<!-- <label for="file-input" class="circular-button"> 
-								<img src="">
-								
-							  </label> -->
-							  <a href="" class="logo"> 
-								<label for="file-input" class="circular-button">
-									<img src=""></label>&nbsp;&nbsp;<p class="logo-p">Result management</p></a>
-									
-						
-							
-							 
-							
-							
-							
-							<!-- <input id="file-input" type="file" accept="image/*"> -->
+							<div href="" class="logo"> 
+								<div class="circular-button" profile-img="<%- locals.profileImg || "" %>">
+								</div>
+								&nbsp;&nbsp;<p class="logo-p"><%- locals.username %></p>
+							  </div>
 							</li>
 							<li>
 								<a  href="/courses/statistics/<%- courseTitle %>?role=branchHead" class="aside-link" id="show-statistics">
 								  <i class="fas icon fa-chart-bar"></i> &nbsp;&nbsp; Statistics </a>
 							  </li>
-					
-						<!-- <li>
-							<a href="/courses/<%- //courseTitle %>/delete" class="aside-link" id="delete-course">
-								<i class="fa fa-trash" aria-hidden="true"></i> &nbsp;&nbsp; Delete course </a>
-						</li>
-						<li>
-							<a href="#" class="aside-link">
-								<i class="fas fa-user-plus icon"></i> &nbsp;&nbsp; Invite faculty </a>
-						</li>
-						<li>
-							<a href="<%- //courseTitle %>/edit" class="aside-link" id="edit-course">
-								<i class="fas fa-edit icon"></i>&nbsp;&nbsp; Edit course </a>
-						</li> -->
 					</ul>
 				</aside>
 				<img src="/images/logo.png" alt="" class=" h-100  navbar-brand">
@@ -117,8 +87,8 @@
 
 				</table>
 				<div class="buttons-container">
-					<button type="button" class="btn btn-success exel" >Export Excel</button>
-					<button type="button" class="btn btn-success exel" >Import Excel</button>
+					<button type="button" class="btn btn-success exel download-excel-file" >Export Excel</button>
+					<button type="button" class="btn btn-success exel upload-excel-file" >Import Excel</button>
 					<button class="btn btn-primary-course btn-sm me-2" id="branchHead-approve-all-button">Approve All</button>
 					<button class="btn btn-primary-course btn-sm exel" id="branchHead-reject-all-button">Reject All</button>
 				</div>

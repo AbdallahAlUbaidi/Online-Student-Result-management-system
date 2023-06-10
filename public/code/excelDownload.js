@@ -7,52 +7,52 @@ const excelDisplayName = {
     finalExamScore:"امتحان نهائي",
     totalScore:"درجة نهائية"
 };
-
-downloadBtn.addEventListener("click" , async ()=> {
-    let filters = [
-        {
-            gradeStatus: "",
-            student:{
-                branch:"information engineering",
-                study:"morning",
-                stage:undefined,
-                studentFullName:undefined
+if(downloadBtn)
+    downloadBtn.addEventListener("click" , async ()=> {
+        let filters = [
+            {
+                gradeStatus: "",
+                student:{
+                    branch:"information engineering",
+                    study:"morning",
+                    stage:undefined,
+                    studentFullName:undefined
+                }
+            },
+            {
+                gradeStatus: "",
+                student:{
+                    branch:"information engineering",
+                    study:"evening",
+                    stage:undefined,
+                    studentFullName:undefined
+                }
+            },
+            {
+                gradeStatus: "",
+                student:{
+                    branch:"network engineering",
+                    study:"morning",
+                    stage:undefined,
+                    studentFullName:undefined
+                }
+            },
+            {
+                gradeStatus: "",
+                student:{
+                    branch:"network engineering",
+                    study:"evening",
+                    stage:undefined,
+                    studentFullName:undefined
+                }
             }
-        },
-        {
-            gradeStatus: "",
-            student:{
-                branch:"information engineering",
-                study:"evening",
-                stage:undefined,
-                studentFullName:undefined
-            }
-        },
-        {
-            gradeStatus: "",
-            student:{
-                branch:"network engineering",
-                study:"morning",
-                stage:undefined,
-                studentFullName:undefined
-            }
-        },
-        {
-            gradeStatus: "",
-            student:{
-                branch:"network engineering",
-                study:"evening",
-                stage:undefined,
-                studentFullName:undefined
-            }
-        }
-    ]
-    filters.forEach(async (filter) => {
-        const {records , fileName} = await getGradesAsExcel(filter);
-        if(records)
-            convertJsonToExcel(records , fileName);
+        ]
+        filters.forEach(async (filter) => {
+            const {records , fileName} = await getGradesAsExcel(filter);
+            if(records)
+                convertJsonToExcel(records , fileName);
+        });
     });
-});
 
 async function getGradesAsExcel(filter){
     const courseTitle = table.getAttribute("course");

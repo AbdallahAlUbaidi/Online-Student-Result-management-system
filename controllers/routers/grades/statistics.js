@@ -15,7 +15,8 @@ router.get('/:courseTitle' , (req , res) => {
   const {courseTitle} = req.params;
   const role = req.query.role;
   const mainRole = req.info.roles[0];
-  res.render(statisticsPage[mainRole] , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , courseTitle , role});
+  const {username , profileImg} = req.info.userInfo;
+  res.render(statisticsPage[mainRole] , {message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , courseTitle , role , username , profileImg});
 })
 
 router.get('/:courseTitle/faculty', validateAccess(["faculty"] , true , "json") ,async (req, res) => {

@@ -27,9 +27,10 @@ const rolesMap = {
 
 router.get('/' , validateAccess(["faculty"] , false , "page") , async(req , res)=> {   
     const {userInfo , roleInfo} = req.info
-    const {roles} = userInfo;
+    const {roles , username , profileImg} = userInfo;
+
     const {courses} = roleInfo;
-    res.render( rolesMap[roles[0]].coursesPageView , {courses , role , message:req.flash('message')[0] , messageType:req.flash('messageType')[0]});
+    res.render( rolesMap[roles[0]].coursesPageView , {courses , role , message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , username , profileImg});
 })
 
 router.get('/create' , validateAccess(["faculty"] , false , "page") , (req , res)=>{
@@ -53,13 +54,13 @@ router.post('/create' , validateAccess(["faculty"] , false , "page") , uploadIma
 
 router.get('/:courseTitle' , validateAccess(["faculty"] , true , "page") , (req , res)=>{
     const {roleInfo , userInfo , roles} = req.info;
-    const {role} = userInfo;
+    const {username , profileImg} = userInfo;
     const {courses} = roleInfo;
     const courseIndex = courses.findIndex(courseObject => courseObject.courseTitle.replace(/\s/gm , '-') == req.params.courseTitle)
     if( courseIndex < 0)
         renderErrorPage(res , 404)
     else
-        res.render( rolesMap[roles[0]].coursePageView , {course:courses[courseIndex] , role:roles[0] , message:req.flash('message')[0] , messageType:req.flash('messageType')[0]});
+        res.render( rolesMap[roles[0]].coursePageView , {course:courses[courseIndex] , role:roles[0] , message:req.flash('message')[0] , messageType:req.flash('messageType')[0] , username , profileImg});
 })
 
 

@@ -90,6 +90,14 @@
 color: #ffffff;
 }
 
+.no-Courses-message{
+  display: flex;
+  width: 100%;
+  height: 80vh;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
 
 /* .circle{
   border-radius: 20px !important;

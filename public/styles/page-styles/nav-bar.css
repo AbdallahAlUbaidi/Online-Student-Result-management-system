@@ -1,9 +1,14 @@
 .navbar {
     background-color: #ffffff !important;
-    border-bottom: 0.7px solid rgb(228, 228, 228) !important;
+    /* border-bottom: 0.7px solid rgb(228, 228, 228) !important; */
     /* box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1) !important; */
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1) !important;
+    /* box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1) !important; */
+    border-bottom: 2px solid #EBEBEB !important; 
+    transition: border-bottom-color 0.4s ease-in-out !important; 
   
+  }
+  .navbar:hover {
+    border-bottom-color: #dddada !important; 
   }
   .nav-link.courses{
     color: #3d52d5 !important;

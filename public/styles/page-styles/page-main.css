@@ -23,6 +23,10 @@
   background-position: center;
   background-size: cover;
 }
+body{
+  background-color: #F4F4F4 !important;
+ }
+
 
 /* .scroll-to-top {
   display: none;

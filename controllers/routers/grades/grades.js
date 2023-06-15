@@ -37,7 +37,7 @@ router.get('/student', validateAccess(['student'] , false , "json") , async (req
         let records = [];
         let labsTotalScoreArray = [];
         let labsPreFinalArray = [];
-        let gradesByCourse = [];
+        let courses = req.info.roleInfo.courses.filter(c=>c.courseType !== "practical").map(c => c.courseTitle);
         grades.forEach(grade => {
             const preFinalScore = grade.evaluationScore + grade.midTermScore;
             const totalScore = grade.finalExamScore + preFinalScore;
@@ -54,6 +54,22 @@ router.get('/student', validateAccess(['student'] , false , "json") , async (req
              record.finalGrade = {value:finalGrade , isWritable:false};
              records.push(record);
         });
+        courses = courses.filter(course => {
+            let existsInRecords = false;
+            records.forEach(r => {
+                if(r === course) existsInRecords = true;
+            });
+            return !existsInRecords;
+        });
+        if(courses.length !== 0){
+            courses.forEach(course => {
+                records.push({
+                    courseTitle:{value:course , isWritable:false},
+                    preFinalScore:{value:"" , isWritable:false},
+                    finalGrade:{value:"" , isWritable:false}
+                });
+            });
+        }
         if(labsTotalScoreArray.length !== 0){
             const labsTotalScore = Math.round(calculateAverage(labsTotalScoreArray));
             const labsPreFinalScore = Math.round(calculateAverage(labsPreFinalArray));
@@ -63,6 +79,12 @@ router.get('/student', validateAccess(['student'] , false , "json") , async (req
                  preFinalScore:{value:labsPreFinalScore , isWritable:false},
                  finalGrade:{value:labsFinalGrade , isWritable:false}
             });
+        }else{
+            records.push({
+                courseTitle:{value:"Labs" , isWritable:false},
+                preFinalScore:{value:"" , isWritable:false},
+                finalGrade:{value:"" , isWritable:false}
+           });
         }
         fields = getGradesFields(fields);
         res.status(200).json({

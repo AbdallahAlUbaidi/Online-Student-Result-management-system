@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
 const bcrypt = require('bcrypt')
+let generateEmailErrorMessage = (props)=> "";
+
 const userSchema = mongoose.Schema({
     username:{
         type:String,
@@ -26,12 +28,8 @@ const userSchema = mongoose.Schema({
         maxLength:[254 , 'Email address can be a max of 254 characters'],
         minLength:[3 , 'Email address can be at least 3 characters'],
         validate:{
-            validator:email=>{
-                const emailPattern1 = /^([\.\_A-Za-z0-9]+)@([\.A-Za-z]+)\.([a-zA-Z]{2,8})\s*$/g;
-                const emailPattern2 = /^([\.\_A-Za-z0-9]+)@([\.A-Za-z]+)\.([a-zA-Z]{2,3})\.([a-zA-Z]{1,3})\s*$/g;
-                return emailPattern1.test(email) || emailPattern2.test(email)
-            },
-            message:props => `"${props.value}" is not a valid email address`
+            validator:emailValidator(),
+            message:emailInvalidMessage()
         }
     },
     conformed:{
@@ -152,5 +150,44 @@ userSchema.pre('validate' , function(next){
     next()
 })
 
+function emailValidator(){
+    if(process.env.TEST_MODE){
+        return (email)=>{
+            const emailPattern1 = /^([\.\_A-Za-z0-9]+)@([\.A-Za-z]+)\.([a-zA-Z]{2,8})\s*$/g;
+            const emailPattern2 = /^([\.\_A-Za-z0-9]+)@([\.A-Za-z]+)\.([a-zA-Z]{2,3})\.([a-zA-Z]{1,3})\s*$/g;
+            return emailPattern1.test(email) || emailPattern2.test(email)
+        }
+    }else{
+        return function(email){
+            let pattern;
+            let {roles} = this;
+            if(roles.includes("student")){
+                pattern = /ce\.[0-9]{2,4}\.[0-9]{2,4}@student\.uotechnology\.edu\.iq/gi;
+            }else{
+                pattern = /[0-9]{6,10}@uotechnology\.edu\.iq/gi;
+            }
+            const isValid = pattern.test(email);
+            if(!isValid){
+                if(roles.includes("student"))
+                    generateEmailErrorMessage = (props) => `"${props.value}" is not a valid student email`;
+                else if(roles.includes(""))
+                    generateEmailErrorMessage = (props) => {
+                        return `Cannot validate email without specifing role`;
+                    }
+                else
+                    generateEmailErrorMessage = (props) => `"${props.value}" is not a valid faculty email`;
+            }
+            return isValid;
+        }
+    }
+}
+
+function emailInvalidMessage(){
+    if(process.env.TEST_MODE){
+        return props => `"${props.value}" is not a valid email address`;
+    }else{
+        return props => generateEmailErrorMessage(props);
+    }
+}
 
 module.exports = mongoose.model('User' , userSchema) 

@@ -151,7 +151,7 @@ userSchema.pre('validate' , function(next){
 })
 
 function emailValidator(){
-    if(process.env.TEST_MODE){
+    if(process.env.TEST_MODE == 1){
         return (email)=>{
             const emailPattern1 = /^([\.\_A-Za-z0-9]+)@([\.A-Za-z]+)\.([a-zA-Z]{2,8})\s*$/g;
             const emailPattern2 = /^([\.\_A-Za-z0-9]+)@([\.A-Za-z]+)\.([a-zA-Z]{2,3})\.([a-zA-Z]{1,3})\s*$/g;
@@ -183,7 +183,7 @@ function emailValidator(){
 }
 
 function emailInvalidMessage(){
-    if(process.env.TEST_MODE){
+    if(process.env.TEST_MODE == 1){
         return props => `"${props.value}" is not a valid email address`;
     }else{
         return props => generateEmailErrorMessage(props);

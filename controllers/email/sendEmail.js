@@ -33,7 +33,7 @@ function sendEmail(user , subject , message)
         from:process.env.EMAIL,
         to:user.emailAddress,
         subject,
-        text:message
+        html:message
     }
     mailTransporter.sendMail(mailOptions , (err)=>
     {if(err)errorReport(err)})

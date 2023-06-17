@@ -13,7 +13,18 @@ function generateConfirmationLink(user)
 
 function sendConfirmationEmail(user)
 {
-    sendEmail(user , 'Confirm Your Email to complete your register' , `Please click on the following link to confirm your email:\n${generateConfirmationLink(user)}\n to receive another link login to your account and click resend confirmation email`)
+    sendEmail(user , 'Confirm Your Email to complete your register' , `
+        <p style="font-size: 16px; margin-bottom: 20px;">
+        Please click on the following link to confirm your email:
+        <br>
+            <div style="display:flex;justify-content:center;align-items:center;marign:10px auto;"> <a href="${generateConfirmationLink(user)}" style="color: #fff; text-decoration: none; padding:10px; background-color:#3e52d5;margin:auto;">Confirm Email</a> </div>
+        <br>
+
+        </p>
+        <p style="font-size: 14px;">
+            To receive another link, login to your account and click "Resend Confirmation Email".
+        </p>
+    `)
 }   
 
 function verifyEmailCheckToken(req , res , next)

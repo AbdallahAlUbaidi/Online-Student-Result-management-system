@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema({
         unique:true,
         validate:{
             validator:user=>{
-                const pattern = /^([a-zA-z0-9\.\-\_]*)([a-zA-z0-9\.\-\_])$/gi
+                const pattern = /^([a-zA-z0-9\.\-\_\s]*)([a-zA-z0-9\.\-\_\s])$/gi
                 return pattern.test(user)
             },
             message:props => `"${props.value}" is not a valid user name`

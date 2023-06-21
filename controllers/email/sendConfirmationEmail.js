@@ -8,7 +8,7 @@ const { showFlashMessage } = require('../flashMessage')
 function generateConfirmationLink(user)
 {
     let token = emailToken.generateEmailConfirmationToken(user)
-    return `${process.env.URL}/emailConfirmation/${token}`
+    return `${process.env.URL}${process.env.PORT && process.env.PORT != 80 ? ":" + process.env.PORT : ""}/emailConfirmation/${token}`
 }
 
 function sendConfirmationEmail(user)
